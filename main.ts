@@ -1,0 +1,3093 @@
+namespace SpriteKind {
+    export const display = SpriteKind.create()
+    export const koopaGreen = SpriteKind.create()
+}
+function world1 () {
+    World_Map_True = 1
+    mySprite5 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Player)
+    for (let value of sprites.allOfKind(SpriteKind.Player)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.Food)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.koopaGreen)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
+        value.destroy()
+    }
+    mySprite = sprites.create(assets.image`Luigi`, SpriteKind.Player)
+    mySprite.ay = 0
+    tiles.placeOnRandomTile(mySprite, assets.tile`myTile1`)
+    controller.moveSprite(mySprite, 100, 100)
+    scene.cameraFollowSprite(mySprite)
+}
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.koopaGreen, function (sprite, otherSprite) {
+    animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
+    sprite.vx = sprite.vx * -1
+    otherSprite.vx = otherSprite.vx * -1
+    sprite.image.flipX()
+    if (otherSprite.vx < 0) {
+        animation.runImageAnimation(
+        otherSprite,
+        [img`
+            .................
+            ....1............
+            ...111...........
+            ...1114..........
+            ..471144.........
+            ..471144.........
+            ..471144.........
+            ..411144.........
+            .4441444.........
+            .4744444.........
+            .444444..77777...
+            .444.44.7477747..
+            .44..44.77474777.
+            .44.441777747117.
+            ..4.441777474717.
+            ....441474777474.
+            ...4411747777747.
+            ....417474777474.
+            ....414777474777.
+            .....17777747777.
+            .....117774747111
+            ....44111477111..
+            ...4444411111444.
+            ..44444......4444
+            `,img`
+            ....1............
+            ...111...........
+            ..41114..........
+            ..471144.........
+            .4471144.........
+            .4471144.........
+            47411144.........
+            44441444.........
+            44444444.........
+            44444444.77777...
+            4444..417477747..
+            444...4177474777.
+            .....41777747117.
+            ....441777474717.
+            ..44441474777474.
+            ...4411747777747.
+            ....417474777474.
+            ....414777474777.
+            .....17777747777.
+            .....117774747111
+            .....41114771114.
+            .....44411111444.
+            ......444....444.
+            .......444..444..
+            `],
+        200,
+        true
+        )
+    } else if (otherSprite.vx > 0) {
+        animation.runImageAnimation(
+        otherSprite,
+        [img`
+            .................
+            ............1....
+            ...........111...
+            ..........4111...
+            .........441174..
+            .........441174..
+            .........441174..
+            .........441114..
+            .........4441444.
+            .........4444474.
+            ...77777..444444.
+            ..7477747.44.444.
+            .77747477.44..44.
+            .711747777144.44.
+            .717474777144.4..
+            .474777474144....
+            .7477777471144...
+            .474777474714....
+            .777474777414....
+            .77774777771.....
+            111747477711.....
+            ..11177411144....
+            .4441111144444...
+            4444......44444..
+            `,img`
+            ............1....
+            ...........111...
+            ..........41114..
+            .........441174..
+            .........4411744.
+            .........4411744.
+            .........44111474
+            .........44414444
+            .........44444444
+            ...77777.44444444
+            ..747774714..4444
+            .7774747714...444
+            .71174777714.....
+            .717474777144....
+            .47477747414444..
+            .7477777471144...
+            .474777474714....
+            .777474777414....
+            .77774777771.....
+            111747477711.....
+            .41117741114.....
+            .44411111444.....
+            .444....444......
+            ..444..444.......
+            `],
+        200,
+        true
+        )
+    }
+    pause(1000)
+})
+scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile13`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+sprites.onOverlap(SpriteKind.koopaGreen, SpriteKind.koopaGreen, function (sprite, otherSprite) {
+    animation.stopAnimation(animation.AnimationTypes.All, sprite)
+    animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
+    sprite.vx = sprite.vx * -1
+    otherSprite.vx = otherSprite.vx * -1
+    if (sprite.vx < 0) {
+        animation.runImageAnimation(
+        sprite,
+        [img`
+            .................
+            ....1............
+            ...111...........
+            ...1114..........
+            ..471144.........
+            ..471144.........
+            ..471144.........
+            ..411144.........
+            .4441444.........
+            .4744444.........
+            .444444..77777...
+            .444.44.7477747..
+            .44..44.77474777.
+            .44.441777747117.
+            ..4.441777474717.
+            ....441474777474.
+            ...4411747777747.
+            ....417474777474.
+            ....414777474777.
+            .....17777747777.
+            .....117774747111
+            ....44111477111..
+            ...4444411111444.
+            ..44444......4444
+            `,img`
+            ....1............
+            ...111...........
+            ..41114..........
+            ..471144.........
+            .4471144.........
+            .4471144.........
+            47411144.........
+            44441444.........
+            44444444.........
+            44444444.77777...
+            4444..417477747..
+            444...4177474777.
+            .....41777747117.
+            ....441777474717.
+            ..44441474777474.
+            ...4411747777747.
+            ....417474777474.
+            ....414777474777.
+            .....17777747777.
+            .....117774747111
+            .....41114771114.
+            .....44411111444.
+            ......444....444.
+            .......444..444..
+            `],
+        200,
+        true
+        )
+    } else if (sprite.vx > 0) {
+        animation.runImageAnimation(
+        sprite,
+        [img`
+            .................
+            ............1....
+            ...........111...
+            ..........4111...
+            .........441174..
+            .........441174..
+            .........441174..
+            .........441114..
+            .........4441444.
+            .........4444474.
+            ...77777..444444.
+            ..7477747.44.444.
+            .77747477.44..44.
+            .711747777144.44.
+            .717474777144.4..
+            .474777474144....
+            .7477777471144...
+            .474777474714....
+            .777474777414....
+            .77774777771.....
+            111747477711.....
+            ..11177411144....
+            .4441111144444...
+            4444......44444..
+            `,img`
+            ............1....
+            ...........111...
+            ..........41114..
+            .........441174..
+            .........4411744.
+            .........4411744.
+            .........44111474
+            .........44414444
+            .........44444444
+            ...77777.44444444
+            ..747774714..4444
+            .7774747714...444
+            .71174777714.....
+            .717474777144....
+            .47477747414444..
+            .7477777471144...
+            .474777474714....
+            .777474777414....
+            .77774777771.....
+            111747477711.....
+            .41117741114.....
+            .44411111444.....
+            .444....444......
+            ..444..444.......
+            `],
+        200,
+        true
+        )
+    }
+    if (otherSprite.vx < 0) {
+        animation.runImageAnimation(
+        otherSprite,
+        [img`
+            .................
+            ....1............
+            ...111...........
+            ...1114..........
+            ..471144.........
+            ..471144.........
+            ..471144.........
+            ..411144.........
+            .4441444.........
+            .4744444.........
+            .444444..77777...
+            .444.44.7477747..
+            .44..44.77474777.
+            .44.441777747117.
+            ..4.441777474717.
+            ....441474777474.
+            ...4411747777747.
+            ....417474777474.
+            ....414777474777.
+            .....17777747777.
+            .....117774747111
+            ....44111477111..
+            ...4444411111444.
+            ..44444......4444
+            `,img`
+            ....1............
+            ...111...........
+            ..41114..........
+            ..471144.........
+            .4471144.........
+            .4471144.........
+            47411144.........
+            44441444.........
+            44444444.........
+            44444444.77777...
+            4444..417477747..
+            444...4177474777.
+            .....41777747117.
+            ....441777474717.
+            ..44441474777474.
+            ...4411747777747.
+            ....417474777474.
+            ....414777474777.
+            .....17777747777.
+            .....117774747111
+            .....41114771114.
+            .....44411111444.
+            ......444....444.
+            .......444..444..
+            `],
+        200,
+        true
+        )
+    } else if (otherSprite.vx > 0) {
+        animation.runImageAnimation(
+        otherSprite,
+        [img`
+            .................
+            ............1....
+            ...........111...
+            ..........4111...
+            .........441174..
+            .........441174..
+            .........441174..
+            .........441114..
+            .........4441444.
+            .........4444474.
+            ...77777..444444.
+            ..7477747.44.444.
+            .77747477.44..44.
+            .711747777144.44.
+            .717474777144.4..
+            .474777474144....
+            .7477777471144...
+            .474777474714....
+            .777474777414....
+            .77774777771.....
+            111747477711.....
+            ..11177411144....
+            .4441111144444...
+            4444......44444..
+            `,img`
+            ............1....
+            ...........111...
+            ..........41114..
+            .........441174..
+            .........4411744.
+            .........4411744.
+            .........44111474
+            .........44414444
+            .........44444444
+            ...77777.44444444
+            ..747774714..4444
+            .7774747714...444
+            .71174777714.....
+            .717474777144....
+            .47477747414444..
+            .7477777471144...
+            .474777474714....
+            .777474777414....
+            .77774777771.....
+            111747477711.....
+            .41117741114.....
+            .44411111444.....
+            .444....444......
+            ..444..444.......
+            `],
+        200,
+        true
+        )
+    }
+    pause(1000)
+})
+scene.onOverlapTile(SpriteKind.display, assets.tile`myTile13`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile13`, function (sprite, location) {
+    mySprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+    pause(1000)
+    mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
+    loadworld()
+    world1()
+})
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (World_Map_True == 1) {
+        if (mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile1`)) {
+            startNextLevel()
+            World_Map_True = 0
+        }
+        if (mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile28`)) {
+            startNextLevel()
+            World_Map_True = 0
+        }
+    } else if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
+        mySprite.vy = -250
+        if (mySprite.vx >= 0) {
+            animation.runImageAnimation(
+            mySprite,
+            [img`
+                . . . . 7 7 7 7 7 . . . . . . . 
+                . . . 7 7 7 7 7 7 7 7 7 . . . . 
+                . . . f f f d d f d . . . . . . 
+                . . f d f d d d f d d d . . . . 
+                . . f d f f d d d f d d d . . . 
+                . . f f d d d d f f f f . . . . 
+                . . . . d d d d d d d . . . . . 
+                . . . 7 7 8 7 7 7 . . . . . . . 
+                . . 7 7 7 8 7 7 8 7 7 7 . . . . 
+                . 7 7 7 7 8 8 8 8 7 7 7 7 . . . 
+                . d d 7 8 5 8 8 5 8 7 7 7 . . . 
+                . d d d 8 8 8 8 8 8 d d d . . . 
+                . d d 8 8 8 8 8 8 8 8 d d . . . 
+                . . . 8 8 8 . . 8 8 8 . . . . . 
+                . . e e e . . . . e e e . . . . 
+                . e e e e . . . . e e e e . . . 
+                `,img`
+                . . . . . . 7 7 7 7 7 . . . d d 
+                . . . . . 7 7 7 7 7 7 7 7 7 d d 
+                . . . . . f f f d d f d . . 7 7 
+                . . . . f d f d d d f d d d 7 7 
+                . . . . f d f f d d d f d d d 7 
+                . . . . f f d d d d f f f f 7 . 
+                . . . . . . d d d d d d 7 7 . . 
+                . . 7 7 7 7 7 8 7 7 8 7 7 . . . 
+                d 7 7 7 7 7 7 7 8 7 7 8 . . e . 
+                d d 7 7 7 7 7 7 8 8 8 8 . . e . 
+                d d d . 8 8 7 8 5 8 8 5 8 e e . 
+                . d . e 8 8 8 8 8 8 8 8 8 e e . 
+                . . e e e 8 8 8 8 8 8 . . . . . 
+                . e e e 8 8 8 8 8 . . . . . . . 
+                . e . . 8 8 8 . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `,img`
+                . . . . . . 7 7 7 7 7 . . . d d 
+                . . . . . 7 7 7 7 7 7 7 7 7 d d 
+                . . . . . f f f d d f d . . 7 7 
+                . . . . f d f d d d f d d d 7 7 
+                . . . . f d f f d d d f d d d 7 
+                . . . . f f d d d d f f f f 7 . 
+                . . . . . . d d d d d d 7 7 . . 
+                . . 7 7 7 7 7 8 7 7 8 7 7 . . . 
+                d 7 7 7 7 7 7 7 8 7 7 8 . . e . 
+                d d 7 7 7 7 7 7 8 8 8 8 . . e . 
+                d d d . 8 8 7 8 5 8 8 5 8 e e . 
+                . d . e 8 8 8 8 8 8 8 8 8 e e . 
+                . . e e e 8 8 8 8 8 8 . . . . . 
+                . e e e 8 8 8 8 8 . . . . . . . 
+                . e . . 8 8 8 . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `,img`
+                . . . . . . 7 7 7 7 7 . . . d d 
+                . . . . . 7 7 7 7 7 7 7 7 7 d d 
+                . . . . . f f f d d f d . . 7 7 
+                . . . . f d f d d d f d d d 7 7 
+                . . . . f d f f d d d f d d d 7 
+                . . . . f f d d d d f f f f 7 . 
+                . . . . . . d d d d d d 7 7 . . 
+                . . 7 7 7 7 7 8 7 7 8 7 7 . . . 
+                d 7 7 7 7 7 7 7 8 7 7 8 . . e . 
+                d d 7 7 7 7 7 7 8 8 8 8 . . e . 
+                d d d . 8 8 7 8 5 8 8 5 8 e e . 
+                . d . e 8 8 8 8 8 8 8 8 8 e e . 
+                . . e e e 8 8 8 8 8 8 . . . . . 
+                . e e e 8 8 8 8 8 . . . . . . . 
+                . e . . 8 8 8 . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `,img`
+                . . . . . . 7 7 7 7 7 . . . d d 
+                . . . . . 7 7 7 7 7 7 7 7 7 d d 
+                . . . . . f f f d d f d . . 7 7 
+                . . . . f d f d d d f d d d 7 7 
+                . . . . f d f f d d d f d d d 7 
+                . . . . f f d d d d f f f f 7 . 
+                . . . . . . d d d d d d 7 7 . . 
+                . . 7 7 7 7 7 8 7 7 8 7 7 . . . 
+                d 7 7 7 7 7 7 7 8 7 7 8 . . e . 
+                d d 7 7 7 7 7 7 8 8 8 8 . . e . 
+                d d d . 8 8 7 8 5 8 8 5 8 e e . 
+                . d . e 8 8 8 8 8 8 8 8 8 e e . 
+                . . e e e 8 8 8 8 8 8 . . . . . 
+                . e e e 8 8 8 8 8 . . . . . . . 
+                . e . . 8 8 8 . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `,img`
+                . . . . 7 7 7 7 7 . . . . . . . 
+                . . . 7 7 7 7 7 7 7 7 7 . . . . 
+                . . . f f f d d f d . . . . . . 
+                . . f d f d d d f d d d . . . . 
+                . . f d f f d d d f d d d . . . 
+                . . f f d d d d f f f f . . . . 
+                . . . . d d d d d d d . . . . . 
+                . . . 7 7 8 7 7 7 . . . . . . . 
+                . . 7 7 7 8 7 7 8 7 7 7 . . . . 
+                . 7 7 7 7 8 8 8 8 7 7 7 7 . . . 
+                . d d 7 8 5 8 8 5 8 7 7 7 . . . 
+                . d d d 8 8 8 8 8 8 d d d . . . 
+                . d d 8 8 8 8 8 8 8 8 d d . . . 
+                . . . 8 8 8 . . 8 8 8 . . . . . 
+                . . e e e . . . . e e e . . . . 
+                . e e e e . . . . e e e e . . . 
+                `],
+            100,
+            false
+            )
+        } else if (mySprite.vx <= 0) {
+            animation.runImageAnimation(
+            mySprite,
+            [img`
+                . . . . . . . 7 7 7 7 7 . . . . 
+                . . . . 7 7 7 7 7 7 7 7 7 . . . 
+                . . . . . . d f d d f f f . . . 
+                . . . . d d d f d d d f d f . . 
+                . . . d d d f d d d f f d f . . 
+                . . . . f f f f d d d d f f . . 
+                . . . . . d d d d d d d . . . . 
+                . . . . . . . 7 7 7 8 7 7 . . . 
+                . . . . 7 7 7 8 7 7 8 7 7 7 . . 
+                . . . 7 7 7 7 8 8 8 8 7 7 7 7 . 
+                . . . 7 7 7 8 5 8 8 5 8 7 d d . 
+                . . . d d d 8 8 8 8 8 8 d d d . 
+                . . . d d 8 8 8 8 8 8 8 8 d d . 
+                . . . . . 8 8 8 . . 8 8 8 . . . 
+                . . . . e e e . . . . e e e . . 
+                . . . e e e e . . . . e e e e . 
+                `,img`
+                d d . . . 7 7 7 7 7 . . . . . . 
+                d d 7 7 7 7 7 7 7 7 7 . . . . . 
+                7 7 . . d f d d f f f . . . . . 
+                7 7 d d d f d d d f d f . . . . 
+                7 d d d f d d d f f d f . . . . 
+                . 7 f f f f d d d d f f . . . . 
+                . . 7 7 d d d d d d . . . . . . 
+                . . . 7 7 8 7 7 8 7 7 7 7 7 . . 
+                . e . . 8 7 7 8 7 7 7 7 7 7 7 d 
+                . e . . 8 8 8 8 7 7 7 7 7 7 d d 
+                . e e 8 5 8 8 5 8 7 8 8 . d d d 
+                . e e 8 8 8 8 8 8 8 8 8 e . d . 
+                . . . . . 8 8 8 8 8 8 e e e . . 
+                . . . . . . . 8 8 8 8 8 e e e . 
+                . . . . . . . . . 8 8 8 . . e . 
+                . . . . . . . . . . . . . . . . 
+                `,img`
+                d d . . . 7 7 7 7 7 . . . . . . 
+                d d 7 7 7 7 7 7 7 7 7 . . . . . 
+                7 7 . . d f d d f f f . . . . . 
+                7 7 d d d f d d d f d f . . . . 
+                7 d d d f d d d f f d f . . . . 
+                . 7 f f f f d d d d f f . . . . 
+                . . 7 7 d d d d d d . . . . . . 
+                . . . 7 7 8 7 7 8 7 7 7 7 7 . . 
+                . e . . 8 7 7 8 7 7 7 7 7 7 7 d 
+                . e . . 8 8 8 8 7 7 7 7 7 7 d d 
+                . e e 8 5 8 8 5 8 7 8 8 . d d d 
+                . e e 8 8 8 8 8 8 8 8 8 e . d . 
+                . . . . . 8 8 8 8 8 8 e e e . . 
+                . . . . . . . 8 8 8 8 8 e e e . 
+                . . . . . . . . . 8 8 8 . . e . 
+                . . . . . . . . . . . . . . . . 
+                `,img`
+                d d . . . 7 7 7 7 7 . . . . . . 
+                d d 7 7 7 7 7 7 7 7 7 . . . . . 
+                7 7 . . d f d d f f f . . . . . 
+                7 7 d d d f d d d f d f . . . . 
+                7 d d d f d d d f f d f . . . . 
+                . 7 f f f f d d d d f f . . . . 
+                . . 7 7 d d d d d d . . . . . . 
+                . . . 7 7 8 7 7 8 7 7 7 7 7 . . 
+                . e . . 8 7 7 8 7 7 7 7 7 7 7 d 
+                . e . . 8 8 8 8 7 7 7 7 7 7 d d 
+                . e e 8 5 8 8 5 8 7 8 8 . d d d 
+                . e e 8 8 8 8 8 8 8 8 8 e . d . 
+                . . . . . 8 8 8 8 8 8 e e e . . 
+                . . . . . . . 8 8 8 8 8 e e e . 
+                . . . . . . . . . 8 8 8 . . e . 
+                . . . . . . . . . . . . . . . . 
+                `,img`
+                d d . . . 7 7 7 7 7 . . . . . . 
+                d d 7 7 7 7 7 7 7 7 7 . . . . . 
+                7 7 . . d f d d f f f . . . . . 
+                7 7 d d d f d d d f d f . . . . 
+                7 d d d f d d d f f d f . . . . 
+                . 7 f f f f d d d d f f . . . . 
+                . . 7 7 d d d d d d . . . . . . 
+                . . . 7 7 8 7 7 8 7 7 7 7 7 . . 
+                . e . . 8 7 7 8 7 7 7 7 7 7 7 d 
+                . e . . 8 8 8 8 7 7 7 7 7 7 d d 
+                . e e 8 5 8 8 5 8 7 8 8 . d d d 
+                . e e 8 8 8 8 8 8 8 8 8 e . d . 
+                . . . . . 8 8 8 8 8 8 e e e . . 
+                . . . . . . . 8 8 8 8 8 e e e . 
+                . . . . . . . . . 8 8 8 . . e . 
+                . . . . . . . . . . . . . . . . 
+                `,img`
+                . . . . . . . 7 7 7 7 7 . . . . 
+                . . . . 7 7 7 7 7 7 7 7 7 . . . 
+                . . . . . . d f d d f f f . . . 
+                . . . . d d d f d d d f d f . . 
+                . . . d d d f d d d f f d f . . 
+                . . . . f f f f d d d d f f . . 
+                . . . . . d d d d d d d . . . . 
+                . . . . . . . 7 7 7 8 7 7 . . . 
+                . . . . 7 7 7 8 7 7 8 7 7 7 . . 
+                . . . 7 7 7 7 8 8 8 8 7 7 7 7 . 
+                . . . 7 7 7 8 5 8 8 5 8 7 d d . 
+                . . . d d d 8 8 8 8 8 8 d d d . 
+                . . . d d 8 8 8 8 8 8 8 8 d d . 
+                . . . . . 8 8 8 . . 8 8 8 . . . 
+                . . . . e e e . . . . e e e . . 
+                . . . e e e e . . . . e e e e . 
+                `],
+            100,
+            false
+            )
+        }
+    }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.koopaGreen, function (sprite, otherSprite) {
+    if (sprite.bottom < otherSprite.y) {
+        otherSprite.setKind(SpriteKind.Projectile)
+        animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
+        otherSprite.setImage(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . 4 7 7 7 7 4 . . . . . 
+            . . . . 7 7 4 4 4 4 7 7 . . . . 
+            . . . 7 7 4 7 7 7 7 4 7 7 . . . 
+            . . . 7 4 7 7 7 7 7 7 4 7 . . . 
+            . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
+            . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+            . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
+            . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
+            1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
+            1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
+            . . . 1 1 7 7 7 7 7 7 1 1 . . . 
+            . . . . 1 1 7 7 7 7 1 1 . . . . 
+            . . . . . 1 1 1 1 1 1 . . . . . 
+            `)
+        animation.runImageAnimation(
+        otherSprite,
+        [img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . 4 7 7 7 7 4 . . . . . 
+            . . . . 7 7 4 4 4 4 7 7 . . . . 
+            . . . 7 7 4 7 7 7 7 4 7 7 . . . 
+            . . . 7 4 7 7 7 7 7 7 4 7 . . . 
+            . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
+            . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+            . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
+            . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
+            1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
+            1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
+            . . . 1 1 7 7 7 7 7 7 1 1 . . . 
+            . . . . 1 1 7 7 7 7 1 1 . . . . 
+            . . . . . 1 1 1 1 1 1 . . . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . 7 7 7 7 7 7 . . . . . 
+            . . . . 7 4 7 7 7 7 4 7 . . . . 
+            . . . 7 7 7 4 4 4 4 7 7 7 . . . 
+            . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
+            . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+            . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
+            . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
+            7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
+            4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
+            7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
+            1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
+            . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
+            . . . 1 1 4 4 4 4 4 4 1 1 . . . 
+            . . . . 1 1 1 1 1 1 1 1 . . . . 
+            . . . . . . 1 1 1 1 . . . . . . 
+            `],
+        100,
+        true
+        )
+        otherSprite.vx = -100
+        sprite.vy = -100
+    } else {
+        luigi_Die()
+    }
+})
+scene.onOverlapTile(SpriteKind.display, assets.tile`myTile20`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (die == 0) {
+        animation.runImageAnimation(
+        mySprite,
+        [img`
+            . . . . . . . 7 7 7 7 7 . . . . 
+            . . . . 7 7 7 7 7 7 7 7 7 . . . 
+            . . . . . . d f d d f f f . . . 
+            . . . . d d d f d d d f d f . . 
+            . . . d d d f d d d f f d f . . 
+            . . . . f f f f d d d d f f . . 
+            . . . . . d d d d d d d . . . . 
+            . . . . . . . 7 7 7 8 7 7 . . . 
+            . . . . 7 7 7 8 7 7 8 7 7 7 . . 
+            . . . 7 7 7 7 8 8 8 8 7 7 7 7 . 
+            . . . 7 7 7 8 5 8 8 5 8 7 d d . 
+            . . . d d d 8 8 8 8 8 8 d d d . 
+            . . . d d 8 8 8 8 8 8 8 8 d d . 
+            . . . . . 8 8 8 . . 8 8 8 . . . 
+            . . . . e e e . . . . e e e . . 
+            . . . e e e e . . . . e e e e . 
+            `,img`
+            . . . . . . 7 7 7 7 7 . . . . . 
+            . . . 7 7 7 7 7 7 7 7 7 . . . . 
+            . . . . . d f d d f f f . . . . 
+            . . . d d d f d d d f d f . . . 
+            . . d d d f d d d f f d f . . . 
+            . . . f f f f d d d d f f . . . 
+            . . . . d d d d d d d . . . . . 
+            . . . . . . 7 7 7 8 7 7 7 7 . . 
+            . . . . 7 7 8 7 7 8 7 7 7 7 d d 
+            . d d d 7 7 8 8 8 8 7 7 . d d d 
+            . d d 7 7 8 5 8 8 5 8 . . . d d 
+            . . e . . 8 8 8 8 8 8 8 . . . . 
+            . . e e 8 8 8 8 8 8 8 8 8 . . . 
+            . . e e 8 8 8 . . 8 8 8 e e . . 
+            . . . . . . . . . . . e e e . . 
+            . . . . . . . . . . e e e . . . 
+            `,img`
+            . . . . . . 7 7 7 7 7 . . . . . 
+            . . . 7 7 7 7 7 7 7 7 7 . . . . 
+            . . . . . d f d d f f f . . . . 
+            . . . d d d f d d d f d f . . . 
+            . . d d d f d d d f f d f . . . 
+            . . . f f f f d d d d f f . . . 
+            . . . . d d d d d d d . . . . . 
+            . . . . . . 7 7 7 8 7 7 7 7 . . 
+            . . . . 7 7 8 7 7 8 7 7 7 7 d d 
+            . d d d 7 7 8 8 8 8 7 7 . d d d 
+            . d d 7 7 8 5 8 8 5 8 . . . d d 
+            . . e . . 8 8 8 8 8 8 8 . . . . 
+            . . e e 8 8 8 8 8 8 8 8 8 . . . 
+            . . e e 8 8 8 . . 8 8 8 e e . . 
+            . . . . . . . . . . . e e e . . 
+            . . . . . . . . . . e e e . . . 
+            `,img`
+            . . . . . . . 7 7 7 7 7 . . . . 
+            . . . . 7 7 7 7 7 7 7 7 7 . . . 
+            . . . . . . d f d d f f f . . . 
+            . . . . d d d f d d d f d f . . 
+            . . . d d d f d d d f f d f . . 
+            . . . . f f f f d d d d f f . . 
+            . . . . . d d d d d d d . . . . 
+            . . . . . . . 7 7 7 8 7 7 . . . 
+            . . . . 7 7 7 8 7 7 8 7 7 7 . . 
+            . . . 7 7 7 7 8 8 8 8 7 7 7 7 . 
+            . . . 7 7 7 8 5 8 8 5 8 7 d d . 
+            . . . d d d 8 8 8 8 8 8 d d d . 
+            . . . d d 8 8 8 8 8 8 8 8 d d . 
+            . . . . . 8 8 8 . . 8 8 8 . . . 
+            . . . . e e e . . . . e e e . . 
+            . . . e e e e . . . . e e e e . 
+            `],
+        50,
+        true
+        )
+    }
+})
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprite.vx = sprite.vx * -1
+    otherSprite.vx = otherSprite.vx * -1
+    sprite.image.flipX()
+    otherSprite.image.flipX()
+    pause(1000)
+})
+controller.right.onEvent(ControllerButtonEvent.Released, function () {
+    if (die == 0) {
+        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+    }
+})
+scene.onOverlapTile(SpriteKind.Enemy, assets.tile`myTile13`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+controller.left.onEvent(ControllerButtonEvent.Released, function () {
+    if (die == 0) {
+        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+    }
+})
+function startNextLevel () {
+    mySprite.ay = 500
+    controller.moveSprite(mySprite, 100, 0)
+    if (currentLevel == 1) {
+        tiles.setCurrentTilemap(tilemap`level12`)
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
+        level_Above_Ground()
+    } else if (currentLevel == 2) {
+        scene.setBackgroundColor(15)
+        tiles.setCurrentTilemap(tilemap`level1`)
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile2`)
+        levelBelowGround()
+    } else {
+    	
+    }
+}
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.koopaGreen, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+})
+scene.onOverlapTile(SpriteKind.Text, assets.tile`myTile20`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+scene.onOverlapTile(SpriteKind.Enemy, assets.tile`myTile20`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+function start_movement () {
+    for (let value4 of sprites.allOfKind(SpriteKind.Enemy)) {
+        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value4.x) {
+            value4.vx = -30
+        }
+    }
+}
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile16`, function (sprite, location) {
+    tiles.setCurrentTilemap(tilemap`level11`)
+    currentLevel += 1
+    loadworld()
+    world1()
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile20`, function (sprite, location) {
+    mySprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+    pause(1000)
+    mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
+    loadworld()
+    world1()
+})
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (die == 0) {
+        animation.runImageAnimation(
+        mySprite,
+        assets.animation`myAnim`,
+        50,
+        true
+        )
+    }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
+    if (sprite.bottom < otherSprite.y) {
+        sprite.vy = -100
+        if (otherSprite.vx != 0) {
+            otherSprite.vx = 0
+            animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
+        } else {
+            if (true) {
+                otherSprite.vx = -105
+                animation.runImageAnimation(
+                otherSprite,
+                [img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . 4 7 7 7 7 4 . . . . . 
+                    . . . . 7 7 4 4 4 4 7 7 . . . . 
+                    . . . 7 7 4 7 7 7 7 4 7 7 . . . 
+                    . . . 7 4 7 7 7 7 7 7 4 7 . . . 
+                    . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
+                    . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                    . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
+                    . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
+                    1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
+                    1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
+                    . . . 1 1 7 7 7 7 7 7 1 1 . . . 
+                    . . . . 1 1 7 7 7 7 1 1 . . . . 
+                    . . . . . 1 1 1 1 1 1 . . . . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . 7 7 7 7 7 7 . . . . . 
+                    . . . . 7 4 7 7 7 7 4 7 . . . . 
+                    . . . 7 7 7 4 4 4 4 7 7 7 . . . 
+                    . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
+                    . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                    . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
+                    . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
+                    7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
+                    4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
+                    7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
+                    1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
+                    . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
+                    . . . 1 1 4 4 4 4 4 4 1 1 . . . 
+                    . . . . 1 1 1 1 1 1 1 1 . . . . 
+                    . . . . . . 1 1 1 1 . . . . . . 
+                    `],
+                100,
+                true
+                )
+            } else if (false) {
+                otherSprite.vx = 105
+                animation.runImageAnimation(
+                otherSprite,
+                [img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . 4 7 7 7 7 4 . . . . . 
+                    . . . . 7 7 4 4 4 4 7 7 . . . . 
+                    . . . 7 7 4 7 7 7 7 4 7 7 . . . 
+                    . . . 7 4 7 7 7 7 7 7 4 7 . . . 
+                    . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
+                    . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                    . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
+                    . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
+                    1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
+                    1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
+                    . . . 1 1 7 7 7 7 7 7 1 1 . . . 
+                    . . . . 1 1 7 7 7 7 1 1 . . . . 
+                    . . . . . 1 1 1 1 1 1 . . . . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . 7 7 7 7 7 7 . . . . . 
+                    . . . . 7 4 7 7 7 7 4 7 . . . . 
+                    . . . 7 7 7 4 4 4 4 7 7 7 . . . 
+                    . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
+                    . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                    . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
+                    . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
+                    7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
+                    4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
+                    7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
+                    1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
+                    . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
+                    . . . 1 1 4 4 4 4 4 4 1 1 . . . 
+                    . . . . 1 1 1 1 1 1 1 1 . . . . 
+                    . . . . . . 1 1 1 1 . . . . . . 
+                    `],
+                100,
+                true
+                )
+            }
+        }
+    } else if (otherSprite.vx == 0) {
+        if (sprite.vx < 0) {
+            otherSprite.vx = -105
+            animation.runImageAnimation(
+            otherSprite,
+            [img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . 4 7 7 7 7 4 . . . . . 
+                . . . . 7 7 4 4 4 4 7 7 . . . . 
+                . . . 7 7 4 7 7 7 7 4 7 7 . . . 
+                . . . 7 4 7 7 7 7 7 7 4 7 . . . 
+                . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
+                . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
+                . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
+                1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
+                1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
+                . . . 1 1 7 7 7 7 7 7 1 1 . . . 
+                . . . . 1 1 7 7 7 7 1 1 . . . . 
+                . . . . . 1 1 1 1 1 1 . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . 7 7 7 7 7 7 . . . . . 
+                . . . . 7 4 7 7 7 7 4 7 . . . . 
+                . . . 7 7 7 4 4 4 4 7 7 7 . . . 
+                . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
+                . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
+                . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
+                7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
+                4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
+                7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
+                1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
+                . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
+                . . . 1 1 4 4 4 4 4 4 1 1 . . . 
+                . . . . 1 1 1 1 1 1 1 1 . . . . 
+                . . . . . . 1 1 1 1 . . . . . . 
+                `],
+            100,
+            true
+            )
+        } else if (sprite.vx > 0) {
+            invulnerability = 1
+            otherSprite.vx = 105
+            animation.runImageAnimation(
+            otherSprite,
+            [img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . 4 7 7 7 7 4 . . . . . 
+                . . . . 7 7 4 4 4 4 7 7 . . . . 
+                . . . 7 7 4 7 7 7 7 4 7 7 . . . 
+                . . . 7 4 7 7 7 7 7 7 4 7 . . . 
+                . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
+                . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
+                . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
+                1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
+                1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
+                . . . 1 1 7 7 7 7 7 7 1 1 . . . 
+                . . . . 1 1 7 7 7 7 1 1 . . . . 
+                . . . . . 1 1 1 1 1 1 . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . 7 7 7 7 7 7 . . . . . 
+                . . . . 7 4 7 7 7 7 4 7 . . . . 
+                . . . 7 7 7 4 4 4 4 7 7 7 . . . 
+                . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
+                . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
+                . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
+                7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
+                4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
+                7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
+                1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
+                . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
+                . . . 1 1 4 4 4 4 4 4 1 1 . . . 
+                . . . . 1 1 1 1 1 1 1 1 . . . . 
+                . . . . . . 1 1 1 1 . . . . . . 
+                `],
+            100,
+            true
+            )
+            pause(100)
+            invulnerability = 0
+        }
+    } else {
+        if (invulnerability == 0) {
+            luigi_Die()
+        }
+    }
+    if (otherSprite.vx != 0) {
+    	
+    }
+})
+function luigi_Die () {
+    mySprite.setFlag(SpriteFlag.GhostThroughTiles, true)
+    die = 1
+    animation.runImageAnimation(
+    mySprite,
+    [img`
+        ......6666......
+        ....66755766....
+        ...6771551776...
+        ..6777ffff7776..
+        ..67ffffffff76..
+        ...ffffffffff...
+        ...6f2f22f2f6...
+        ..ff22222222ff..
+        ...f22333322f...
+        ..ff23f33f32ff..
+        .edf33dddd33fde.
+        .edffddddddffde.
+        .e4fdf4444fdf4e.
+        .1edffffffffde..
+        .11eddd22dddeee.
+        ..77eed22dee711e
+        ...7ced22decff1e
+        ...caaedde1ffff.
+        ...cb11ee11ffff.
+        ..fff11bbbcffff.
+        .f5eefcccc.ffff.
+        .ffffef.....ff..
+        .ffffff.........
+        ....ff..........
+        `,img`
+        ......6666......
+        ....66755766....
+        ...6771551776...
+        ..6777ffff7776..
+        ..67ffffffff76..
+        ...ffffffffff...
+        ...6f2f22f2f6...
+        ..ff22222222ff..
+        ...f22333322f...
+        ..ff23f33f32ff..
+        .edf33dddd33fde.
+        .edffddddddffde.
+        .e4fdf4444fdf4e.
+        ..edffffffffde1.
+        .eeeddd22ddde11.
+        e117eed22dee77..
+        e1ffced22dec7...
+        .ffff1eddeaac...
+        .ffff11ee11bc...
+        .ffffcbbb11fff..
+        .ffff.ccccfee5f.
+        ..ff.....feffff.
+        .........ffffff.
+        ..........ff....
+        `],
+    100,
+    true
+    )
+    mySprite.vy = -250
+    mySprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+    pause(2000)
+    animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+    mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
+    mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
+    die = 0
+    loadworld()
+    world1()
+}
+scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile20`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+scene.onOverlapTile(SpriteKind.koopaGreen, assets.tile`myTile20`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+function loadworld () {
+    tiles.setCurrentTilemap(tilemap`level11`)
+    if (currentLevel == 2) {
+        tiles.setTileAt(tiles.getTileLocation(1, 7), assets.tile`myTile4`)
+        tiles.setWallAt(tiles.getTileLocation(2, 7), false)
+        tiles.setWallAt(tiles.getTileLocation(2, 6), false)
+        tiles.setTileAt(tiles.getTileLocation(4, 5), assets.tile`myTile28`)
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile28`)
+    }
+}
+function level_Above_Ground () {
+    scene.setBackgroundImage(img`
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999bbb99999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999d11199999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999991111ff999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999bb99999999999999999999999999999999999999999999999999999999999999999999c991111999999999999999999999999999999999999999999999999999999999999999999999
+        999999999999dd11999999999999999999999999999999999999999999999999999999999999999999111111111dff999999999999999999999999999999999999999999999999999999999999999999
+        9999999999991111fc999999999999999999999999999999999999999999999999999999999999999f111111111111999999999999999999999999999999999999999999999999999999999999999999
+        99999999999c99911d999999999999999999999999999999999999999999999999999999999999999b11111111111b999999999999999999999999999999999999999999999999999999999999999999
+        999999999cb11111119c9999999999999999999999999999999999999999999999999999999999999919911991111c999999999999999999999999999999999999999999999999999999999999999999
+        99999999f11111111111d9999999999999999999999999999999999999999999999999999999999999f11999991111999999999999999999999999999999999999999999999999999999999999999999
+        99999999b11111111111b99999999999999999999999999999999999999999999999999999999999999f19111911df999999999999999999999999999999999999999999999999999999999999999999
+        99999999919911191111c9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999999f1199999111d9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999f19911911dc9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999cbbccbcc999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999bb9999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999dd119999999999999999999999999999
+        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999991111fc99999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c99911d99999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cb11111119c999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999f11111111111d99999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999b11111111111b99999999999999999999999
+        9999999999999999999999999999999999999999999999999999999bbb999999999999999999999999999999999999999999999999999999999999999999919911191111c99999999999999999999999
+        999999999999999999999999999999999999999999999999999999d1119999999999999999999999999999999999999999999999999999999999999999999f1199999111d99999999999999999999999
+        9999999999999999999999999999999999999999999999999999991111ff999999999999999999999999999999999999999999999999999999999999999999f19911911dc99999999999999999999999
+        99999999999999999999999999999999999999999999999999999c9911119999999999999999999999999999999999999999999999999999999999999999999cbbccbcc9999999999999999999999999
+        999999999999999999999999999999999999999999999999999111111111dff9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999f1111111111119999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999b11111111111b9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999919911991111c9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999999999999999999999999999999999999999999999999f119999911119999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999f19111911df9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999bbb99999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999d11199999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999991111ff999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999bb99999999999999999999999999999999999999999999999999999999999999999999c991111999999999999999999999999999999999999999999999999999999999999999999
+        999999999999999dd11999999999999999999999999999999999999999999999999999999999999999999111111111dff999999999999999999999999999999999999999999999999999999999999999
+        9999999999999991111fc999999999999999999999999999999999999999999999999999999999999999f111111111111999999999999999999999999999999999999999999999999999999999999999
+        99999999999999c99911d999999999999999999999999999999999999999999999999999999999999999b11111111111b999999999999999999999999999999999999999999999999999999999999999
+        999999999999cb11111119c9999999999999999999999999999999999999999999999999999999999999919911991111c999999999999999999999999999999999999999999999999999999999999999
+        99999999999f11111111111d9999999999999999999999999999999999999999999999999999999999999f11999991111999999999999999999999999999999999999999999999999999999999999999
+        99999999999b11111111111b99999999999999999999999999999999999999999999999999999999999999f19111911df999999999999999999999999999999999999999999999999999999999999999
+        99999999999919911191111c9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999999999f1199999111d9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999f19911911dc9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999cbbccbcc999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999bb9999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999dd119999999999999999999999999
+        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999991111fc99999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c99911d99999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cb11111119c999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999f11111111111d99999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999b11111111111b99999999999999999999
+        9999999999999999999999999999999999999999999999999999999999bbb999999999999999999999999999999999999999999999999999999999999999999919911191111c99999999999999999999
+        999999999999999999999999999999999999999999999999999999999d1119999999999999999999999999999999999999999999999999999999999999999999f1199999111d99999999999999999999
+        9999999999999999999999999999999999999999999999999999999991111ff999999999999999999999999999999999999999999999999999999999999999999f19911911dc99999999999999999999
+        99999999999999999999999999999999999999999999999999999999c9911119999999999999999999999999999999999999999999999999999999999999999999cbbccbcc9999999999999999999999
+        999999999999999999999999999999999999999999999999999999111111111dff9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999f1111111111119999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999b11111111111b9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999919911991111c9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999999999999999999999999999999999999999999999999999f119999911119999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999f19111911df9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999bbb9999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999d1119999999999999999
+        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999991111ff99999999999999
+        999999999999999999999999999999999999999999999999999999999999999999999bb99999999999999999999999999999999999999999999999999999999999999999999c99111199999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999dd11999999999999999999999999999999999999999999999999999999999999999999111111111dff99999999999
+        99999999999999999999999999999999999999999999999999999999999999999991111fc999999999999999999999999999999999999999999999999999999999999999f11111111111199999999999
+        999999999999999999999999999999999999999999999999999999999999999999c99911d999999999999999999999999999999999999999999999999999999999999999b11111111111b99999999999
+        9999999999999999999999999999999999999999999999999999999999999999cb11111119c9999999999999999999999999999999999999999999999999999999999999919911991111c99999999999
+        999999999999999999999999999999999999999999999999999999999999999f11111111111d9999999999999999999999999999999999999999999999999999999999999f1199999111199999999999
+        999999999999999999999999999999999999999999999999999999999999999b11111111111b99999999999999999999999999999999999999999999999999999999999999f19111911df99999999999
+        999999999999999999999999999999999999999999999999999999999999999919911191111c999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999f1199999111d999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999f19911911dc999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999999999999999999999999999999999999999999999999999999999999999cbbccbcc99999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999bbb99999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999d11199999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999991111ff999999999999999999999999999999999999999999999
+        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c991111999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999111111111dff999999999999999999999999999999999999999999
+        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999f111111111111999999999999999999999999999999999999999999
+        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999b11111111111b999999999999999999999999999999999999999999
+        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999919911991111c999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999f11999991111999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999f19111911df999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999bbb99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999d11199999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999991111ff999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999999c991111999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999111111111dff999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999f111111111111999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999b11111111111b999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999919911991111c999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999f11999991111999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999f19111911df999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999bb9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999dd119999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999999999999999999999999999999999999999999999999991111fc99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999c99911d99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999cb11111119c999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999f11111111111d99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999b11111111111b99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999919911191111c99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999f1199999111d99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999999999999999999999999999999999999999999999999f19911911dc99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999cbbccbcc9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999bbb99999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999d11199999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999991111ff999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999bb99999999999999999999999999999999999999999999999999999999999999999999c991111999999999999999999999999999999999999999999999999999999999999999999
+        999999999999999dd11999999999999999999999999999999999999999999999999999999999999999999111111111dff999999999999999999999999999999999999999999999999999999999999999
+        9999999999999991111fc999999999999999999999999999999999999999999999999999999999999999f111111111111999999999999999999999999999999999999999999999999999999999999999
+        99999999999999c99911d999999999999999999999999999999999999999999999999999999999999999b11111111111b999999999999999999999999999999999999999999999999999999999999999
+        999999999999cb11111119c9999999999999999999999999999999999999999999999999999999999999919911991111c999999999999999999999999999999999999999999999999999999999999999
+        99999999999f11111111111d9999999999999999999999999999999999999999999999999999999999999f11999991111999999999999999999999999999999999999999999999999999999999999999
+        99999999999b11111111111b99999999999999999999999999999999999999999999999999999999999999f19111911df999999999999999999999999999999999999999999999999999999999999999
+        99999999999919911191111c9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999999999f1199999111d9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999f19911911dc9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999cbbccbcc999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999bb9999999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999dd119999999999999999999999999
+        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999991111fc99999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999c99911d99999999999999999999999
+        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999cb11111119c999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999f11111111111d99999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999b11111111111b99999999999999999999
+        9999999999999999999999999999999999999999999999999999999999bbb999999999999999999999999999999999999999999999999999999999999999999919911191111c99999999999999999999
+        999999999999999999999999999999999999999999999999999999999d1119999999999999999999999999999999999999999999999999999999999999999999f1199999111d99999999999999999999
+        9999999999999999999999999999999999999999999999999999999991111ff999999999999999999999999999999999999999999999999999999999999999999f19911911dc99999999999999999999
+        99999999999999999999999999999999999999999999999999999999c9911119999999999999999999999999999999999999999999999999999999999999999999cbbccbcc9999999999999999999999
+        999999999999999999999999999999999999999999999999999999111111111dff9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999f1111111111119999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999b11111111111b9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999999999999999999999999999999999999999999999999919911991111c9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999999999999999999999999999999999999999999999999999f119999911119999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999f19111911df9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999999966999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999996f66f66999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        99999999c6666fffc99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999999c66666fff669999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999999976666ffff679999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9999c77777666666677c99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        999c777777777777777769999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+        9997777777777777777779999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999666999999999999999999999999999999999999999999999
+        9977777777777777777777999999999999999999999999999999999999999999999999999999999999999999999999999999999999999967777769999999999999999999999999999999999999999999
+        9c77777777777777777777c99999999999999999999999999999999999999999999999999999999cc9999ccc9999cc999999999999999c7777777c999999999999999999999999999999999999999999
+        c777777777777777777777766999999999999999999999999999999999999999999999999999977779997777999777999999999999997777777777999999999999999999999999999999999999999999
+        7777777777777777777777777799999999999999999999999999999999999999999999999999f777777f777777f777777999999999977777777777779999999999999999999999999999999999999999
+        77777777777777777777777777c99999999999999999999999999999999999999999999999cc7777777777777777777779c9999999c7777777777777c999999999999999999999999999999999999999
+        77777777777777777777777777799999999999999999999999999999999999999999999999777777777777777777777777ff999977777777777777777999999999999999999999999999999999999999
+        7777777777777777777777777777999999999999999999999999999999999999999999999f77777777777777777777777777999977777777777777777799999999999999999999999999999999999999
+        `)
+    tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
+    mySprite4 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Enemy)
+    mySprite4 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Food)
+    for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.Food)) {
+        value.destroy()
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile18`)) {
+        mySprite2 = sprites.create(img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . . . d d d d d d d d . . . . 
+            . . f f d d d d d d d d f f . . 
+            . f f f f f d d d d f f f f f . 
+            . f f f f f f . . f f f f f f . 
+            . . f f f f f . . f f f f f . . 
+            `, SpriteKind.Enemy)
+        tiles.placeOnTile(mySprite2, value)
+        animation.runImageAnimation(
+        mySprite2,
+        [img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . . . d d d d d d d d . . . . 
+            . . f f d d d d d d d d f f . . 
+            . f f f f f d d d d f f f f f . 
+            . f f f f f f . . f f f f f f . 
+            . . f f f f f . . f f f f f . . 
+            `,img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . . . d d d d d d d d f f . . 
+            . . f f d d d d d d f f f f f . 
+            . f f f f f d d d f f f f f f . 
+            . f f f f f f . . f f f f f . . 
+            . . f f f f f . . . . . . . . . 
+            `,img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . . . d d d d d d d d . . . . 
+            . . f f d d d d d d d d f f . . 
+            . f f f f f d d d d f f f f f . 
+            . f f f f f f . . f f f f f f . 
+            . . f f f f f . . f f f f f . . 
+            `,img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . f f d d d d d d d d . . . . 
+            . f f f f f d d d d d d f f . . 
+            . f f f f f f d d d f f f f f . 
+            . . f f f f f . . f f f f f f . 
+            . . . . . . . . . f f f f f . . 
+            `],
+        200,
+        true
+        )
+        mySprite2.ay = 500
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile12`)) {
+        mySprite2 = sprites.create(img`
+            ................
+            ............1...
+            ...........111..
+            ..........4111..
+            .........441174.
+            .........441174.
+            .........441174.
+            .........441114.
+            .........4441444
+            .........4444474
+            ...77777..444444
+            ..7477747.44.444
+            .77747477.44..44
+            .711747777144.44
+            .717474777144.4.
+            .474777474144...
+            .7477777471144..
+            .474777474714...
+            .777474777414...
+            .77774777771....
+            111747477711....
+            ..11177411144...
+            .4441111144444..
+            4444......44444.
+            `, SpriteKind.koopaGreen)
+        tiles.placeOnTile(mySprite2, value)
+        mySprite2.ay = 500
+        animation.runImageAnimation(
+        mySprite2,
+        [img`
+            .................
+            ............1....
+            ...........111...
+            ..........4111...
+            .........441174..
+            .........441174..
+            .........441174..
+            .........441114..
+            .........4441444.
+            .........4444474.
+            ...77777..444444.
+            ..7477747.44.444.
+            .77747477.44..44.
+            .711747777144.44.
+            .717474777144.4..
+            .474777474144....
+            .7477777471144...
+            .474777474714....
+            .777474777414....
+            .77774777771.....
+            111747477711.....
+            ..11177411144....
+            .4441111144444...
+            4444......44444..
+            `,img`
+            ............1....
+            ...........111...
+            ..........41114..
+            .........441174..
+            .........4411744.
+            .........4411744.
+            .........44111474
+            .........44414444
+            .........44444444
+            ...77777.44444444
+            ..747774714..4444
+            .7774747714...444
+            .71174777714.....
+            .717474777144....
+            .47477747414444..
+            .7477777471144...
+            .474777474714....
+            .777474777414....
+            .77774777771.....
+            111747477711.....
+            .41117741114.....
+            .44411111444.....
+            .444....444......
+            ..444..444.......
+            `],
+        200,
+        true
+        )
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile31`)) {
+        mySprite2 = sprites.create(img`
+            ........................
+            ........................
+            ........................
+            ..........ffffff........
+            ........fff111ffff......
+            .......ff1155555ff......
+            .......f155111f55ff.....
+            ......ff155155f55ff.....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......ff155155f55ff.....
+            .......f155ffff55ff.....
+            .......ff1555555ff......
+            ........fff555ffff......
+            ..........ffffff........
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            `, SpriteKind.Food)
+        tiles.placeOnTile(mySprite2, value)
+        animation.runImageAnimation(
+        mySprite2,
+        [img`
+            ........ffffff..........
+            ......fff111fff.........
+            .....ff1155555ff........
+            .....f155111f55ff.......
+            ....ff155155f55ff.......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....ff155155f55ff.......
+            .....f155ffff55ff.......
+            .....ff1555555ff........
+            ......fff555ffff........
+            ........ffffff..........
+            ........................
+            `,img`
+            .........ffff...........
+            .......fff1ffff.........
+            ......ff11555ff.........
+            ......f1551f55ff........
+            .....ff1551f55ff........
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....ff1551f55ff........
+            ......f155ff55ff........
+            ......ff15555ff.........
+            .......fff5ffff.........
+            .........ffff...........
+            ........................
+            `,img`
+            .........fff............
+            ........ff1fff..........
+            .......ff155ff..........
+            .......f15155ff.........
+            ......ff15155ff.........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......ff15155ff.........
+            .......f15f55ff.........
+            .......ff155ff..........
+            ........ff5fff..........
+            .........fff............
+            ........................
+            `,img`
+            ..........ff............
+            .........ffff...........
+            ........ff1ff...........
+            ........f155ff..........
+            .......ff155ff..........
+            .......f15555ff.........
+            .......f15555ff.........
+            .......f15555ff.........
+            .......f15555ff.........
+            .......f15555ff.........
+            .......ff155ff..........
+            ........f155ff..........
+            ........ff1ff...........
+            .........ffff...........
+            ..........ff............
+            ........................
+            `,img`
+            .........fff............
+            ........ff1fff..........
+            .......ff155ff..........
+            .......f15155ff.........
+            ......ff15155ff.........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......ff15155ff.........
+            .......f15f55ff.........
+            .......ff155ff..........
+            ........ff5fff..........
+            .........fff............
+            ........................
+            `,img`
+            .........ffff...........
+            .......fff1ffff.........
+            ......ff11555ff.........
+            ......f1551f55ff........
+            .....ff1551f55ff........
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....ff1551f55ff........
+            ......f155ff55ff........
+            ......ff15555ff.........
+            .......fff5ffff.........
+            .........ffff...........
+            ........................
+            `,img`
+            ........ffffff..........
+            ......fff111ffff........
+            .....ff1155555ff........
+            .....f155111f55ff.......
+            ....ff155155f55ff.......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....ff155155f55ff.......
+            .....f155ffff55ff.......
+            .....ff1555555ff........
+            ......fff555ffff........
+            ........ffffff..........
+            ........................
+            `],
+        100,
+        true
+        )
+    }
+}
+scene.onOverlapTile(SpriteKind.Food, assets.tile`myTile13`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+function coinPlace () {
+    mySprite3 = sprites.create(img`
+        ........................
+        ........................
+        ........................
+        ..........ffffff........
+        ........fff111ffff......
+        .......ff1155555ff......
+        .......f155111f55ff.....
+        ......ff155155f55ff.....
+        ......f1555155f555ff....
+        ......f1555155f555ff....
+        ......f1555155f555ff....
+        ......f1555155f555ff....
+        ......f1555155f555ff....
+        ......f1555155f555ff....
+        ......ff155155f55ff.....
+        .......f155ffff55ff.....
+        .......ff1555555ff......
+        ........fff555ffff......
+        ..........ffffff........
+        ........................
+        ........................
+        ........................
+        ........................
+        ........................
+        `, SpriteKind.Food)
+    animation.runImageAnimation(
+    mySprite3,
+    [img`
+        ........ffffff..........
+        ......fff111fff.........
+        .....ff1155555ff........
+        .....f155111f55ff.......
+        ....ff155155f55ff.......
+        ....f1555155f555ff......
+        ....f1555155f555ff......
+        ....f1555155f555ff......
+        ....f1555155f555ff......
+        ....f1555155f555ff......
+        ....ff155155f55ff.......
+        .....f155ffff55ff.......
+        .....ff1555555ff........
+        ......fff555ffff........
+        ........ffffff..........
+        ........................
+        `,img`
+        .........ffff...........
+        .......fff1ffff.........
+        ......ff11555ff.........
+        ......f1551f55ff........
+        .....ff1551f55ff........
+        .....f15551f555ff.......
+        .....f15551f555ff.......
+        .....f15551f555ff.......
+        .....f15551f555ff.......
+        .....f15551f555ff.......
+        .....ff1551f55ff........
+        ......f155ff55ff........
+        ......ff15555ff.........
+        .......fff5ffff.........
+        .........ffff...........
+        ........................
+        `,img`
+        .........fff............
+        ........ff1fff..........
+        .......ff155ff..........
+        .......f15155ff.........
+        ......ff15155ff.........
+        ......f1551555ff........
+        ......f1551555ff........
+        ......f1551555ff........
+        ......f1551555ff........
+        ......f1551555ff........
+        ......ff15155ff.........
+        .......f15f55ff.........
+        .......ff155ff..........
+        ........ff5fff..........
+        .........fff............
+        ........................
+        `,img`
+        ..........ff............
+        .........ffff...........
+        ........ff1ff...........
+        ........f155ff..........
+        .......ff155ff..........
+        .......f15555ff.........
+        .......f15555ff.........
+        .......f15555ff.........
+        .......f15555ff.........
+        .......f15555ff.........
+        .......ff155ff..........
+        ........f155ff..........
+        ........ff1ff...........
+        .........ffff...........
+        ..........ff............
+        ........................
+        `,img`
+        .........fff............
+        ........ff1fff..........
+        .......ff155ff..........
+        .......f15155ff.........
+        ......ff15155ff.........
+        ......f1551555ff........
+        ......f1551555ff........
+        ......f1551555ff........
+        ......f1551555ff........
+        ......f1551555ff........
+        ......ff15155ff.........
+        .......f15f55ff.........
+        .......ff155ff..........
+        ........ff5fff..........
+        .........fff............
+        ........................
+        `,img`
+        .........ffff...........
+        .......fff1ffff.........
+        ......ff11555ff.........
+        ......f1551f55ff........
+        .....ff1551f55ff........
+        .....f15551f555ff.......
+        .....f15551f555ff.......
+        .....f15551f555ff.......
+        .....f15551f555ff.......
+        .....f15551f555ff.......
+        .....ff1551f55ff........
+        ......f155ff55ff........
+        ......ff15555ff.........
+        .......fff5ffff.........
+        .........ffff...........
+        ........................
+        `,img`
+        ........ffffff..........
+        ......fff111ffff........
+        .....ff1155555ff........
+        .....f155111f55ff.......
+        ....ff155155f55ff.......
+        ....f1555155f555ff......
+        ....f1555155f555ff......
+        ....f1555155f555ff......
+        ....f1555155f555ff......
+        ....f1555155f555ff......
+        ....ff155155f55ff.......
+        .....f155ffff55ff.......
+        .....ff1555555ff........
+        ......fff555ffff........
+        ........ffffff..........
+        ........................
+        `],
+    100,
+    true
+    )
+    tiles.placeOnTile(mySprite3, tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top).getNeighboringLocation(CollisionDirection.Top))
+    mySprite3.vy = -200
+    coins += 1
+    textSprite.setText(convertToText(coins))
+}
+controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+    currentLevel += 1
+    loadworld()
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    coins += 1
+    textSprite.setText(convertToText(coins))
+})
+scene.onOverlapTile(SpriteKind.Text, assets.tile`myTile13`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+scene.onOverlapTile(SpriteKind.koopaGreen, assets.tile`myTile13`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+function levelBelowGround () {
+    tiles.placeOnRandomTile(mySprite, assets.tile`myTile2`)
+    mySprite4 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Enemy)
+    mySprite4 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Food)
+    for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.Food)) {
+        value.destroy()
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile0`)) {
+        mySprite2 = sprites.create(img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . . . d d d d d d d d . . . . 
+            . . f f d d d d d d d d f f . . 
+            . f f f f f d d d d f f f f f . 
+            . f f f f f f . . f f f f f f . 
+            . . f f f f f . . f f f f f . . 
+            `, SpriteKind.Enemy)
+        tiles.placeOnTile(mySprite2, value)
+        mySprite2.ay = 500
+        animation.runImageAnimation(
+        mySprite2,
+        [img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . . . d d d d d d d d . . . . 
+            . . f f d d d d d d d d f f . . 
+            . f f f f f d d d d f f f f f . 
+            . f f f f f f . . f f f f f f . 
+            . . f f f f f . . f f f f f . . 
+            `,img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . . . d d d d d d d d f f . . 
+            . . f f d d d d d d f f f f f . 
+            . f f f f f d d d f f f f f f . 
+            . f f f f f f . . f f f f f . . 
+            . . f f f f f . . . . . . . . . 
+            `,img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . . . d d d d d d d d . . . . 
+            . . f f d d d d d d d d f f . . 
+            . f f f f f d d d d f f f f f . 
+            . f f f f f f . . f f f f f f . 
+            . . f f f f f . . f f f f f . . 
+            `,img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . f f d d d d d d d d . . . . 
+            . f f f f f d d d d d d f f . . 
+            . f f f f f f d d d f f f f f . 
+            . . f f f f f . . f f f f f f . 
+            . . . . . . . . . f f f f f . . 
+            `],
+        200,
+        true
+        )
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile11`)) {
+        mySprite2 = sprites.create(img`
+            ................
+            ............1...
+            ...........111..
+            ..........4111..
+            .........441174.
+            .........441174.
+            .........441174.
+            .........441114.
+            .........4441444
+            .........4444474
+            ...77777..444444
+            ..7477747.44.444
+            .77747477.44..44
+            .711747777144.44
+            .717474777144.4.
+            .474777474144...
+            .7477777471144..
+            .474777474714...
+            .777474777414...
+            .77774777771....
+            111747477711....
+            ..11177411144...
+            .4441111144444..
+            4444......44444.
+            `, SpriteKind.koopaGreen)
+        tiles.placeOnTile(mySprite2, value)
+        mySprite2.ay = 500
+        animation.runImageAnimation(
+        mySprite2,
+        [img`
+            .................
+            ............1....
+            ...........111...
+            ..........4111...
+            .........441174..
+            .........441174..
+            .........441174..
+            .........441114..
+            .........4441444.
+            .........4444474.
+            ...77777..444444.
+            ..7477747.44.444.
+            .77747477.44..44.
+            .711747777144.44.
+            .717474777144.4..
+            .474777474144....
+            .7477777471144...
+            .474777474714....
+            .777474777414....
+            .77774777771.....
+            111747477711.....
+            ..11177411144....
+            .4441111144444...
+            4444......44444..
+            `,img`
+            ............1....
+            ...........111...
+            ..........41114..
+            .........441174..
+            .........4411744.
+            .........4411744.
+            .........44111474
+            .........44414444
+            .........44444444
+            ...77777.44444444
+            ..747774714..4444
+            .7774747714...444
+            .71174777714.....
+            .717474777144....
+            .47477747414444..
+            .7477777471144...
+            .474777474714....
+            .777474777414....
+            .77774777771.....
+            111747477711.....
+            .41117741114.....
+            .44411111444.....
+            .444....444......
+            ..444..444.......
+            `],
+        200,
+        true
+        )
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile30`)) {
+        mySprite2 = sprites.create(img`
+            ........................
+            ........................
+            ........................
+            ..........ffffff........
+            ........fff111ffff......
+            .......ff1155555ff......
+            .......f155111f55ff.....
+            ......ff155155f55ff.....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......ff155155f55ff.....
+            .......f155ffff55ff.....
+            .......ff1555555ff......
+            ........fff555ffff......
+            ..........ffffff........
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            `, SpriteKind.Food)
+        tiles.placeOnTile(mySprite2, value)
+        animation.runImageAnimation(
+        mySprite2,
+        [img`
+            ........ffffff..........
+            ......fff111fff.........
+            .....ff1155555ff........
+            .....f155111f55ff.......
+            ....ff155155f55ff.......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....ff155155f55ff.......
+            .....f155ffff55ff.......
+            .....ff1555555ff........
+            ......fff555ffff........
+            ........ffffff..........
+            ........................
+            `,img`
+            .........ffff...........
+            .......fff1ffff.........
+            ......ff11555ff.........
+            ......f1551f55ff........
+            .....ff1551f55ff........
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....ff1551f55ff........
+            ......f155ff55ff........
+            ......ff15555ff.........
+            .......fff5ffff.........
+            .........ffff...........
+            ........................
+            `,img`
+            .........fff............
+            ........ff1fff..........
+            .......ff155ff..........
+            .......f15155ff.........
+            ......ff15155ff.........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......ff15155ff.........
+            .......f15f55ff.........
+            .......ff155ff..........
+            ........ff5fff..........
+            .........fff............
+            ........................
+            `,img`
+            ..........ff............
+            .........ffff...........
+            ........ff1ff...........
+            ........f155ff..........
+            .......ff155ff..........
+            .......f15555ff.........
+            .......f15555ff.........
+            .......f15555ff.........
+            .......f15555ff.........
+            .......f15555ff.........
+            .......ff155ff..........
+            ........f155ff..........
+            ........ff1ff...........
+            .........ffff...........
+            ..........ff............
+            ........................
+            `,img`
+            .........fff............
+            ........ff1fff..........
+            .......ff155ff..........
+            .......f15155ff.........
+            ......ff15155ff.........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......ff15155ff.........
+            .......f15f55ff.........
+            .......ff155ff..........
+            ........ff5fff..........
+            .........fff............
+            ........................
+            `,img`
+            .........ffff...........
+            .......fff1ffff.........
+            ......ff11555ff.........
+            ......f1551f55ff........
+            .....ff1551f55ff........
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....ff1551f55ff........
+            ......f155ff55ff........
+            ......ff15555ff.........
+            .......fff5ffff.........
+            .........ffff...........
+            ........................
+            `,img`
+            ........ffffff..........
+            ......fff111ffff........
+            .....ff1155555ff........
+            .....f155111f55ff.......
+            ....ff155155f55ff.......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....ff155155f55ff.......
+            .....f155ffff55ff.......
+            .....ff1555555ff........
+            ......fff555ffff........
+            ........ffffff..........
+            ........................
+            `],
+        100,
+        true
+        )
+    }
+}
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+})
+scene.onOverlapTile(SpriteKind.Food, assets.tile`myTile20`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+function music2 () {
+    for (let index = 0; index < 1; index++) {
+        music.playTone(523, music.beat(BeatFraction.Half))
+        music.playTone(392, music.beat(BeatFraction.Half))
+        music.playTone(330, music.beat(BeatFraction.Half))
+        music.playTone(349, music.beat(BeatFraction.Half))
+        music.playTone(392, music.beat(BeatFraction.Quarter))
+        music.playTone(370, music.beat(BeatFraction.Quarter))
+        music.playTone(349, music.beat(BeatFraction.Half))
+        music.playTone(554, music.beat(BeatFraction.Quarter))
+        music.playTone(554, music.beat(BeatFraction.Quarter))
+        music.playTone(523, music.beat(BeatFraction.Half))
+        music.playTone(523, music.beat(BeatFraction.Quarter))
+        music.playTone(523, music.beat(BeatFraction.Quarter))
+        music.playTone(494, music.beat(BeatFraction.Half))
+        music.playTone(494, music.beat(BeatFraction.Quarter))
+        music.playTone(494, music.beat(BeatFraction.Quarter))
+        music.playTone(494, music.beat(BeatFraction.Half))
+        music.playTone(494, music.beat(BeatFraction.Quarter))
+        music.playTone(494, music.beat(BeatFraction.Quarter))
+        music.playTone(554, music.beat(BeatFraction.Quarter))
+        music.playTone(523, music.beat(BeatFraction.Whole))
+    }
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    if (sprite.bottom < otherSprite.y) {
+        otherSprite.destroy()
+        sprite.vy = -100
+    } else {
+        luigi_Die()
+    }
+})
+let coins = 0
+let mySprite3: Sprite = null
+let mySprite2: Sprite = null
+let mySprite4: Sprite = null
+let invulnerability = 0
+let die = 0
+let mySprite5: Sprite = null
+let currentLevel = 0
+let textSprite: TextSprite = null
+let World_Map_True = 0
+let mySprite: Sprite = null
+mySprite = sprites.create(assets.image`Luigi`, SpriteKind.Player)
+World_Map_True = 1
+game.setDialogCursor(img`
+    ..........666666666666..........
+    ........6667777777777666........
+    ......66677777777777777666......
+    .....6677777779999777777766.....
+    ....667777779966669977777766....
+    ....677777799668866117777776....
+    ...66777779966877861197777766...
+    ...66777799668677686699777766...
+    ...88777796688888888669777788...
+    ...88777788888888888888777788...
+    ...88977888679999997688877988...
+    ...88977886777777777768877988...
+    ...88997777777777777777779988...
+    ...88799777777777777777711788...
+    ...88679997777777777779117688...
+    ..cc866679999999999999976668cc..
+    .ccbc6666679999999999766666cbcc.
+    .fcbcc66666666666666666666ccbcf.
+    .fcbbcc666666666666666666ccbdcf.
+    .f8bbbccc66666666666666cccbddcf.
+    .f8cbbbbccccccccccccccccbdddbcf.
+    .f8ccbbbbbccccccccccccb111ddccf.
+    .f6ccccbbbddddddddddddd111dcccf.
+    .f6ccccccbbddddddddddddddbbcccf.
+    .f6cccccccccccccbbbbbbbbbdbcccf.
+    ..f6cccccccccbbbbbbbbbbbddbccf..
+    ..f6cccccccccbbbbbbbbbbbddbccf..
+    ..ff6ccccccccbbbbbbbbbbbddbcff..
+    ...ff6cccccccbbbbbbbbbbbddbff...
+    ....ffcccccccbbbbbbbbbbbdbff....
+    ......ffccccbbbbbbbbbbbbff......
+    ........ffffffffffffffff........
+    `)
+game.setDialogFrame(img`
+    333333333333333333333333
+    3dddddddddddddddddddddd3
+    b3dddddddddddddddddddd3b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    b3333333333333333333333b
+    bb33333333333333333333bb
+    bccccccccccccccccccccccb
+    cccccccccccccccccccccccc
+    `)
+game.showLongText("SUPER LUIGI 2D WORLD!", DialogLayout.Full)
+scene.setBackgroundColor(9)
+tiles.setCurrentTilemap(tilemap`level11`)
+world1()
+let mySprite6 = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.display)
+textSprite = textsprite.create("0")
+textSprite.setIcon(img`
+    ........................
+    ........................
+    ........................
+    ..........ffffff........
+    ........fff111ffff......
+    .......ff1155555ff......
+    .......f155111f55ff.....
+    ......ff155155f55ff.....
+    ......f1555155f555ff....
+    ......f1555155f555ff....
+    ......f1555155f555ff....
+    ......f1555155f555ff....
+    ......f1555155f555ff....
+    ......f1555155f555ff....
+    ......ff155155f55ff.....
+    .......f155ffff55ff.....
+    .......ff1555555ff......
+    ........fff555ffff......
+    ..........ffffff........
+    ........................
+    ........................
+    ........................
+    ........................
+    ........................
+    `)
+textSprite.setStayInScreen(true)
+currentLevel = 1
+scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.BothDirections, scroller.BackgroundLayer.Layer0)
+game.onUpdate(function () {
+    if (World_Map_True == 0) {
+        if (mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile23`)) {
+            mySprite3 = sprites.create(img`
+                ........................
+                ........................
+                ........................
+                ..........ffffff........
+                ........fff111ffff......
+                .......ff1155555ff......
+                .......f155111f55ff.....
+                ......ff155155f55ff.....
+                ......f1555155f555ff....
+                ......f1555155f555ff....
+                ......f1555155f555ff....
+                ......f1555155f555ff....
+                ......f1555155f555ff....
+                ......f1555155f555ff....
+                ......ff155155f55ff.....
+                .......f155ffff55ff.....
+                .......ff1555555ff......
+                ........fff555ffff......
+                ..........ffffff........
+                ........................
+                ........................
+                ........................
+                ........................
+                ........................
+                `, SpriteKind.Food)
+            animation.runImageAnimation(
+            mySprite3,
+            [img`
+                ........ffffff..........
+                ......fff111fff.........
+                .....ff1155555ff........
+                .....f155111f55ff.......
+                ....ff155155f55ff.......
+                ....f1555155f555ff......
+                ....f1555155f555ff......
+                ....f1555155f555ff......
+                ....f1555155f555ff......
+                ....f1555155f555ff......
+                ....ff155155f55ff.......
+                .....f155ffff55ff.......
+                .....ff1555555ff........
+                ......fff555ffff........
+                ........ffffff..........
+                ........................
+                `,img`
+                .........ffff...........
+                .......fff1ffff.........
+                ......ff11555ff.........
+                ......f1551f55ff........
+                .....ff1551f55ff........
+                .....f15551f555ff.......
+                .....f15551f555ff.......
+                .....f15551f555ff.......
+                .....f15551f555ff.......
+                .....f15551f555ff.......
+                .....ff1551f55ff........
+                ......f155ff55ff........
+                ......ff15555ff.........
+                .......fff5ffff.........
+                .........ffff...........
+                ........................
+                `,img`
+                .........fff............
+                ........ff1fff..........
+                .......ff155ff..........
+                .......f15155ff.........
+                ......ff15155ff.........
+                ......f1551555ff........
+                ......f1551555ff........
+                ......f1551555ff........
+                ......f1551555ff........
+                ......f1551555ff........
+                ......ff15155ff.........
+                .......f15f55ff.........
+                .......ff155ff..........
+                ........ff5fff..........
+                .........fff............
+                ........................
+                `,img`
+                ..........ff............
+                .........ffff...........
+                ........ff1ff...........
+                ........f155ff..........
+                .......ff155ff..........
+                .......f15555ff.........
+                .......f15555ff.........
+                .......f15555ff.........
+                .......f15555ff.........
+                .......f15555ff.........
+                .......ff155ff..........
+                ........f155ff..........
+                ........ff1ff...........
+                .........ffff...........
+                ..........ff............
+                ........................
+                `,img`
+                .........fff............
+                ........ff1fff..........
+                .......ff155ff..........
+                .......f15155ff.........
+                ......ff15155ff.........
+                ......f1551555ff........
+                ......f1551555ff........
+                ......f1551555ff........
+                ......f1551555ff........
+                ......f1551555ff........
+                ......ff15155ff.........
+                .......f15f55ff.........
+                .......ff155ff..........
+                ........ff5fff..........
+                .........fff............
+                ........................
+                `,img`
+                .........ffff...........
+                .......fff1ffff.........
+                ......ff11555ff.........
+                ......f1551f55ff........
+                .....ff1551f55ff........
+                .....f15551f555ff.......
+                .....f15551f555ff.......
+                .....f15551f555ff.......
+                .....f15551f555ff.......
+                .....f15551f555ff.......
+                .....ff1551f55ff........
+                ......f155ff55ff........
+                ......ff15555ff.........
+                .......fff5ffff.........
+                .........ffff...........
+                ........................
+                `,img`
+                ........ffffff..........
+                ......fff111ffff........
+                .....ff1155555ff........
+                .....f155111f55ff.......
+                ....ff155155f55ff.......
+                ....f1555155f555ff......
+                ....f1555155f555ff......
+                ....f1555155f555ff......
+                ....f1555155f555ff......
+                ....f1555155f555ff......
+                ....ff155155f55ff.......
+                .....f155ffff55ff.......
+                .....ff1555555ff........
+                ......fff555ffff........
+                ........ffffff..........
+                ........................
+                `],
+            100,
+            true
+            )
+            tiles.placeOnTile(mySprite3, tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top).getNeighboringLocation(CollisionDirection.Top))
+            tiles.setTileAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), assets.tile`myTile22`)
+            for (let value of sprites.allOfKind(SpriteKind.koopaGreen)) {
+                if (value.overlapsWith(mySprite3)) {
+                    sprites.destroy(value)
+                }
+            }
+            for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
+                if (value.overlapsWith(mySprite3)) {
+                    sprites.destroy(value)
+                }
+            }
+        }
+        if (mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile21`)) {
+            let powerup = 0
+            if (powerup == 1) {
+                tiles.setTileAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), assets.tile`transparency16`)
+                tiles.setWallAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), false)
+                coinPlace()
+            }
+        }
+        for (let value3 of sprites.allOfKind(SpriteKind.Enemy)) {
+            if (value3.isHittingTile(CollisionDirection.Left)) {
+                value3.vx = 30
+                value3.image.flipX()
+            } else if (value3.isHittingTile(CollisionDirection.Right)) {
+                value3.vx = -30
+                value3.image.flipX()
+            }
+            if (!(tiles.tileAtLocationIsWall(tiles.locationInDirection(tiles.locationInDirection(tiles.locationOfSprite(value3), CollisionDirection.Left), CollisionDirection.Bottom)))) {
+                value3.vx = 30
+                value3.image.flipX()
+            } else if (!(tiles.tileAtLocationIsWall(tiles.locationInDirection(tiles.locationInDirection(tiles.locationOfSprite(value3), CollisionDirection.Right), CollisionDirection.Bottom)))) {
+                value3.vx = -30
+                value3.image.flipX()
+            }
+        }
+        for (let value3 of sprites.allOfKind(SpriteKind.koopaGreen)) {
+            if (value3.isHittingTile(CollisionDirection.Left)) {
+                value3.vx = 30
+                animation.runImageAnimation(
+                value3,
+                [img`
+                    .................
+                    ............1....
+                    ...........111...
+                    ..........4111...
+                    .........441174..
+                    .........441174..
+                    .........441174..
+                    .........441114..
+                    .........4441444.
+                    .........4444474.
+                    ...77777..444444.
+                    ..7477747.44.444.
+                    .77747477.44..44.
+                    .711747777144.44.
+                    .717474777144.4..
+                    .474777474144....
+                    .7477777471144...
+                    .474777474714....
+                    .777474777414....
+                    .77774777771.....
+                    111747477711.....
+                    ..11177411144....
+                    .4441111144444...
+                    4444......44444..
+                    `,img`
+                    ............1....
+                    ...........111...
+                    ..........41114..
+                    .........441174..
+                    .........4411744.
+                    .........4411744.
+                    .........44111474
+                    .........44414444
+                    .........44444444
+                    ...77777.44444444
+                    ..747774714..4444
+                    .7774747714...444
+                    .71174777714.....
+                    .717474777144....
+                    .47477747414444..
+                    .7477777471144...
+                    .474777474714....
+                    .777474777414....
+                    .77774777771.....
+                    111747477711.....
+                    .41117741114.....
+                    .44411111444.....
+                    .444....444......
+                    ..444..444.......
+                    `],
+                200,
+                true
+                )
+            } else if (value3.isHittingTile(CollisionDirection.Right)) {
+                value3.vx = -30
+                animation.runImageAnimation(
+                value3,
+                [img`
+                    .................
+                    ....1............
+                    ...111...........
+                    ...1114..........
+                    ..471144.........
+                    ..471144.........
+                    ..471144.........
+                    ..411144.........
+                    .4441444.........
+                    .4744444.........
+                    .444444..77777...
+                    .444.44.7477747..
+                    .44..44.77474777.
+                    .44.441777747117.
+                    ..4.441777474717.
+                    ....441474777474.
+                    ...4411747777747.
+                    ....417474777474.
+                    ....414777474777.
+                    .....17777747777.
+                    .....117774747111
+                    ....44111477111..
+                    ...4444411111444.
+                    ..44444......4444
+                    `,img`
+                    ....1............
+                    ...111...........
+                    ..41114..........
+                    ..471144.........
+                    .4471144.........
+                    .4471144.........
+                    47411144.........
+                    44441444.........
+                    44444444.........
+                    44444444.77777...
+                    4444..417477747..
+                    444...4177474777.
+                    .....41777747117.
+                    ....441777474717.
+                    ..44441474777474.
+                    ...4411747777747.
+                    ....417474777474.
+                    ....414777474777.
+                    .....17777747777.
+                    .....117774747111
+                    .....41114771114.
+                    .....44411111444.
+                    ......444....444.
+                    .......444..444..
+                    `],
+                200,
+                true
+                )
+            }
+            if (!(tiles.tileAtLocationIsWall(tiles.locationInDirection(tiles.locationInDirection(tiles.locationOfSprite(value3), CollisionDirection.Left), CollisionDirection.Bottom)))) {
+                value3.vx = 30
+                animation.runImageAnimation(
+                value3,
+                [img`
+                    .................
+                    ............1....
+                    ...........111...
+                    ..........4111...
+                    .........441174..
+                    .........441174..
+                    .........441174..
+                    .........441114..
+                    .........4441444.
+                    .........4444474.
+                    ...77777..444444.
+                    ..7477747.44.444.
+                    .77747477.44..44.
+                    .711747777144.44.
+                    .717474777144.4..
+                    .474777474144....
+                    .7477777471144...
+                    .474777474714....
+                    .777474777414....
+                    .77774777771.....
+                    111747477711.....
+                    ..11177411144....
+                    .4441111144444...
+                    4444......44444..
+                    `,img`
+                    ............1....
+                    ...........111...
+                    ..........41114..
+                    .........441174..
+                    .........4411744.
+                    .........4411744.
+                    .........44111474
+                    .........44414444
+                    .........44444444
+                    ...77777.44444444
+                    ..747774714..4444
+                    .7774747714...444
+                    .71174777714.....
+                    .717474777144....
+                    .47477747414444..
+                    .7477777471144...
+                    .474777474714....
+                    .777474777414....
+                    .77774777771.....
+                    111747477711.....
+                    .41117741114.....
+                    .44411111444.....
+                    .444....444......
+                    ..444..444.......
+                    `],
+                200,
+                true
+                )
+            } else if (!(tiles.tileAtLocationIsWall(tiles.locationInDirection(tiles.locationInDirection(tiles.locationOfSprite(value3), CollisionDirection.Right), CollisionDirection.Bottom)))) {
+                value3.vx = -30
+                animation.runImageAnimation(
+                value3,
+                [img`
+                    .................
+                    ....1............
+                    ...111...........
+                    ...1114..........
+                    ..471144.........
+                    ..471144.........
+                    ..471144.........
+                    ..411144.........
+                    .4441444.........
+                    .4744444.........
+                    .444444..77777...
+                    .444.44.7477747..
+                    .44..44.77474777.
+                    .44.441777747117.
+                    ..4.441777474717.
+                    ....441474777474.
+                    ...4411747777747.
+                    ....417474777474.
+                    ....414777474777.
+                    .....17777747777.
+                    .....117774747111
+                    ....44111477111..
+                    ...4444411111444.
+                    ..44444......4444
+                    `,img`
+                    ....1............
+                    ...111...........
+                    ..41114..........
+                    ..471144.........
+                    .4471144.........
+                    .4471144.........
+                    47411144.........
+                    44441444.........
+                    44444444.........
+                    44444444.77777...
+                    4444..417477747..
+                    444...4177474777.
+                    .....41777747117.
+                    ....441777474717.
+                    ..44441474777474.
+                    ...4411747777747.
+                    ....417474777474.
+                    ....414777474777.
+                    .....17777747777.
+                    .....117774747111
+                    .....41114771114.
+                    .....44411111444.
+                    ......444....444.
+                    .......444..444..
+                    `],
+                200,
+                true
+                )
+            }
+        }
+        for (let value3 of sprites.allOfKind(SpriteKind.Projectile)) {
+            if (value3.isHittingTile(CollisionDirection.Left)) {
+                value3.vx = 100
+            } else if (value3.isHittingTile(CollisionDirection.Right)) {
+                value3.vx = -100
+            }
+        }
+    }
+    start_movement()
+})
+forever(function () {
+    textSprite.x = 0
+    textSprite.y = -99999
+})
