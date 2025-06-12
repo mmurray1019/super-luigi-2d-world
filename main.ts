@@ -2099,6 +2099,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     otherSprite.destroy()
     coins += 1
     textSprite.setText(convertToText(coins))
+    music.play(music.melodyPlayable(music.baDing), music.PlaybackMode.UntilDone)
 })
 scene.onOverlapTile(SpriteKind.Text, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
@@ -2521,6 +2522,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     if (sprite.bottom < otherSprite.y) {
         otherSprite.destroy()
         sprite.vy = -100
+        music.play(music.melodyPlayable(music.thump), music.PlaybackMode.UntilDone)
     } else {
         luigi_Die()
     }
