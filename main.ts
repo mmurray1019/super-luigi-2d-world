@@ -409,11 +409,9 @@ scene.onOverlapTile(SpriteKind.display, assets.tile`myTile13`, function (sprite,
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile13`, function (sprite, location) {
-    mySprite.setFlag(SpriteFlag.GhostThroughWalls, true)
-    pause(1000)
-    mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
-    loadworld()
-    world1()
+    if (die == 0) {
+        luigi_Die()
+    }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (World_Map_True == 1) {
@@ -856,11 +854,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile16`, function (sprite, 
     world1()
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile20`, function (sprite, location) {
-    mySprite.setFlag(SpriteFlag.GhostThroughWalls, true)
-    pause(1000)
-    mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
-    loadworld()
-    world1()
+    if (die == 0) {
+        luigi_Die()
+    }
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (die == 0) {
@@ -1123,14 +1119,17 @@ function luigi_Die () {
     true
     )
     mySprite.vy = -250
+    mySprite.setFlag(SpriteFlag.GhostThroughSprites, true)
     mySprite.setFlag(SpriteFlag.GhostThroughWalls, true)
-    pause(2000)
-    animation.stopAnimation(animation.AnimationTypes.All, mySprite)
-    mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
-    mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
-    die = 0
-    loadworld()
-    world1()
+    timer.after(2000, function () {
+        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+        mySprite.setFlag(SpriteFlag.GhostThroughSprites, false)
+        mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
+        mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
+        die = 0
+        loadworld()
+        world1()
+    })
 }
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile20`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
