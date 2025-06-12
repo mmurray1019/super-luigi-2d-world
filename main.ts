@@ -168,6 +168,197 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.koopaGreen, function (sprite, oth
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
+    if (sprite.bottom < otherSprite.y) {
+        sprite.vy = -100
+        if (otherSprite.vx != 0) {
+            otherSprite.vx = 0
+            animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
+        } else {
+            if (true) {
+                otherSprite.vx = -105
+                animation.runImageAnimation(
+                otherSprite,
+                [img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . 4 7 7 7 7 4 . . . . . 
+                    . . . . 7 7 4 4 4 4 7 7 . . . . 
+                    . . . 7 7 4 7 7 7 7 4 7 7 . . . 
+                    . . . 7 4 7 7 7 7 7 7 4 7 . . . 
+                    . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
+                    . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                    . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
+                    . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
+                    1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
+                    1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
+                    . . . 1 1 7 7 7 7 7 7 1 1 . . . 
+                    . . . . 1 1 7 7 7 7 1 1 . . . . 
+                    . . . . . 1 1 1 1 1 1 . . . . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . 7 7 7 7 7 7 . . . . . 
+                    . . . . 7 4 7 7 7 7 4 7 . . . . 
+                    . . . 7 7 7 4 4 4 4 7 7 7 . . . 
+                    . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
+                    . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                    . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
+                    . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
+                    7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
+                    4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
+                    7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
+                    1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
+                    . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
+                    . . . 1 1 4 4 4 4 4 4 1 1 . . . 
+                    . . . . 1 1 1 1 1 1 1 1 . . . . 
+                    . . . . . . 1 1 1 1 . . . . . . 
+                    `],
+                100,
+                true
+                )
+            } else if (false) {
+                otherSprite.vx = 105
+                animation.runImageAnimation(
+                otherSprite,
+                [img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . 4 7 7 7 7 4 . . . . . 
+                    . . . . 7 7 4 4 4 4 7 7 . . . . 
+                    . . . 7 7 4 7 7 7 7 4 7 7 . . . 
+                    . . . 7 4 7 7 7 7 7 7 4 7 . . . 
+                    . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
+                    . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                    . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
+                    . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
+                    1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
+                    1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
+                    . . . 1 1 7 7 7 7 7 7 1 1 . . . 
+                    . . . . 1 1 7 7 7 7 1 1 . . . . 
+                    . . . . . 1 1 1 1 1 1 . . . . . 
+                    `,img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . 7 7 7 7 7 7 . . . . . 
+                    . . . . 7 4 7 7 7 7 4 7 . . . . 
+                    . . . 7 7 7 4 4 4 4 7 7 7 . . . 
+                    . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
+                    . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                    . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
+                    . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
+                    7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
+                    4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
+                    7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
+                    1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
+                    . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
+                    . . . 1 1 4 4 4 4 4 4 1 1 . . . 
+                    . . . . 1 1 1 1 1 1 1 1 . . . . 
+                    . . . . . . 1 1 1 1 . . . . . . 
+                    `],
+                100,
+                true
+                )
+            }
+        }
+    } else if (otherSprite.vx == 0) {
+        if (sprite.vx < 0) {
+            otherSprite.vx = -105
+            animation.runImageAnimation(
+            otherSprite,
+            [img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . 4 7 7 7 7 4 . . . . . 
+                . . . . 7 7 4 4 4 4 7 7 . . . . 
+                . . . 7 7 4 7 7 7 7 4 7 7 . . . 
+                . . . 7 4 7 7 7 7 7 7 4 7 . . . 
+                . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
+                . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
+                . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
+                1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
+                1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
+                . . . 1 1 7 7 7 7 7 7 1 1 . . . 
+                . . . . 1 1 7 7 7 7 1 1 . . . . 
+                . . . . . 1 1 1 1 1 1 . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . 7 7 7 7 7 7 . . . . . 
+                . . . . 7 4 7 7 7 7 4 7 . . . . 
+                . . . 7 7 7 4 4 4 4 7 7 7 . . . 
+                . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
+                . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
+                . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
+                7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
+                4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
+                7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
+                1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
+                . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
+                . . . 1 1 4 4 4 4 4 4 1 1 . . . 
+                . . . . 1 1 1 1 1 1 1 1 . . . . 
+                . . . . . . 1 1 1 1 . . . . . . 
+                `],
+            100,
+            true
+            )
+        } else if (sprite.vx > 0) {
+            invulnerability = 1
+            otherSprite.vx = 105
+            animation.runImageAnimation(
+            otherSprite,
+            [img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . 4 7 7 7 7 4 . . . . . 
+                . . . . 7 7 4 4 4 4 7 7 . . . . 
+                . . . 7 7 4 7 7 7 7 4 7 7 . . . 
+                . . . 7 4 7 7 7 7 7 7 4 7 . . . 
+                . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
+                . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
+                . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
+                1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
+                1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
+                . . . 1 1 7 7 7 7 7 7 1 1 . . . 
+                . . . . 1 1 7 7 7 7 1 1 . . . . 
+                . . . . . 1 1 1 1 1 1 . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . 7 7 7 7 7 7 . . . . . 
+                . . . . 7 4 7 7 7 7 4 7 . . . . 
+                . . . 7 7 7 4 4 4 4 7 7 7 . . . 
+                . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
+                . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
+                . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
+                . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
+                7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
+                4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
+                7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
+                1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
+                . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
+                . . . 1 1 4 4 4 4 4 4 1 1 . . . 
+                . . . . 1 1 1 1 1 1 1 1 . . . . 
+                . . . . . . 1 1 1 1 . . . . . . 
+                `],
+            100,
+            true
+            )
+            pause(100)
+            invulnerability = 0
+        }
+    } else {
+        if (invulnerability == 0) {
+            luigi_Die()
+        }
+    }
+    if (otherSprite.vx != 0) {
+    	
+    }
+})
 sprites.onOverlap(SpriteKind.koopaGreen, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     animation.stopAnimation(animation.AnimationTypes.All, sprite)
     animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
@@ -721,75 +912,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (die == 0) {
         animation.runImageAnimation(
         mySprite,
-        [img`
-            . . . . . . . 7 7 7 7 7 . . . . 
-            . . . . 7 7 7 7 7 7 7 7 7 . . . 
-            . . . . . . d f d d f f f . . . 
-            . . . . d d d f d d d f d f . . 
-            . . . d d d f d d d f f d f . . 
-            . . . . f f f f d d d d f f . . 
-            . . . . . d d d d d d d . . . . 
-            . . . . . . . 7 7 7 8 7 7 . . . 
-            . . . . 7 7 7 8 7 7 8 7 7 7 . . 
-            . . . 7 7 7 7 8 8 8 8 7 7 7 7 . 
-            . . . 7 7 7 8 5 8 8 5 8 7 d d . 
-            . . . d d d 8 8 8 8 8 8 d d d . 
-            . . . d d 8 8 8 8 8 8 8 8 d d . 
-            . . . . . 8 8 8 . . 8 8 8 . . . 
-            . . . . e e e . . . . e e e . . 
-            . . . e e e e . . . . e e e e . 
-            `,img`
-            . . . . . . 7 7 7 7 7 . . . . . 
-            . . . 7 7 7 7 7 7 7 7 7 . . . . 
-            . . . . . d f d d f f f . . . . 
-            . . . d d d f d d d f d f . . . 
-            . . d d d f d d d f f d f . . . 
-            . . . f f f f d d d d f f . . . 
-            . . . . d d d d d d d . . . . . 
-            . . . . . . 7 7 7 8 7 7 7 7 . . 
-            . . . . 7 7 8 7 7 8 7 7 7 7 d d 
-            . d d d 7 7 8 8 8 8 7 7 . d d d 
-            . d d 7 7 8 5 8 8 5 8 . . . d d 
-            . . e . . 8 8 8 8 8 8 8 . . . . 
-            . . e e 8 8 8 8 8 8 8 8 8 . . . 
-            . . e e 8 8 8 . . 8 8 8 e e . . 
-            . . . . . . . . . . . e e e . . 
-            . . . . . . . . . . e e e . . . 
-            `,img`
-            . . . . . . 7 7 7 7 7 . . . . . 
-            . . . 7 7 7 7 7 7 7 7 7 . . . . 
-            . . . . . d f d d f f f . . . . 
-            . . . d d d f d d d f d f . . . 
-            . . d d d f d d d f f d f . . . 
-            . . . f f f f d d d d f f . . . 
-            . . . . d d d d d d d . . . . . 
-            . . . . . . 7 7 7 8 7 7 7 7 . . 
-            . . . . 7 7 8 7 7 8 7 7 7 7 d d 
-            . d d d 7 7 8 8 8 8 7 7 . d d d 
-            . d d 7 7 8 5 8 8 5 8 . . . d d 
-            . . e . . 8 8 8 8 8 8 8 . . . . 
-            . . e e 8 8 8 8 8 8 8 8 8 . . . 
-            . . e e 8 8 8 . . 8 8 8 e e . . 
-            . . . . . . . . . . . e e e . . 
-            . . . . . . . . . . e e e . . . 
-            `,img`
-            . . . . . . . 7 7 7 7 7 . . . . 
-            . . . . 7 7 7 7 7 7 7 7 7 . . . 
-            . . . . . . d f d d f f f . . . 
-            . . . . d d d f d d d f d f . . 
-            . . . d d d f d d d f f d f . . 
-            . . . . f f f f d d d d f f . . 
-            . . . . . d d d d d d d . . . . 
-            . . . . . . . 7 7 7 8 7 7 . . . 
-            . . . . 7 7 7 8 7 7 8 7 7 7 . . 
-            . . . 7 7 7 7 8 8 8 8 7 7 7 7 . 
-            . . . 7 7 7 8 5 8 8 5 8 7 d d . 
-            . . . d d d 8 8 8 8 8 8 d d d . 
-            . . . d d 8 8 8 8 8 8 8 8 d d . 
-            . . . . . 8 8 8 . . 8 8 8 . . . 
-            . . . . e e e . . . . e e e . . 
-            . . . e e e e . . . . e e e e . 
-            `],
+        assets.animation`myAnim`,
         50,
         true
         )
@@ -862,201 +985,10 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (die == 0) {
         animation.runImageAnimation(
         mySprite,
-        assets.animation`myAnim`,
+        assets.animation`myAnim0`,
         50,
         true
         )
-    }
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
-    if (sprite.bottom < otherSprite.y) {
-        sprite.vy = -100
-        if (otherSprite.vx != 0) {
-            otherSprite.vx = 0
-            animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
-        } else {
-            if (true) {
-                otherSprite.vx = -105
-                animation.runImageAnimation(
-                otherSprite,
-                [img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . 4 7 7 7 7 4 . . . . . 
-                    . . . . 7 7 4 4 4 4 7 7 . . . . 
-                    . . . 7 7 4 7 7 7 7 4 7 7 . . . 
-                    . . . 7 4 7 7 7 7 7 7 4 7 . . . 
-                    . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
-                    . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
-                    . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
-                    . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
-                    1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
-                    1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
-                    . . . 1 1 7 7 7 7 7 7 1 1 . . . 
-                    . . . . 1 1 7 7 7 7 1 1 . . . . 
-                    . . . . . 1 1 1 1 1 1 . . . . . 
-                    `,img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . 7 7 7 7 7 7 . . . . . 
-                    . . . . 7 4 7 7 7 7 4 7 . . . . 
-                    . . . 7 7 7 4 4 4 4 7 7 7 . . . 
-                    . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
-                    . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
-                    . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
-                    . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
-                    7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
-                    4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
-                    7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
-                    1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
-                    . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
-                    . . . 1 1 4 4 4 4 4 4 1 1 . . . 
-                    . . . . 1 1 1 1 1 1 1 1 . . . . 
-                    . . . . . . 1 1 1 1 . . . . . . 
-                    `],
-                100,
-                true
-                )
-            } else if (false) {
-                otherSprite.vx = 105
-                animation.runImageAnimation(
-                otherSprite,
-                [img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . 4 7 7 7 7 4 . . . . . 
-                    . . . . 7 7 4 4 4 4 7 7 . . . . 
-                    . . . 7 7 4 7 7 7 7 4 7 7 . . . 
-                    . . . 7 4 7 7 7 7 7 7 4 7 . . . 
-                    . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
-                    . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
-                    . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
-                    . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
-                    1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
-                    1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
-                    . . . 1 1 7 7 7 7 7 7 1 1 . . . 
-                    . . . . 1 1 7 7 7 7 1 1 . . . . 
-                    . . . . . 1 1 1 1 1 1 . . . . . 
-                    `,img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . 7 7 7 7 7 7 . . . . . 
-                    . . . . 7 4 7 7 7 7 4 7 . . . . 
-                    . . . 7 7 7 4 4 4 4 7 7 7 . . . 
-                    . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
-                    . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
-                    . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
-                    . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
-                    7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
-                    4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
-                    7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
-                    1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
-                    . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
-                    . . . 1 1 4 4 4 4 4 4 1 1 . . . 
-                    . . . . 1 1 1 1 1 1 1 1 . . . . 
-                    . . . . . . 1 1 1 1 . . . . . . 
-                    `],
-                100,
-                true
-                )
-            }
-        }
-    } else if (otherSprite.vx == 0) {
-        if (sprite.vx < 0) {
-            otherSprite.vx = -105
-            animation.runImageAnimation(
-            otherSprite,
-            [img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . 4 7 7 7 7 4 . . . . . 
-                . . . . 7 7 4 4 4 4 7 7 . . . . 
-                . . . 7 7 4 7 7 7 7 4 7 7 . . . 
-                . . . 7 4 7 7 7 7 7 7 4 7 . . . 
-                . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
-                . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
-                . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
-                . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
-                1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
-                1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
-                . . . 1 1 7 7 7 7 7 7 1 1 . . . 
-                . . . . 1 1 7 7 7 7 1 1 . . . . 
-                . . . . . 1 1 1 1 1 1 . . . . . 
-                `,img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . 7 7 7 7 7 7 . . . . . 
-                . . . . 7 4 7 7 7 7 4 7 . . . . 
-                . . . 7 7 7 4 4 4 4 7 7 7 . . . 
-                . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
-                . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
-                . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
-                . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
-                7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
-                4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
-                7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
-                1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
-                . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
-                . . . 1 1 4 4 4 4 4 4 1 1 . . . 
-                . . . . 1 1 1 1 1 1 1 1 . . . . 
-                . . . . . . 1 1 1 1 . . . . . . 
-                `],
-            100,
-            true
-            )
-        } else if (sprite.vx > 0) {
-            invulnerability = 1
-            otherSprite.vx = 105
-            animation.runImageAnimation(
-            otherSprite,
-            [img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . 4 7 7 7 7 4 . . . . . 
-                . . . . 7 7 4 4 4 4 7 7 . . . . 
-                . . . 7 7 4 7 7 7 7 4 7 7 . . . 
-                . . . 7 4 7 7 7 7 7 7 4 7 . . . 
-                . . 7 4 7 7 7 7 7 7 7 7 4 7 . . 
-                . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
-                . 4 7 7 7 4 7 7 7 7 4 7 7 7 4 . 
-                . 7 7 7 7 7 4 4 4 4 7 7 7 7 7 . 
-                1 1 1 7 7 4 7 7 7 7 4 7 7 1 1 1 
-                1 1 1 1 4 7 7 7 7 7 7 4 1 1 1 1 
-                . . . 1 1 7 7 7 7 7 7 1 1 . . . 
-                . . . . 1 1 7 7 7 7 1 1 . . . . 
-                . . . . . 1 1 1 1 1 1 . . . . . 
-                `,img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . 7 7 7 7 7 7 . . . . . 
-                . . . . 7 4 7 7 7 7 4 7 . . . . 
-                . . . 7 7 7 4 4 4 4 7 7 7 . . . 
-                . . 7 7 7 4 7 7 7 7 4 7 7 7 . . 
-                . . 4 7 4 7 7 7 7 7 7 4 7 4 . . 
-                . 7 7 4 7 7 7 7 7 7 7 7 4 7 7 . 
-                . 7 4 7 4 7 7 7 7 7 7 4 7 4 7 . 
-                7 4 7 7 7 4 7 7 7 7 4 7 7 7 4 7 
-                4 7 7 7 7 7 4 4 4 4 7 7 7 7 7 4 
-                7 7 7 7 7 4 1 1 1 1 4 7 7 7 7 7 
-                1 1 4 4 4 1 1 1 1 1 1 4 4 4 1 1 
-                . 1 1 1 4 1 1 1 1 1 1 4 1 1 1 . 
-                . . . 1 1 4 4 4 4 4 4 1 1 . . . 
-                . . . . 1 1 1 1 1 1 1 1 . . . . 
-                . . . . . . 1 1 1 1 . . . . . . 
-                `],
-            100,
-            true
-            )
-            pause(100)
-            invulnerability = 0
-        }
-    } else {
-        if (invulnerability == 0) {
-            luigi_Die()
-        }
-    }
-    if (otherSprite.vx != 0) {
-    	
     }
 })
 function luigi_Die () {
@@ -2530,8 +2462,8 @@ let coins = 0
 let mySprite3: Sprite = null
 let mySprite2: Sprite = null
 let mySprite4: Sprite = null
-let invulnerability = 0
 let die = 0
+let invulnerability = 0
 let mySprite5: Sprite = null
 let currentLevel = 0
 let textSprite: TextSprite = null
@@ -2651,6 +2583,10 @@ textSprite.setIcon(img`
 textSprite.setStayInScreen(true)
 currentLevel = 1
 scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.BothDirections, scroller.BackgroundLayer.Layer0)
+forever(function () {
+    textSprite.x = 0
+    textSprite.y = -99999
+})
 game.onUpdate(function () {
     if (World_Map_True == 0) {
         if (mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile23`)) {
@@ -3094,8 +3030,4 @@ game.onUpdate(function () {
         }
     }
     start_movement()
-})
-forever(function () {
-    textSprite.x = 0
-    textSprite.y = -99999
 })
