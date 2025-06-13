@@ -1230,26 +1230,7 @@ function start_movement () {
     }
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile16`, function (sprite, location) {
-    canMove = 0
-    mySprite.ay = 0
-    mySprite7 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.flag)
+    music.play(music.createSong(assets.song`win`), music.PlaybackMode.UntilDone)
     tiles.setCurrentTilemap(tilemap`level11`)
     currentLevel += 1
     world1()
@@ -2466,7 +2447,6 @@ let coins = 0
 let mySprite3: Sprite = null
 let mySprite2: Sprite = null
 let mySprite4: Sprite = null
-let mySprite7: Sprite = null
 let die = 0
 let invulnerability = 0
 let mySprite5: Sprite = null
