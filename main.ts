@@ -7,6 +7,7 @@ namespace SpriteKind {
     export const flag = SpriteKind.create()
 }
 function world1 () {
+    music.play(music.createSong(assets.song`Yoshis island`), music.PlaybackMode.LoopingInBackground)
     World_Map_True = 1
     mySprite5 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
@@ -1191,6 +1192,7 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
     }
 })
 function startNextLevel () {
+    music.stopAllSounds()
     mySprite.ay = 500
     controller.moveSprite(mySprite, 100, 0)
     if (currentLevel == 1) {
@@ -2570,6 +2572,7 @@ textSprite.setStayInScreen(true)
 currentLevel = 1
 canMove = 1
 scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.OnlyHorizontal, scroller.BackgroundLayer.Layer4)
+scroller.scrollBackgroundWithSpeed(5, 0, scroller.BackgroundLayer.Layer4)
 game.onUpdate(function () {
     if (World_Map_True == 0) {
         if (mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile23`)) {
