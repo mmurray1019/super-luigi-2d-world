@@ -7,7 +7,6 @@ namespace SpriteKind {
     export const flag = SpriteKind.create()
 }
 function world1 () {
-    music.play(music.createSong(assets.song`Yoshis island`), music.PlaybackMode.LoopingInBackground)
     World_Map_True = 1
     mySprite5 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
@@ -40,6 +39,12 @@ function world1 () {
         value.destroy()
     }
     for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.offScreenKoopaGreen)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.OffScreenEnemy)) {
         value.destroy()
     }
     mySprite = sprites.create(assets.image`Luigi`, SpriteKind.Player)
@@ -1196,12 +1201,12 @@ function startNextLevel () {
     mySprite.ay = 500
     controller.moveSprite(mySprite, 100, 0)
     if (currentLevel == 1) {
-        tiles.setCurrentTilemap(tilemap`level12`)
+        tiles.setCurrentTilemap(tilemap`w1-1`)
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
         level_Above_Ground()
     } else if (currentLevel == 2) {
         scene.setBackgroundColor(15)
-        tiles.setCurrentTilemap(tilemap`level1`)
+        tiles.setCurrentTilemap(tilemap`W1-2`)
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile2`)
         levelBelowGround()
     } else {
