@@ -2551,7 +2551,7 @@ game.setDialogFrame(img`
     bccccccccccccccccccccccb
     cccccccccccccccccccccccc
     `)
-game.showLongText("SUPER LUIGI 2D WORLD!", DialogLayout.Full)
+game.showLongText(" SUPER LUIGI 2D WORLD! ", DialogLayout.Full)
 scene.setBackgroundColor(9)
 tiles.setCurrentTilemap(tilemap`level11`)
 world1()
