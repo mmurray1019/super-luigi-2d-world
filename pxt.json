@@ -9,7 +9,8 @@
         "arcade-text": "github:microsoft/arcade-text#v1.3.0",
         "settings-blocks": "github:microsoft/pxt-settings-blocks#v1.0.0",
         "arcade-background-scroll": "github:microsoft/arcade-background-scroll#v0.1.2",
-        "Timers": "github:microsoft/arcade-timers#v1.1.0"
+        "Timers": "github:microsoft/arcade-timers#v1.1.0",
+        "arcade-camera-offset": "github:riknoll/arcade-camera-offset#50dcab790691a38799aa99390f9cced2d62fbc21"
     },
     "files": [
         "main.blocks",

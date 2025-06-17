@@ -1203,6 +1203,7 @@ function startNextLevel () {
     music.stopAllSounds()
     mySprite.ay = 500
     controller.moveSprite(mySprite, 100, 0)
+    cameraOffsetScene.cameraFollowWithOffset(mySprite, 0, 30)
     if (currentLevel == 1) {
         tiles.setCurrentTilemap(tilemap`w1-1`)
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
