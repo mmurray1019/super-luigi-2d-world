@@ -30,6 +30,9 @@ function world1 () {
     for (let value of sprites.allOfKind(SpriteKind.OffScreenEnemy)) {
         value.destroy()
     }
+    for (let value of sprites.allOfKind(SpriteKind.mushroom)) {
+        value.destroy()
+    }
     mySprite.ay = 0
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile1`)
     controller.moveSprite(mySprite, 100, 100)
@@ -861,14 +864,14 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             mySprite,
             assets.animation`myAnim2`,
             200,
-            true
+            false
             )
         } else if (mySprite.vx >= 0 && powerup == 1) {
             animation.runImageAnimation(
             mySprite,
             assets.animation`myAnim3`,
             200,
-            true
+            false
             )
         } else if (mySprite.vx >= 0) {
             animation.runImageAnimation(
@@ -1262,7 +1265,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         animation.runImageAnimation(
         mySprite,
         assets.animation`big_walk1`,
-        200,
+        100,
         true
         )
     } else if (die == 0 && canMove == 1) {
@@ -1390,8 +1393,8 @@ function loadworld () {
     tiles.setCurrentTilemap(tilemap`level11`)
     if (currentLevel == 2) {
         tiles.setTileAt(tiles.getTileLocation(1, 7), assets.tile`myTile4`)
-        tiles.setWallAt(tiles.getTileLocation(2, 7), false)
-        tiles.setWallAt(tiles.getTileLocation(2, 6), false)
+        tiles.setWallAt(tiles.getTileLocation(3, 7), false)
+        tiles.setWallAt(tiles.getTileLocation(3, 6), false)
         tiles.setTileAt(tiles.getTileLocation(4, 5), assets.tile`myTile28`)
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile28`)
     }
