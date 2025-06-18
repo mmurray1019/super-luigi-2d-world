@@ -7,6 +7,7 @@ namespace SpriteKind {
     export const flag = SpriteKind.create()
     export const mushroom = SpriteKind.create()
     export const enemy_killer_sprite = SpriteKind.create()
+    export const firebar = SpriteKind.create()
 }
 function world1 () {
     animation.stopAnimation(animation.AnimationTypes.All, mySprite)
@@ -665,6 +666,35 @@ function levelCastle () {
             ........................
             `],
         100,
+        true
+        )
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile47`)) {
+        mySprite2 = sprites.create(img`
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
+            `, SpriteKind.firebar)
+        mySprite2.setFlag(SpriteFlag.GhostThroughWalls, true)
+        tiles.placeOnTile(mySprite2, value.getNeighboringLocation(CollisionDirection.Top).getNeighboringLocation(CollisionDirection.Top).getNeighboringLocation(CollisionDirection.Left).getNeighboringLocation(CollisionDirection.Left))
+        tiles.setTileAt(value, assets.tile`myTile22`)
+        animation.runImageAnimation(
+        mySprite2,
+        assets.animation`myAnim7`,
+        200,
         true
         )
     }
@@ -1563,6 +1593,12 @@ function startNextLevel () {
         200,
         TileAnimationOrder.LoopSync
         )
+        scene.runTileAnimation(
+        assets.tile`myTile44`,
+        assets.animation`myAnim8`,
+        250,
+        TileAnimationOrder.LoopSync
+        )
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile2`)
         levelCastle()
     } else {
@@ -1571,6 +1607,9 @@ function startNextLevel () {
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
+})
+scene.onOverlapTile(SpriteKind.Food, assets.tile`myTile41`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
 scene.onOverlapTile(SpriteKind.Text, assets.tile`myTile20`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
@@ -1923,6 +1962,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.mushroom, function (sprite, othe
 })
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile20`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+controller.combos.attachCombo("up down left right b", function () {
+    currentLevel += 1
+    loadworld()
 })
 scene.onOverlapTile(SpriteKind.koopaGreen, assets.tile`myTile20`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
@@ -2503,9 +2546,11 @@ function coinPlace () {
     coins += 1
     textSprite.setText(convertToText(coins))
 }
-controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    currentLevel += 1
-    loadworld()
+scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile41`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+scene.onOverlapTile(SpriteKind.koopaGreen, assets.tile`myTile41`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     otherSprite.destroy()
@@ -2540,10 +2585,21 @@ function kill_above_block (location_of_block: tiles.Location) {
         sprites.destroy(mySprite5)
     })
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile41`, function (sprite, location) {
+    if (die == 0) {
+        luigi_Die()
+    }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.firebar, function (sprite, otherSprite) {
+    luigi_Die()
+})
 scene.onOverlapTile(SpriteKind.Text, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
 scene.onOverlapTile(SpriteKind.koopaGreen, assets.tile`myTile13`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+scene.onOverlapTile(SpriteKind.Enemy, assets.tile`myTile41`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
 function levelBelowGround () {
@@ -3066,6 +3122,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         luigi_Die()
     }
 })
+scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile41`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
 scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -3243,6 +3302,9 @@ game.onUpdate(function () {
         }
         for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
             pathfinding(value, false, 100, "shellGreen")
+        }
+        for (let value of sprites.allOfKind(SpriteKind.firebar)) {
+            transformSprites.changeRotation(value, 1)
         }
         start_movement()
     }

@@ -12,7 +12,9 @@
         "Timers": "github:microsoft/arcade-timers#v1.1.0",
         "arcade-camera-offset": "github:riknoll/arcade-camera-offset#50dcab790691a38799aa99390f9cced2d62fbc21",
         "Tile Animator": "github:LautaroCeballos/Tiles-Animator#2e87fd85737dcf61210ea9004eac2167c1e59fb6",
-        "Color Fading": "github:jwunderl/pxt-color#v0.2.3"
+        "Color Fading": "github:jwunderl/pxt-color#v0.2.3",
+        "pxt-arcade-image-transform": "github:robo-technical-group/pxt-arcade-image-transform#v1.0.9",
+        "pxt-button-combos": "github:jwunderl/pxt-button-combos#v0.0.24"
     },
     "files": [
         "main.blocks",
