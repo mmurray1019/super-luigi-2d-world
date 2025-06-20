@@ -8,6 +8,8 @@ namespace SpriteKind {
     export const mushroom = SpriteKind.create()
     export const enemy_killer_sprite = SpriteKind.create()
     export const firebar = SpriteKind.create()
+    export const utility = SpriteKind.create()
+    export const lavabubble = SpriteKind.create()
 }
 function world1 () {
     animation.stopAnimation(animation.AnimationTypes.All, mySprite)
@@ -35,9 +37,13 @@ function world1 () {
     for (let value of sprites.allOfKind(SpriteKind.mushroom)) {
         value.destroy()
     }
+    for (let value of sprites.allOfKind(SpriteKind.firebar)) {
+        value.destroy()
+    }
     controller.moveSprite(mySprite, 100, 100)
     mySprite.ay = 0
     scene.cameraFollowSprite(mySprite)
+    mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
 }
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
@@ -698,6 +704,27 @@ function levelCastle () {
         true
         )
     }
+    for (let value of tiles.getTilesByType(assets.tile`myTile48`)) {
+        mySprite2 = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.lavabubble)
+        tiles.placeOnTile(mySprite2, value)
+    }
 }
 sprites.onOverlap(SpriteKind.koopaGreen, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     animation.stopAnimation(animation.AnimationTypes.All, sprite)
@@ -1192,6 +1219,10 @@ function pathfinding (sprite: Sprite, edge_detection: boolean, speed: number, sp
         }
     }
 }
+scene.onOverlapTile(SpriteKind.lavabubble, assets.tile`myTile41`, function (sprite, location) {
+    sprite.vy = 0
+    sprite.ay = 0
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (World_Map_True == 1) {
         if (mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile1`)) {
@@ -1206,7 +1237,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             startNextLevel()
             World_Map_True = 0
         }
-    } else if (die == 0 && canMove == 1 && mySprite.isHittingTile(CollisionDirection.Bottom)) {
+    } else if (0 == 0 && canMove == 1 && mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vy = -250
         if (mySprite.vx < 0 && powerup == 1) {
             animation.runImageAnimation(
@@ -1594,6 +1625,12 @@ function startNextLevel () {
         TileAnimationOrder.LoopSync
         )
         scene.runTileAnimation(
+        assets.tile`myTile48`,
+        assets.animation`myAnim6`,
+        200,
+        TileAnimationOrder.LoopSync
+        )
+        scene.runTileAnimation(
         assets.tile`myTile44`,
         assets.animation`myAnim8`,
         250,
@@ -1635,6 +1672,7 @@ function start_movement () {
     }
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile16`, function (sprite, location) {
+    music.stopAllSounds()
     music.play(music.createSong(assets.song`win`), music.PlaybackMode.UntilDone)
     tiles.setCurrentTilemap(tilemap`level11`)
     currentLevel += 1
@@ -1855,9 +1893,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
     }
 })
 function luigi_Die () {
-    if (invulnerability == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`))) {
+    if (invulnerability == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile41`))) {
     	
-    } else if (powerup == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`))) {
+    } else if (powerup == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile41`))) {
         invulnerability = 1
         powerup = 0
         animation.stopAnimation(animation.AnimationTypes.All, mySprite)
@@ -1954,6 +1992,47 @@ function luigi_Die () {
         loadworld()
     }
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, location) {
+    mySprite.setFlag(SpriteFlag.GhostThroughTiles, true)
+    controller.moveSprite(mySprite, 0, 0)
+    music.stopAllSounds()
+    mySprite7 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.utility)
+    mySprite7.setFlag(SpriteFlag.GhostThroughWalls, true)
+    tiles.placeOnTile(mySprite7, tiles.getTileLocation(85, 12))
+    for (let value of tiles.getTilesByType(assets.tile`myTile43`)) {
+        tiles.setTileAt(value, assets.tile`transparency16`)
+    }
+    animation.runImageAnimation(
+    mySprite7,
+    assets.animation`myAnim9`,
+    100,
+    false
+    )
+    music.play(music.createSong(assets.song`win`), music.PlaybackMode.InBackground)
+    timer.after(3000, function () {
+        tiles.setCurrentTilemap(tilemap`level11`)
+        currentLevel += 1
+        world1()
+        loadworld()
+    })
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.mushroom, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     powerup = 1
@@ -3131,6 +3210,7 @@ scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile13`, function (sprite
 let mySprite5: Sprite = null
 let coins = 0
 let mySprite3: Sprite = null
+let mySprite7: Sprite = null
 let die = 0
 let mySprite2: Sprite = null
 let mySprite4: Sprite = null
@@ -3307,6 +3387,18 @@ game.onUpdate(function () {
             transformSprites.changeRotation(value, 1)
         }
         start_movement()
+    }
+})
+game.onUpdateInterval(5000, function () {
+    for (let value of sprites.allOfKind(SpriteKind.lavabubble)) {
+        value.ay = 500
+        value.vy = -250
+        animation.runImageAnimation(
+        value,
+        assets.animation`myAnim5`,
+        200,
+        false
+        )
     }
 })
 forever(function () {
