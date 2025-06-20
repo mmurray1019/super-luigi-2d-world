@@ -40,6 +40,9 @@ function world1 () {
     for (let value of sprites.allOfKind(SpriteKind.firebar)) {
         value.destroy()
     }
+    for (let value of sprites.allOfKind(SpriteKind.utility)) {
+        value.destroy()
+    }
     controller.moveSprite(mySprite, 100, 100)
     mySprite.ay = 0
     scene.cameraFollowSprite(mySprite)
@@ -1608,34 +1611,118 @@ function startNextLevel () {
         level_Above_Ground()
     } else if (currentLevel == 4) {
         tiles.setCurrentTilemap(tilemap`level`)
-        scene.runTileAnimation(
-        assets.tile`myTile42`,
-        assets.animation`myAnim6`,
-        200,
-        TileAnimationOrder.LoopSync
-        )
+        for (let value of tiles.getTilesByType(assets.tile`myTile50`)) {
+            mySprite8 = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, SpriteKind.utility)
+            tiles.placeOnTile(mySprite8, value)
+            animation.runImageAnimation(
+            mySprite8,
+            assets.animation`myAnim6`,
+            200,
+            true
+            )
+        }
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
         level_Above_Ground()
     } else if (currentLevel == 5) {
         tiles.setCurrentTilemap(tilemap`level0`)
-        scene.runTileAnimation(
-        assets.tile`myTile42`,
-        assets.animation`myAnim6`,
-        200,
-        TileAnimationOrder.LoopSync
-        )
-        scene.runTileAnimation(
-        assets.tile`myTile48`,
-        assets.animation`myAnim6`,
-        200,
-        TileAnimationOrder.LoopSync
-        )
-        scene.runTileAnimation(
-        assets.tile`myTile44`,
-        assets.animation`myAnim8`,
-        250,
-        TileAnimationOrder.LoopSync
-        )
+        for (let value of tiles.getTilesByType(assets.tile`myTile48`)) {
+            mySprite8 = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, SpriteKind.utility)
+            tiles.placeOnTile(mySprite8, value)
+            animation.runImageAnimation(
+            mySprite8,
+            assets.animation`myAnim10`,
+            200,
+            true
+            )
+        }
+        for (let value of tiles.getTilesByType(assets.tile`myTile42`)) {
+            mySprite8 = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, SpriteKind.utility)
+            tiles.placeOnTile(mySprite8, value)
+            animation.runImageAnimation(
+            mySprite8,
+            assets.animation`myAnim10`,
+            200,
+            true
+            )
+        }
+        for (let value of tiles.getTilesByType(assets.tile`myTile44`)) {
+            mySprite8 = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, SpriteKind.utility)
+            tiles.placeOnTile(mySprite8, value)
+            animation.runImageAnimation(
+            mySprite8,
+            assets.animation`myAnim8`,
+            250,
+            true
+            )
+        }
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile2`)
         levelCastle()
     } else {
@@ -1678,6 +1765,11 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile16`, function (sprite, 
     currentLevel += 1
     world1()
     loadworld()
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile49`, function (sprite, location) {
+    if (die == 0) {
+        luigi_Die()
+    }
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile20`, function (sprite, location) {
     if (die == 0) {
@@ -3211,6 +3303,7 @@ let mySprite5: Sprite = null
 let coins = 0
 let mySprite3: Sprite = null
 let mySprite7: Sprite = null
+let mySprite8: Sprite = null
 let die = 0
 let mySprite2: Sprite = null
 let mySprite4: Sprite = null
