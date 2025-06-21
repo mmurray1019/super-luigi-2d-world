@@ -10,6 +10,8 @@ namespace SpriteKind {
     export const firebar = SpriteKind.create()
     export const utility = SpriteKind.create()
     export const lavabubble = SpriteKind.create()
+    export const boss = SpriteKind.create()
+    export const fire = SpriteKind.create()
 }
 function world1 () {
     animation.stopAnimation(animation.AnimationTypes.All, mySprite)
@@ -41,6 +43,15 @@ function world1 () {
         value.destroy()
     }
     for (let value of sprites.allOfKind(SpriteKind.utility)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.boss)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.lavabubble)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.fire)) {
         value.destroy()
     }
     controller.moveSprite(mySprite, 100, 100)
@@ -172,6 +183,9 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.koopaGreen, function (sprite, oth
 })
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.boss, function (sprite, otherSprite) {
+    luigi_Die()
 })
 function levelCastle () {
     color.setColor(9, color.rgb(191, 191, 191))
@@ -727,6 +741,15 @@ function levelCastle () {
             . . . . . . . . . . . . . . . . 
             `, SpriteKind.lavabubble)
         tiles.placeOnTile(mySprite2, value)
+        mySprite2.setFlag(SpriteFlag.GhostThroughWalls, true)
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile53`)) {
+        mySprite2 = sprites.create(assets.image`myImage0`, SpriteKind.boss)
+        tiles.placeOnTile(mySprite2, value)
+        mySprite2.ay = 500
+        timer.after(500, function () {
+            mySprite2.ay = 0
+        })
     }
 }
 sprites.onOverlap(SpriteKind.koopaGreen, SpriteKind.koopaGreen, function (sprite, otherSprite) {
@@ -1240,6 +1263,10 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             startNextLevel()
             World_Map_True = 0
         }
+        if (mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile8`)) {
+            startNextLevel()
+            World_Map_True = 0
+        }
     } else if (0 == 0 && canMove == 1 && mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vy = -250
         if (mySprite.vx < 0 && powerup == 1) {
@@ -1571,6 +1598,9 @@ sprites.onOverlap(SpriteKind.enemy_killer_sprite, SpriteKind.Enemy, function (sp
 sprites.onOverlap(SpriteKind.enemy_killer_sprite, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
 })
+scene.onOverlapTile(SpriteKind.Food, assets.tile`myTile49`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprite.vx = sprite.vx * -1
     otherSprite.vx = otherSprite.vx * -1
@@ -1583,6 +1613,9 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
         animation.stopAnimation(animation.AnimationTypes.All, mySprite)
     }
 })
+scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile49`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
 scene.onOverlapTile(SpriteKind.Enemy, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -1590,6 +1623,10 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
     if (die == 0 && canMove == 1) {
         animation.stopAnimation(animation.AnimationTypes.All, mySprite)
     }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.fire, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    luigi_Die()
 })
 function startNextLevel () {
     music.stopAllSounds()
@@ -1758,6 +1795,9 @@ function start_movement () {
         }
     }
 }
+scene.onOverlapTile(SpriteKind.koopaGreen, assets.tile`myTile49`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile16`, function (sprite, location) {
     music.stopAllSounds()
     music.play(music.createSong(assets.song`win`), music.PlaybackMode.UntilDone)
@@ -1984,6 +2024,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
     	
     }
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.lavabubble, function (sprite, otherSprite) {
+    luigi_Die()
+})
 function luigi_Die () {
     if (invulnerability == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile41`))) {
     	
@@ -2110,6 +2153,55 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, 
     tiles.placeOnTile(mySprite7, tiles.getTileLocation(85, 12))
     for (let value of tiles.getTilesByType(assets.tile`myTile43`)) {
         tiles.setTileAt(value, assets.tile`transparency16`)
+        tiles.setWallAt(value, false)
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile42`)) {
+        mySprite10 = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.utility)
+        animation.runImageAnimation(
+        mySprite10,
+        assets.animation`myAnim10`,
+        200,
+        true
+        )
+        tiles.placeOnTile(mySprite10, value)
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile41`)) {
+        mySprite10 = sprites.create(img`
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            `, SpriteKind.utility)
+        tiles.placeOnTile(mySprite10, value)
     }
     animation.runImageAnimation(
     mySprite7,
@@ -2119,10 +2211,15 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, 
     )
     music.play(music.createSong(assets.song`win`), music.PlaybackMode.InBackground)
     timer.after(3000, function () {
-        tiles.setCurrentTilemap(tilemap`level11`)
-        currentLevel += 1
-        world1()
-        loadworld()
+        for (let value of sprites.allOfKind(SpriteKind.boss)) {
+            value.vy = 50
+        }
+        timer.after(3000, function () {
+            tiles.setCurrentTilemap(tilemap`level11`)
+            currentLevel += 1
+            world1()
+            loadworld()
+        })
     })
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.mushroom, function (sprite, otherSprite) {
@@ -2170,8 +2267,22 @@ function loadworld () {
         tiles.setWallAt(tiles.getTileLocation(9, 2), false)
         tiles.setTileAt(tiles.getTileLocation(9, 8), assets.tile`myTile26`)
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile26`)
+    } else if (currentLevel == 5) {
+        tiles.setTileAt(tiles.getTileLocation(1, 7), assets.tile`myTile4`)
+        tiles.setWallAt(tiles.getTileLocation(3, 7), false)
+        tiles.setWallAt(tiles.getTileLocation(3, 6), false)
+        tiles.setTileAt(tiles.getTileLocation(4, 5), assets.tile`myTile29`)
+        tiles.setWallAt(tiles.getTileLocation(6, 4), false)
+        tiles.setWallAt(tiles.getTileLocation(6, 5), false)
+        tiles.setTileAt(tiles.getTileLocation(7, 2), assets.tile`myTile29`)
+        tiles.setWallAt(tiles.getTileLocation(9, 1), false)
+        tiles.setWallAt(tiles.getTileLocation(9, 2), false)
+        tiles.setTileAt(tiles.getTileLocation(9, 8), assets.tile`myTile27`)
+        tiles.setWallAt(tiles.getTileLocation(11, 8), false)
+        tiles.setWallAt(tiles.getTileLocation(11, 9), false)
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile8`)
     } else {
-        tiles.placeOnRandomTile(mySprite, assets.tile`myTile1`)
+        game.gameOver(true)
     }
 }
 function level_Above_Ground () {
@@ -2756,6 +2867,9 @@ function kill_above_block (location_of_block: tiles.Location) {
         sprites.destroy(mySprite5)
     })
 }
+scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile49`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile41`, function (sprite, location) {
     if (die == 0) {
         luigi_Die()
@@ -2768,6 +2882,9 @@ scene.onOverlapTile(SpriteKind.Text, assets.tile`myTile13`, function (sprite, lo
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
 scene.onOverlapTile(SpriteKind.koopaGreen, assets.tile`myTile13`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
+scene.onOverlapTile(SpriteKind.Enemy, assets.tile`myTile49`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
 scene.onOverlapTile(SpriteKind.Enemy, assets.tile`myTile41`, function (sprite, location) {
@@ -3299,9 +3416,11 @@ scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile41`, function (sprite
 scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
+let mySprite9: Sprite = null
 let mySprite5: Sprite = null
 let coins = 0
 let mySprite3: Sprite = null
+let mySprite10: Sprite = null
 let mySprite7: Sprite = null
 let mySprite8: Sprite = null
 let die = 0
@@ -3477,7 +3596,7 @@ game.onUpdate(function () {
             pathfinding(value, false, 100, "shellGreen")
         }
         for (let value of sprites.allOfKind(SpriteKind.firebar)) {
-            transformSprites.changeRotation(value, 1)
+            transformSprites.changeRotation(value, 5)
         }
         start_movement()
     }
@@ -3491,6 +3610,27 @@ game.onUpdateInterval(5000, function () {
         assets.animation`myAnim5`,
         200,
         false
+        )
+    }
+    for (let value of sprites.allOfKind(SpriteKind.boss)) {
+        mySprite9 = sprites.create(img`
+            . . . . . . . . . . 2 2 2 2 2 2 . . 2 . . . . . 
+            . . . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . . 
+            . . . 2 2 2 2 2 4 4 2 2 4 4 4 4 2 2 4 4 4 4 2 2 
+            2 2 2 2 2 2 2 2 2 2 2 2 2 4 4 4 4 4 1 1 1 1 2 2 
+            . . . . . 2 2 2 2 4 4 4 4 4 4 4 4 4 4 4 4 4 1 2 
+            . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 4 4 4 2 2 2 2 . 
+            . . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . . . 
+            . . . . . 2 2 . . 2 2 2 . 2 2 . . 2 . . . . . . 
+            `, SpriteKind.fire)
+        mySprite9.setFlag(SpriteFlag.GhostThroughWalls, true)
+        tiles.placeOnTile(mySprite9, tiles.getTileLocation(value.tilemapLocation().column, randint(8, 13)))
+        mySprite9.vx = -50
+        animation.runImageAnimation(
+        mySprite9,
+        assets.animation`myAnim1`,
+        100,
+        true
         )
     }
 })
