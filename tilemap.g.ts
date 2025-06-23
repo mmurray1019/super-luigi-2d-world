@@ -114,6 +114,24 @@ namespace myTiles {
     export const tile55 = image.ofBuffer(hex``);
     //% fixedInstance jres blockIdentity=images._tile
     export const tile56 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile58 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile59 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile60 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile57 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile61 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile62 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile63 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile64 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile65 = image.ofBuffer(hex``);
 
     helpers._registerFactory("tilemap", function(name: string) {
         switch(helpers.stringTrim(name)) {
@@ -346,6 +364,24 @@ namespace myTiles {
             case "tile55":return tile55;
             case "myTile54":
             case "tile56":return tile56;
+            case "myTile56":
+            case "tile58":return tile58;
+            case "myTile57":
+            case "tile59":return tile59;
+            case "myTile58":
+            case "tile60":return tile60;
+            case "myTile55":
+            case "tile57":return tile57;
+            case "myTile59":
+            case "tile61":return tile61;
+            case "myTile60":
+            case "tile62":return tile62;
+            case "myTile61":
+            case "tile63":return tile63;
+            case "myTile62":
+            case "tile64":return tile64;
+            case "myTile63":
+            case "tile65":return tile65;
         }
         return null;
     })
