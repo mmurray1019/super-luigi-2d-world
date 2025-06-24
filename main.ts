@@ -1773,6 +1773,69 @@ function startNextLevel () {
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
         tiles.setCurrentTilemap(tilemap`level4`)
         underwater_physics()
+        for (let value of tiles.getTilesByType(assets.tile`myTile65`)) {
+            mySprite11 = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, SpriteKind.utility)
+            animation.runImageAnimation(
+            mySprite11,
+            assets.animation`myAnim11`,
+            200,
+            true
+            )
+            tiles.placeOnTile(mySprite11, value)
+        }
+        for (let value of tiles.getTilesByType(assets.tile`myTile64`)) {
+            mySprite11 = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, SpriteKind.utility)
+            animation.runImageAnimation(
+            mySprite11,
+            assets.animation`myAnim12`,
+            150,
+            true
+            )
+            tiles.placeOnTile(mySprite11, value)
+            tiles.setTileAt(value, assets.tile`transparency16`)
+        }
+        for (let value of tiles.getTilesByType(assets.tile`myTile68`)) {
+            mySprite11 = sprites.create(assets.image`myImage3`, SpriteKind.utility)
+            tiles.placeOnTile(mySprite11, value)
+        }
+        for (let value of tiles.getTilesByType(assets.tile`myTile69`)) {
+            mySprite11 = sprites.create(assets.image`myImage2`, SpriteKind.utility)
+            tiles.placeOnTile(mySprite11, value)
+        }
     }
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.koopaGreen, function (sprite, otherSprite) {
@@ -3431,6 +3494,7 @@ let coins = 0
 let mySprite3: Sprite = null
 let mySprite10: Sprite = null
 let mySprite7: Sprite = null
+let mySprite11: Sprite = null
 let mySprite8: Sprite = null
 let die = 0
 let underwater = 0

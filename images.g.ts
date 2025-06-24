@@ -558,13 +558,80 @@ eeeeee....eeeeee
 ....................11441144444.
 ...................1114111444444
 `;
+            case "image8":
+            case "myImage3":return img`
+..............................ffffffffffffffff1111ffffffffffffff
+...........................fffffffffffffffffff1111ffffffffffffff
+........................fffffff11111111111111f1111ff111111111111
+.....................fffffff111ccccccccccccccf1111ff1ccccccccccc
+...................ffffff111cccccccccccccccccfffffff1ccccccccccc
+.................fffff111ccccccccccccccccccccfffffff1ccccccccccc
+...............fffff11cccccccccfffffffffffffcff111ff1fffffffffff
+.............fffff11ccccccccffffffffffffffffcffcccff1fffffffffff
+............ffff11cccccccffff1111fffffffffffcfffffff111111111111
+...........fff11ccccccffff11111111ffffffffffcfffffff111111111111
+..........fff1ccccccfff11111111111ffffffffffcfffffff111111111111
+.........ff11cccccffff11111111111fffffffffffcff111ff111111111111
+........ff1cccccff11ff11111111ffffffffffffffcff111ff1fffffffffff
+.......ffcccccfff1111ff1111fffffffffffffffffcff111ff1fffffffffff
+......ffccccffff11111fffffffffffffffffffffffcff111ff1fffffffffff
+.....ffccccfffff11111fffffffffffffffffffffffcfffffff1fffffffffff
+.....ffcccfffffff111ffccffffffffffffffffffffcfffffff1fffffffffff
+....ffccfffffffffffffcc11fffffffffffffffffffcfffffff1fffffffffff
+....ffccffffffffffffcc111fffffffffffffffffffcfffffff1fffffffffff
+...ffccffffffffffffcc1111cffffffffffffffffffcfffffff1fffffffffff
+...ffcffffffffffffcc11111cffffffffffffffffffcfffffff1fffffffffff
+..ffccffffffffffffc111111cffffffffffffffffffcfffffff1fffffffffff
+..ffcffffffffffffff111111cffffffffffffffffffcfffffff1fffffffffff
+..ffcffffffffff1fff11111ccffffffffffffffffffcfffffff1fffffffffff
+.ffcfffffffffffffff1111ccfffffffffffffffffffcfffffff1fffffffffff
+.ffcfffffffffffcccc111111fffffffffffffffffffcfffffff1fffffffffff
+.ffcffffffcfffffcc1111111fffffffffffffffffffcfffffff1fffffffffff
+.fcffffffcc1ffffff111111ffffffffffffffffffffcfffffff1fffffffffff
+ffcffffffc11111111111111ffffffffffffffffffffcfffffff1fffffffffff
+ffcfffffffc111111111cc1fffffffffffffffffffffcfffffff1fffffffffff
+fcfffffffffcc111cccccfffffffffffffffffffffffcfffffff1fffffffffff
+fcfffffffffffccccfffffffffffffffffffffffffffcfffffff1fffffffffff
+fcffffffffffffffffffffffffffffffffffffffffffcfffffff1fffffffffff
+fcffffffffffffffffffffffffffffffffffffffffffcfffffff1fffffffffff
+fcffffffffffffffffff111122ffffffffffffffffffcfffffff1fffffffffff
+ffcfffffffffffffff1111112222ffffffffffffffffcfffffff1fffffffffff
+ffcffffffffffffff111111122222fffffffffffffffcfffffff1fffffffffff
+.fcffffffffffffff111111122222fffffffffffffffcfffffff1fffffffffff
+.ffcfffffffffffff1111111222222ffffffffffffffcfffffff1fffffffffff
+.ffcffffffffffff11122222222222ffffffffffffffcfffffff1fffffffffff
+.ffcffffffffffff11122222222222ffffffffffffffcfffffff1fffffffffff
+..ffcffffffffff1111222222222222fffffffffffffcfffffff1fffffffffff
+..ffcfffffffff11111222222222222fffffffffffffcfffffff1fffffffffff
+..ffccfffffff111111222222221111fffffffffffffcfffffff1fffffffffff
+...ff1ffffff1111111222222221111fffffffffffffcfffffff1fffffffffff
+...ff11fff111111111222222221111fffffffffffffcfffffff1fffffffffff
+....ff1111112222222222222221111fffffffffffffcfffffff1fffffffffff
+....ff1111112222222222222221111fffffffffffffcfffffff1fffffffffff
+.....ff111112222222222222221111fffffffffffffcfffffff1fffffffffff
+.....ff21111222222222222222111ffffffffffffffcff111ff1fffffffffff
+......ff2211222222222211111111ffffffffffffffcff111ff1fffffffffff
+.......ff22222222222221111111fffffffffffffffcff111ff1fffffffffff
+........ff2222222222221111111fffffffffffffffcff111ff111111111111
+.........ff22222222222111111ffffffffffffffffcfffffff111111111111
+..........ff221112222211111fffffffffffffffffcfffffff111111111111
+...........ff2111111221111ffffffffffffffffffcfffffff111111111111
+............fff111111111ffffffffffffffffffffcffcccff1fffffffffff
+.............ffff11ccccccccccfffffffffffffffcff111ff1fffffffffff
+...............ffff1111ccccccccccccccccccccccfffffff1ccccccccccc
+.................ffffff111cccccccccccccccccccfffffff1ccccccccccc
+...................fffffff111ccccccccccccccccf1111ff1ccccccccccc
+......................fffffff1111111111111111f1111ff111111111111
+.........................fffffffffffffffffffff1111ffffffffffffff
+............................ffffffffffffffffff1111ffffffffffffff
+`;
             case "image7":
             case "myImage2":return img`
 . . . . . . . . . . . . . . . . 
 . . . . . . f f f f f f f . f f 
 . . . . f f f 1 1 1 1 1 f f 1 1 
-. . . f f f 1 f f f f f f 1 f f 
-. . f f 1 f f f f f f f f f f f 
+. . . f f f 1 c c c c c f 1 c c 
+. . f f 1 f c f f f f f f c f f 
 . f f 1 1 f f f f f f f f f f f 
 f 1 f 1 1 f f f f 1 1 f f f f f 
 f 1 1 1 f f f 1 f 1 1 1 f f f f 
@@ -3517,6 +3584,42 @@ e b e e e e e e b e e e e e f e
 . . . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . . 
 . . . . . . . . . . 2 2 2 2 2 2 . . 2 . . . . . 
 `];
+            case "myAnim13":
+            case "anim19":return [img`
+f . . . . . . . . . . . . . . f 
+f f . . . . . . . . . . . . f f 
+f 1 f . . . . . . . . . . f 1 f 
+f 1 f f . . . . . . . . f 1 f f 
+f 1 f f f . . . . . . f 1 f f f 
+. f 1 f f f . . . . f 1 f f f . 
+. f 1 f f f f . . f 1 f f f f . 
+. . f 1 f f f f f 1 f f f f . . 
+. . f f f f f f f f f f f f . . 
+. . . f f f f f f f f f f . . . 
+. . . . f f f f f f f f . . . . 
+. e e e . . f f f f . . e e e . 
+e 5 5 5 e . f 5 5 f . e 5 5 5 e 
+. e 5 5 5 e e 5 5 e e 5 5 5 e . 
+. . e e e 5 d 5 5 d 5 e e e . . 
+. . . . . e e e e e e . . . . . 
+`, img`
+. . . . . . . f f . . . . . . . 
+. . . . . . f 1 f f . . . . . . 
+. . . . . . f 1 f f . . . . . . 
+. . . . . f 1 f f f f . . . . . 
+. . . . . f 1 f f f f . . . . . 
+. . . . f f 1 f f f f f . . . . 
+. . . . f 1 f f f f f f . . . . 
+. . . . f 1 f f f f f f . . . . 
+. . . . f f f f f f f f . . . . 
+. . . . f f f f f f f f . . . . 
+. . . . . f f f f f f . . . . . 
+. e e e . f f f f f f . e e e . 
+e 5 5 5 e . f f f f . e 5 5 5 e 
+. e 5 5 5 e f 5 5 f e 5 5 5 e . 
+. . e e e 5 d 5 5 d 5 e e e . . 
+. . . . . e e e e e e . . . . . 
+`];
             case "myAnim11":
             case "anim17":return [img`
 . . f f f f f f f f f f f f . . 
@@ -3656,42 +3759,6 @@ f f 5 5 5 5 5 5 5 5 5 b b b f f
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`];
-            case "myAnim13":
-            case "anim19":return [img`
-f . . . . . . . . . . . . . . f 
-f f . . . . . . . . . . . . f f 
-f 1 f . . . . . . . . . . f 1 f 
-f 1 f f . . . . . . . . f 1 f f 
-f 1 f f f . . . . . . f 1 f f f 
-. f 1 f f f . . . . f 1 f f f . 
-. f 1 f f f f . . f 1 f f f f . 
-. . f 1 f f f f f 1 f f f f . . 
-. . f f f f f f f f f f f f . . 
-. . . f f f f f f f f f f . . . 
-. . . . f f f f f f f f . . . . 
-. e e e . . f f f f . . e e e . 
-e 5 5 5 e . f 5 5 f . e 5 5 5 e 
-. e 5 5 5 e e 5 5 e e 5 5 5 e . 
-. . e e e 5 d 5 5 d 5 e e e . . 
-. . . . . e e e e e e . . . . . 
-`, img`
-. . . . . . . f f . . . . . . . 
-. . . . . . f 1 f f . . . . . . 
-. . . . . . f 1 f f . . . . . . 
-. . . . . f 1 f f f f . . . . . 
-. . . . . f 1 f f f f . . . . . 
-. . . . f f 1 f f f f f . . . . 
-. . . . f 1 f f f f f f . . . . 
-. . . . f 1 f f f f f f . . . . 
-. . . . f f f f f f f f . . . . 
-. . . . f f f f f f f f . . . . 
-. . . . . f f f f f f . . . . . 
-. e e e . f f f f f f . e e e . 
-e 5 5 5 e . f f f f . e 5 5 5 e 
-. e 5 5 5 e f 5 5 f e 5 5 5 e . 
-. . e e e 5 d 5 5 d 5 e e e . . 
-. . . . . e e e e e e . . . . . 
 `];
         }
         return null;
