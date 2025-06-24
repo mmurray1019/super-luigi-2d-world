@@ -989,6 +989,10 @@ sprites.onOverlap(SpriteKind.koopaGreen, SpriteKind.koopaGreen, function (sprite
     }
     pause(1000)
 })
+function underwater_physics () {
+    underwater = 1
+    mySprite.ay = 100
+}
 scene.onOverlapTile(SpriteKind.display, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -1267,7 +1271,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             startNextLevel()
             World_Map_True = 0
         }
-    } else if (0 == 0 && canMove == 1 && mySprite.isHittingTile(CollisionDirection.Bottom)) {
+    } else if (0 == 0 && canMove == 1 && (mySprite.isHittingTile(CollisionDirection.Bottom) && underwater == 0)) {
         mySprite.vy = -250
         if (mySprite.vx < 0 && powerup == 1) {
             animation.runImageAnimation(
@@ -1502,6 +1506,8 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             false
             )
         }
+    } else if (underwater == 1) {
+        mySprite.vy = -75
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.koopaGreen, function (sprite, otherSprite) {
@@ -1763,7 +1769,10 @@ function startNextLevel () {
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile2`)
         levelCastle()
     } else {
-    	
+        color.setColor(3, color.rgb(201, 152, 88))
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
+        tiles.setCurrentTilemap(tilemap`level4`)
+        underwater_physics()
     }
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.koopaGreen, function (sprite, otherSprite) {
@@ -2282,7 +2291,7 @@ function loadworld () {
         tiles.setWallAt(tiles.getTileLocation(11, 9), false)
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile8`)
     } else {
-        game.gameOver(true)
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile1`)
     }
 }
 function level_Above_Ground () {
@@ -3424,6 +3433,7 @@ let mySprite10: Sprite = null
 let mySprite7: Sprite = null
 let mySprite8: Sprite = null
 let die = 0
+let underwater = 0
 let mySprite2: Sprite = null
 let mySprite4: Sprite = null
 let invulnerability = 0
