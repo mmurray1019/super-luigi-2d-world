@@ -558,6 +558,25 @@ eeeeee....eeeeee
 ....................11441144444.
 ...................1114111444444
 `;
+            case "image7":
+            case "myImage2":return img`
+. . . . . . . . . . . . . . . . 
+. . . . . . f f f f f f f . f f 
+. . . . f f f 1 1 1 1 1 f f 1 1 
+. . . f f f 1 f f f f f f 1 f f 
+. . f f 1 f f f f f f f f f f f 
+. f f 1 1 f f f f f f f f f f f 
+f 1 f 1 1 f f f f 1 1 f f f f f 
+f 1 1 1 f f f 1 f 1 1 1 f f f f 
+f f f f f 1 1 1 1 1 1 1 f f f f 
+f f f f f 1 1 1 1 1 f f f f f f 
+. f f f f f 1 1 1 f f f f f f f 
+. . f f f f f f f f f f f f f f 
+. . . f f f f f f f f f f f f f 
+. . . . f f f f f f f f f . f f 
+. . . . . . f f f f f f f . f f 
+. . . . . . . . . . . . . . . . 
+`;
         }
         return null;
     })

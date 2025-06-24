@@ -406,6 +406,18 @@
         "tilemapTile": true,
         "displayName": "myTile65"
     },
+    "tile68": {
+        "data": "hwQQABAAAADd3d3d3d3d3f3d///////9/d3///////3w////////D9Df/f//3d3d0N/9/9/////Q3/3//d/9/9Df/f/9/U//0N/9//39T//Q3/3//U/0/9Df/f9P////0N/9//9ERETQ3/3////fD93d3d3d3d3d/d3///////393f///////Q==",
+        "mimeType": "image/x-mkcd-f4",
+        "tilemapTile": true,
+        "displayName": "myTile66"
+    },
+    "tile69": {
+        "data": "hwQQABAAAAAAAADd3d3d3QAA3f//////AN3////////d/09ERERE////RETd3UT0//9E3UTURPT//9RNRNTd9P//1N3d3dT0///U3d3d1PT//9RNRNTd9P//RN1E1ET0//9ERN3dRPRE/09ERERE/wBE////////AABE9P////8AAABARERERA==",
+        "mimeType": "image/x-mkcd-f4",
+        "tilemapTile": true,
+        "displayName": "myTile67"
+    },
     "level1": {
         "id": "level1",
         "mimeType": "application/mkcd-tilemap",
