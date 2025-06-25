@@ -1848,9 +1848,16 @@ function above_ground_SMW () {
         mySprite11 = sprites.create(assets.image`myImage3`, SpriteKind.bullet_off_screen)
         tiles.placeOnTile(mySprite11, value)
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile69`)) {
-        mySprite11 = sprites.create(assets.image`myImage2`, SpriteKind.utility)
+    for (let value of tiles.getTilesByType(assets.tile`myTile18`)) {
+        mySprite11 = sprites.create(assets.image`myImage4`, SpriteKind.offscreenSMWgoomba)
         tiles.placeOnTile(mySprite11, value)
+        animation.runImageAnimation(
+        mySprite11,
+        assets.animation`myAnim14`,
+        200,
+        true
+        )
+        mySprite11.ay = 500
     }
 }
 function start_movement () {
