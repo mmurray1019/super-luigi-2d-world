@@ -12,52 +12,10 @@ namespace SpriteKind {
     export const lavabubble = SpriteKind.create()
     export const boss = SpriteKind.create()
     export const fire = SpriteKind.create()
-}
-function world1 () {
-    animation.stopAnimation(animation.AnimationTypes.All, mySprite)
-    mySprite.setImage(assets.image`Luigi`)
-    powerup = 0
-    World_Map_True = 1
-    for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.Food)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.koopaGreen)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.offScreenKoopaGreen)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.OffScreenEnemy)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.mushroom)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.firebar)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.utility)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.boss)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.lavabubble)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.fire)) {
-        value.destroy()
-    }
-    controller.moveSprite(mySprite, 100, 100)
-    mySprite.ay = 0
-    scene.cameraFollowSprite(mySprite)
-    mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
+    export const bullet_off_screen = SpriteKind.create()
+    export const SMW_Goomba = SpriteKind.create()
+    export const bullet = SpriteKind.create()
+    export const offscreenSMWgoomba = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
@@ -181,6 +139,55 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.koopaGreen, function (sprite, oth
     }
     pause(1000)
 })
+function loadworld1 () {
+    tiles.setCurrentTilemap(tilemap`level11`)
+    if (currentLevel == 2) {
+        tiles.setTileAt(tiles.getTileLocation(1, 7), assets.tile`myTile4`)
+        tiles.setWallAt(tiles.getTileLocation(3, 7), false)
+        tiles.setWallAt(tiles.getTileLocation(3, 6), false)
+        tiles.setTileAt(tiles.getTileLocation(4, 5), assets.tile`myTile28`)
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile28`)
+    } else if (currentLevel == 3) {
+        tiles.setTileAt(tiles.getTileLocation(1, 7), assets.tile`myTile4`)
+        tiles.setWallAt(tiles.getTileLocation(3, 7), false)
+        tiles.setWallAt(tiles.getTileLocation(3, 6), false)
+        tiles.setTileAt(tiles.getTileLocation(4, 5), assets.tile`myTile29`)
+        tiles.setWallAt(tiles.getTileLocation(6, 4), false)
+        tiles.setWallAt(tiles.getTileLocation(6, 5), false)
+        tiles.setTileAt(tiles.getTileLocation(7, 2), assets.tile`myTile28`)
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile28`)
+    } else if (currentLevel == 4) {
+        tiles.setTileAt(tiles.getTileLocation(1, 7), assets.tile`myTile4`)
+        tiles.setWallAt(tiles.getTileLocation(3, 7), false)
+        tiles.setWallAt(tiles.getTileLocation(3, 6), false)
+        tiles.setTileAt(tiles.getTileLocation(4, 5), assets.tile`myTile29`)
+        tiles.setWallAt(tiles.getTileLocation(6, 4), false)
+        tiles.setWallAt(tiles.getTileLocation(6, 5), false)
+        tiles.setTileAt(tiles.getTileLocation(7, 2), assets.tile`myTile29`)
+        tiles.setWallAt(tiles.getTileLocation(9, 1), false)
+        tiles.setWallAt(tiles.getTileLocation(9, 2), false)
+        tiles.setTileAt(tiles.getTileLocation(9, 8), assets.tile`myTile26`)
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile26`)
+    } else if (currentLevel == 5) {
+        tiles.setTileAt(tiles.getTileLocation(1, 7), assets.tile`myTile4`)
+        tiles.setWallAt(tiles.getTileLocation(3, 7), false)
+        tiles.setWallAt(tiles.getTileLocation(3, 6), false)
+        tiles.setTileAt(tiles.getTileLocation(4, 5), assets.tile`myTile29`)
+        tiles.setWallAt(tiles.getTileLocation(6, 4), false)
+        tiles.setWallAt(tiles.getTileLocation(6, 5), false)
+        tiles.setTileAt(tiles.getTileLocation(7, 2), assets.tile`myTile29`)
+        tiles.setWallAt(tiles.getTileLocation(9, 1), false)
+        tiles.setWallAt(tiles.getTileLocation(9, 2), false)
+        tiles.setTileAt(tiles.getTileLocation(9, 8), assets.tile`myTile27`)
+        tiles.setWallAt(tiles.getTileLocation(11, 8), false)
+        tiles.setWallAt(tiles.getTileLocation(11, 9), false)
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile8`)
+    } else if (currentLevel >= 6) {
+        loadworld2()
+    } else {
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile1`)
+    }
+}
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -1062,6 +1069,13 @@ function pathfinding (sprite: Sprite, edge_detection: boolean, speed: number, sp
             200,
             true
             )
+        } else if (spriteType == "SMWgoomba") {
+            animation.runImageAnimation(
+            sprite,
+            assets.animation`myAnim16`,
+            200,
+            true
+            )
         }
     } else if (sprite.isHittingTile(CollisionDirection.Right)) {
         sprite.vx = 0 - speed
@@ -1120,6 +1134,13 @@ function pathfinding (sprite: Sprite, edge_detection: boolean, speed: number, sp
                 ......444....444.
                 .......444..444..
                 `],
+            200,
+            true
+            )
+        } else if (spriteType == "SMWgoomba") {
+            animation.runImageAnimation(
+            sprite,
+            assets.animation`myAnim14`,
             200,
             true
             )
@@ -1581,6 +1602,11 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.koopaGreen, function (sprite, ot
 scene.onOverlapTile(SpriteKind.display, assets.tile`myTile20`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
+scene.onHitWall(SpriteKind.bullet, function (sprite, location) {
+    if (sprite.isHittingTile(CollisionDirection.Left)) {
+        sprites.destroy(sprite)
+    }
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (die == 0 && canMove == 1 && powerup == 1) {
         animation.runImageAnimation(
@@ -1769,73 +1795,8 @@ function startNextLevel () {
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile2`)
         levelCastle()
     } else {
-        color.setColor(3, color.rgb(201, 152, 88))
-        tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
         tiles.setCurrentTilemap(tilemap`level4`)
-        underwater_physics()
-        for (let value of tiles.getTilesByType(assets.tile`myTile65`)) {
-            mySprite11 = sprites.create(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `, SpriteKind.utility)
-            animation.runImageAnimation(
-            mySprite11,
-            assets.animation`myAnim11`,
-            200,
-            true
-            )
-            tiles.placeOnTile(mySprite11, value)
-        }
-        for (let value of tiles.getTilesByType(assets.tile`myTile64`)) {
-            mySprite11 = sprites.create(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `, SpriteKind.utility)
-            animation.runImageAnimation(
-            mySprite11,
-            assets.animation`myAnim12`,
-            150,
-            true
-            )
-            tiles.placeOnTile(mySprite11, value)
-            tiles.setTileAt(value, assets.tile`transparency16`)
-        }
-        for (let value of tiles.getTilesByType(assets.tile`myTile68`)) {
-            mySprite11 = sprites.create(assets.image`myImage3`, SpriteKind.utility)
-            tiles.placeOnTile(mySprite11, value)
-        }
-        for (let value of tiles.getTilesByType(assets.tile`myTile69`)) {
-            mySprite11 = sprites.create(assets.image`myImage2`, SpriteKind.utility)
-            tiles.placeOnTile(mySprite11, value)
-        }
+        above_ground_SMW()
     }
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.koopaGreen, function (sprite, otherSprite) {
@@ -1853,6 +1814,45 @@ scene.onOverlapTile(SpriteKind.Enemy, assets.tile`myTile20`, function (sprite, l
 scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile20`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
+function above_ground_SMW () {
+    color.setColor(3, color.rgb(201, 152, 88))
+    tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
+    for (let value of tiles.getTilesByType(assets.tile`myTile65`)) {
+        mySprite11 = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.utility)
+        animation.runImageAnimation(
+        mySprite11,
+        assets.animation`myAnim11`,
+        200,
+        true
+        )
+        tiles.placeOnTile(mySprite11, value)
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile68`)) {
+        mySprite11 = sprites.create(assets.image`myImage3`, SpriteKind.bullet_off_screen)
+        tiles.placeOnTile(mySprite11, value)
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile69`)) {
+        mySprite11 = sprites.create(assets.image`myImage2`, SpriteKind.utility)
+        tiles.placeOnTile(mySprite11, value)
+    }
+}
 function start_movement () {
     for (let value4 of sprites.allOfKind(SpriteKind.OffScreenEnemy)) {
         if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value4.x) {
@@ -1866,6 +1866,18 @@ function start_movement () {
             value5.setKind(SpriteKind.koopaGreen)
         }
     }
+    for (let value5 of sprites.allOfKind(SpriteKind.bullet_off_screen)) {
+        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value5.x) {
+            value5.vx = -50
+            value5.setKind(SpriteKind.bullet)
+        }
+    }
+    for (let value5 of sprites.allOfKind(SpriteKind.offscreenSMWgoomba)) {
+        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value5.x) {
+            value5.vx = -30
+            value5.setKind(SpriteKind.SMW_Goomba)
+        }
+    }
 }
 scene.onOverlapTile(SpriteKind.koopaGreen, assets.tile`myTile49`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
@@ -1875,8 +1887,8 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile16`, function (sprite, 
     music.play(music.createSong(assets.song`win`), music.PlaybackMode.UntilDone)
     tiles.setCurrentTilemap(tilemap`level11`)
     currentLevel += 1
-    world1()
-    loadworld()
+    world()
+    loadworld1()
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile49`, function (sprite, location) {
     if (die == 0) {
@@ -2195,8 +2207,8 @@ function luigi_Die () {
         mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
         mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
         die = 0
-        world1()
-        loadworld()
+        world()
+        loadworld1()
     }
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, location) {
@@ -2289,8 +2301,8 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, 
         timer.after(3000, function () {
             tiles.setCurrentTilemap(tilemap`level11`)
             currentLevel += 1
-            world1()
-            loadworld()
+            world()
+            loadworld1()
         })
     })
 })
@@ -2305,58 +2317,11 @@ scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile20`, function (spri
 })
 controller.combos.attachCombo("up down left right b", function () {
     currentLevel += 1
-    loadworld()
+    loadworld1()
 })
 scene.onOverlapTile(SpriteKind.koopaGreen, assets.tile`myTile20`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
-function loadworld () {
-    tiles.setCurrentTilemap(tilemap`level11`)
-    if (currentLevel == 2) {
-        tiles.setTileAt(tiles.getTileLocation(1, 7), assets.tile`myTile4`)
-        tiles.setWallAt(tiles.getTileLocation(3, 7), false)
-        tiles.setWallAt(tiles.getTileLocation(3, 6), false)
-        tiles.setTileAt(tiles.getTileLocation(4, 5), assets.tile`myTile28`)
-        tiles.placeOnRandomTile(mySprite, assets.tile`myTile28`)
-    } else if (currentLevel == 3) {
-        tiles.setTileAt(tiles.getTileLocation(1, 7), assets.tile`myTile4`)
-        tiles.setWallAt(tiles.getTileLocation(3, 7), false)
-        tiles.setWallAt(tiles.getTileLocation(3, 6), false)
-        tiles.setTileAt(tiles.getTileLocation(4, 5), assets.tile`myTile29`)
-        tiles.setWallAt(tiles.getTileLocation(6, 4), false)
-        tiles.setWallAt(tiles.getTileLocation(6, 5), false)
-        tiles.setTileAt(tiles.getTileLocation(7, 2), assets.tile`myTile28`)
-        tiles.placeOnRandomTile(mySprite, assets.tile`myTile28`)
-    } else if (currentLevel == 4) {
-        tiles.setTileAt(tiles.getTileLocation(1, 7), assets.tile`myTile4`)
-        tiles.setWallAt(tiles.getTileLocation(3, 7), false)
-        tiles.setWallAt(tiles.getTileLocation(3, 6), false)
-        tiles.setTileAt(tiles.getTileLocation(4, 5), assets.tile`myTile29`)
-        tiles.setWallAt(tiles.getTileLocation(6, 4), false)
-        tiles.setWallAt(tiles.getTileLocation(6, 5), false)
-        tiles.setTileAt(tiles.getTileLocation(7, 2), assets.tile`myTile29`)
-        tiles.setWallAt(tiles.getTileLocation(9, 1), false)
-        tiles.setWallAt(tiles.getTileLocation(9, 2), false)
-        tiles.setTileAt(tiles.getTileLocation(9, 8), assets.tile`myTile26`)
-        tiles.placeOnRandomTile(mySprite, assets.tile`myTile26`)
-    } else if (currentLevel == 5) {
-        tiles.setTileAt(tiles.getTileLocation(1, 7), assets.tile`myTile4`)
-        tiles.setWallAt(tiles.getTileLocation(3, 7), false)
-        tiles.setWallAt(tiles.getTileLocation(3, 6), false)
-        tiles.setTileAt(tiles.getTileLocation(4, 5), assets.tile`myTile29`)
-        tiles.setWallAt(tiles.getTileLocation(6, 4), false)
-        tiles.setWallAt(tiles.getTileLocation(6, 5), false)
-        tiles.setTileAt(tiles.getTileLocation(7, 2), assets.tile`myTile29`)
-        tiles.setWallAt(tiles.getTileLocation(9, 1), false)
-        tiles.setWallAt(tiles.getTileLocation(9, 2), false)
-        tiles.setTileAt(tiles.getTileLocation(9, 8), assets.tile`myTile27`)
-        tiles.setWallAt(tiles.getTileLocation(11, 8), false)
-        tiles.setWallAt(tiles.getTileLocation(11, 9), false)
-        tiles.placeOnRandomTile(mySprite, assets.tile`myTile8`)
-    } else {
-        tiles.placeOnRandomTile(mySprite, assets.tile`myTile1`)
-    }
-}
 function level_Above_Ground () {
     music.play(music.createSong(assets.song`mariomusic`), music.PlaybackMode.LoopingInBackground)
     scene.setBackgroundImage(assets.image`BG`)
@@ -2947,6 +2912,52 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile41`, function (sprite, 
         luigi_Die()
     }
 })
+function world () {
+    animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+    mySprite.setImage(assets.image`Luigi`)
+    powerup = 0
+    World_Map_True = 1
+    for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.Food)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.koopaGreen)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.offScreenKoopaGreen)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.OffScreenEnemy)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.mushroom)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.firebar)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.utility)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.boss)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.lavabubble)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.fire)) {
+        value.destroy()
+    }
+    controller.moveSprite(mySprite, 100, 100)
+    mySprite.ay = 0
+    scene.cameraFollowSprite(mySprite)
+    mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.firebar, function (sprite, otherSprite) {
     luigi_Die()
 })
@@ -3482,6 +3493,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         luigi_Die()
     }
 })
+function loadworld2 () {
+    tiles.setCurrentTilemap(tilemap`level6`)
+    if (currentLevel == 6) {
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile1`)
+    }
+}
 scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile41`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -3573,7 +3590,7 @@ game.showLongText(" SUPER LUIGI 2D WORLD! ", DialogLayout.Full)
 scene.setBackgroundColor(9)
 tiles.setCurrentTilemap(tilemap`level11`)
 tiles.placeOnRandomTile(mySprite, assets.tile`myTile1`)
-world1()
+world()
 let mySprite6 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -3628,7 +3645,7 @@ scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.OnlyHorizontal, sc
 scroller.scrollBackgroundWithSpeed(5, 0, scroller.BackgroundLayer.Layer4)
 game.onUpdate(function () {
     if (World_Map_True == 0) {
-        if (mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile23`)) {
+        if (mySprite.isHittingTile(CollisionDirection.Top) && mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile23`)) {
             mySprite3 = sprites.create(assets.image`mushroom`, SpriteKind.mushroom)
             mySprite3.ay = 500
             mySprite3.vx = 30
@@ -3669,6 +3686,9 @@ game.onUpdate(function () {
         for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
             pathfinding(value, false, 100, "shellGreen")
         }
+        for (let value of sprites.allOfKind(SpriteKind.SMW_Goomba)) {
+            pathfinding(value, false, 30, "SMWgoomba")
+        }
         for (let value of sprites.allOfKind(SpriteKind.firebar)) {
             transformSprites.changeRotation(value, 5)
         }
@@ -3706,6 +3726,11 @@ game.onUpdateInterval(5000, function () {
         100,
         true
         )
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile66`)) {
+        mySprite9 = sprites.create(assets.image`myImage2`, SpriteKind.bullet)
+        tiles.placeOnTile(mySprite9, value.getNeighboringLocation(CollisionDirection.Left))
+        mySprite9.vx = -50
     }
 })
 forever(function () {
