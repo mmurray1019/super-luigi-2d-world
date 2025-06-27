@@ -1292,6 +1292,10 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             startNextLevel()
             World_Map_True = 0
         }
+        if (mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile75`)) {
+            startNextLevel()
+            World_Map_True = 0
+        }
     } else if (0 == 0 && canMove == 1 && (mySprite.isHittingTile(CollisionDirection.Bottom) && underwater == 0)) {
         mySprite.vy = -250
         if (mySprite.vx < 0 && powerup == 1) {
@@ -1605,6 +1609,8 @@ scene.onOverlapTile(SpriteKind.display, assets.tile`myTile20`, function (sprite,
 scene.onHitWall(SpriteKind.bullet, function (sprite, location) {
     if (sprite.isHittingTile(CollisionDirection.Left)) {
         sprites.destroy(sprite)
+    } else if (sprite.isHittingTile(CollisionDirection.Right)) {
+        sprites.destroy(sprite)
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -1795,7 +1801,7 @@ function startNextLevel () {
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile2`)
         levelCastle()
     } else {
-        tiles.setCurrentTilemap(tilemap`level4`)
+        tiles.setCurrentTilemap(tilemap`level8`)
         above_ground_SMW()
     }
 }
@@ -1815,8 +1821,17 @@ scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile20`, function (sprite
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
 function above_ground_SMW () {
+    color.setPalette(
+    color.originalPalette
+    )
     color.setColor(3, color.rgb(201, 152, 88))
+    scroller.setLayerImage(scroller.BackgroundLayer.Layer4, assets.image`BG`)
+    scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.BothDirections, scroller.BackgroundLayer.Layer4)
+    scroller.scrollBackgroundWithSpeed(-5, 0, scroller.BackgroundLayer.Layer4)
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
+    for (let value of sprites.allOfKind(SpriteKind.utility)) {
+        sprites.destroy(value)
+    }
     for (let value of tiles.getTilesByType(assets.tile`myTile65`)) {
         mySprite11 = sprites.create(img`
             . . . . . . . . . . . . . . . . 
@@ -3955,9 +3970,32 @@ game.onUpdateInterval(5000, function () {
         )
     }
     for (let value of tiles.getTilesByType(assets.tile`myTile66`)) {
-        mySprite9 = sprites.create(assets.image`myImage2`, SpriteKind.bullet)
-        tiles.placeOnTile(mySprite9, value.getNeighboringLocation(CollisionDirection.Left))
-        mySprite9.vx = -50
+        if (mySprite.tilemapLocation().column < value.column - 2) {
+            mySprite9 = sprites.create(assets.image`myImage2`, SpriteKind.bullet)
+            tiles.placeOnTile(mySprite9, value.getNeighboringLocation(CollisionDirection.Left))
+            mySprite9.vx = -50
+        } else if (mySprite.tilemapLocation().column > value.column + 2) {
+            mySprite9 = sprites.create(img`
+                . . . . . . . . . . . . . . . . 
+                f f . f f f f f f f . . . . . . 
+                1 1 f f 1 1 1 1 1 f f f . . . . 
+                c c 1 f c c c c c 1 f f f . . . 
+                f f c f f f f f f c f 1 f f . . 
+                f f f f f f f f f f f 1 1 f f . 
+                f f f f f 1 1 f f f f 1 1 f 1 f 
+                f f f f 1 1 1 f 1 f f f 1 1 1 f 
+                f f f f 1 1 1 1 1 1 1 f f f f f 
+                f f f f f f 1 1 1 1 1 f f f f f 
+                f f f f f f f 1 1 1 f f f f f . 
+                f f f f f f f f f f f f f f . . 
+                f f f f f f f f f f f f f . . . 
+                f f . f f f f f f f f f . . . . 
+                f f . f f f f f f f . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, SpriteKind.bullet)
+            tiles.placeOnTile(mySprite9, value.getNeighboringLocation(CollisionDirection.Right))
+            mySprite9.vx = 50
+        }
     }
 })
 forever(function () {
