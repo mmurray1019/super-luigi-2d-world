@@ -2325,6 +2325,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, 
             currentLevel += 1
             world()
             loadworld1()
+            game.gameOver(true)
         })
     })
 })
