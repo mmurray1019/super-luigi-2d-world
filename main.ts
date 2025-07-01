@@ -765,7 +765,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.SMW_Goomba, function (sprite, ot
         otherSprite.vx = 0
         sprite.vy = -100
         animation.runImageAnimation(
-        sprite,
+        otherSprite,
         assets.animation`myAnim15`,
         300,
         true
@@ -773,7 +773,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.SMW_Goomba, function (sprite, ot
         timer.after(5000, function () {
             otherSprite.vx = -30
             animation.runImageAnimation(
-            sprite,
+            otherSprite,
             assets.animation`myAnim14`,
             200,
             true
@@ -3918,6 +3918,7 @@ invulnerability = 0
 scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.OnlyHorizontal, scroller.BackgroundLayer.Layer4)
 scroller.scrollBackgroundWithSpeed(5, 0, scroller.BackgroundLayer.Layer4)
 let block_locations: tiles.Location[] = []
+multilights.addLightSource(mySprite, 20)
 game.onUpdate(function () {
     if (World_Map_True == 0) {
         if (mySprite.isHittingTile(CollisionDirection.Top) && mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile23`)) {
