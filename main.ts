@@ -16,6 +16,7 @@ namespace SpriteKind {
     export const SMW_Goomba = SpriteKind.create()
     export const bullet = SpriteKind.create()
     export const offscreenSMWgoomba = SpriteKind.create()
+    export const SMW_Block = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
@@ -996,6 +997,11 @@ sprites.onOverlap(SpriteKind.koopaGreen, SpriteKind.koopaGreen, function (sprite
     }
     pause(1000)
 })
+sprites.onCreated(SpriteKind.SMW_Block, function (sprite) {
+    timer.after(5000, function () {
+        sprites.destroy(sprite)
+    })
+})
 function underwater_physics () {
     underwater = 1
     mySprite.ay = 100
@@ -1875,6 +1881,9 @@ function above_ground_SMW () {
         mySprite11.ay = 500
     }
 }
+sprites.onOverlap(SpriteKind.enemy_killer_sprite, SpriteKind.utility, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+})
 function start_movement () {
     for (let value4 of sprites.allOfKind(SpriteKind.OffScreenEnemy)) {
         if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value4.x) {
@@ -3749,6 +3758,7 @@ scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile13`, function (sprite
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
 let mySprite9: Sprite = null
+let mySprite13: Sprite = null
 let mySprite12: Sprite = null
 let mySprite5: Sprite = null
 let coins = 0
@@ -3887,6 +3897,7 @@ canMove = 1
 invulnerability = 0
 scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.OnlyHorizontal, scroller.BackgroundLayer.Layer4)
 scroller.scrollBackgroundWithSpeed(5, 0, scroller.BackgroundLayer.Layer4)
+let block_locations: tiles.Location[] = []
 game.onUpdate(function () {
     if (World_Map_True == 0) {
         if (mySprite.isHittingTile(CollisionDirection.Top) && mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile23`)) {
@@ -3919,6 +3930,49 @@ game.onUpdate(function () {
                     tiles.setTileAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), assets.tile`transparency16`)
                     tiles.setWallAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), false)
                 }
+            }
+            if (mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile65`)) {
+                kill_above_block(mySprite.tilemapLocation().getNeighboringLocation(CollisionDirection.Top))
+                tiles.setTileAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), assets.tile`myTile56`)
+                mySprite3 = sprites.create(assets.image`myImage7`, SpriteKind.mushroom)
+                mySprite3.ay = 500
+                mySprite3.vx = 30
+                tiles.placeOnTile(mySprite3, tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top).getNeighboringLocation(CollisionDirection.Top))
+            }
+            // See on created sprite of kind SMW_Block for how it gets destroyed
+            if (mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile64`)) {
+                block_locations.push(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top))
+                tiles.setTileAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), assets.tile`transparency16`)
+                tiles.setWallAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), false)
+                mySprite13 = sprites.create(img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `, SpriteKind.SMW_Block)
+                tiles.placeOnTile(mySprite13, tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top))
+                animation.runImageAnimation(
+                mySprite13,
+                assets.animation`myAnim12`,
+                150,
+                true
+                )
+                timer.after(5000, function () {
+                    tiles.setTileAt(block_locations[0], assets.tile`myTile64`)
+                    tiles.setWallAt(block_locations.shift(), true)
+                })
             }
         }
         for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
