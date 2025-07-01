@@ -760,6 +760,29 @@ function levelCastle () {
         })
     }
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.SMW_Goomba, function (sprite, otherSprite) {
+    if (sprite.bottom < otherSprite.y) {
+        otherSprite.vx = 0
+        sprite.vy = -100
+        animation.runImageAnimation(
+        sprite,
+        assets.animation`myAnim15`,
+        300,
+        true
+        )
+        timer.after(5000, function () {
+            otherSprite.vx = -30
+            animation.runImageAnimation(
+            sprite,
+            assets.animation`myAnim14`,
+            200,
+            true
+            )
+        })
+    } else {
+        luigi_Die()
+    }
+})
 sprites.onOverlap(SpriteKind.koopaGreen, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     animation.stopAnimation(animation.AnimationTypes.All, sprite)
     animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
@@ -1603,8 +1626,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.koopaGreen, function (sprite, ot
         100,
         true
         )
-        otherSprite.vx = -100
-        sprite.vy = -100
     } else {
         luigi_Die()
     }
@@ -3520,7 +3541,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     if (sprite.bottom < otherSprite.y) {
         otherSprite.destroy()
         sprite.vy = -100
-        music.play(music.melodyPlayable(music.thump), music.PlaybackMode.UntilDone)
     } else {
         luigi_Die()
     }
