@@ -3919,6 +3919,28 @@ scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.OnlyHorizontal, sc
 scroller.scrollBackgroundWithSpeed(5, 0, scroller.BackgroundLayer.Layer4)
 let block_locations: tiles.Location[] = []
 multilights.addLightSource(mySprite, 20)
+let spritetypes = [
+SpriteKind.Food,
+SpriteKind.Projectile,
+SpriteKind.Enemy,
+SpriteKind.koopaGreen,
+SpriteKind.offScreenKoopaGreen,
+SpriteKind.OffScreenEnemy,
+SpriteKind.koopaRed,
+SpriteKind.flag,
+SpriteKind.mushroom,
+SpriteKind.enemy_killer_sprite,
+SpriteKind.firebar,
+SpriteKind.utility,
+SpriteKind.lavabubble,
+SpriteKind.boss,
+SpriteKind.fire,
+SpriteKind.bullet_off_screen,
+SpriteKind.SMW_Goomba,
+SpriteKind.bullet,
+SpriteKind.offscreenSMWgoomba,
+SpriteKind.SMW_Block
+]
 game.onUpdate(function () {
     if (World_Map_True == 0) {
         if (mySprite.isHittingTile(CollisionDirection.Top) && mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile23`)) {
