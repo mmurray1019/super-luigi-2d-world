@@ -2970,41 +2970,8 @@ function world () {
     mySprite.setImage(assets.image`Luigi`)
     powerup = 0
     World_Map_True = 1
-    for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.Food)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.koopaGreen)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.offScreenKoopaGreen)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.OffScreenEnemy)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.mushroom)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.firebar)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.utility)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.boss)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.lavabubble)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.fire)) {
-        value.destroy()
+    for (let value of spritetypes) {
+        destroyspritetype(value)
     }
     controller.moveSprite(mySprite, 100, 100)
     mySprite.ay = 0
@@ -3545,6 +3512,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         luigi_Die()
     }
 })
+function destroyspritetype (spritetype: number) {
+    sprites.destroyAllSpritesOfKind(spritetype)
+}
 function loadworld2 () {
     music.play(music.createSong(assets.song`Yoshis island`), music.PlaybackMode.LoopingInBackground)
     scroller.setLayerImage(scroller.BackgroundLayer.Layer4, img`
@@ -3791,6 +3761,7 @@ let die = 0
 let underwater = 0
 let mySprite2: Sprite = null
 let mySprite4: Sprite = null
+let spritetypes: number[] = []
 let invulnerability = 0
 let canMove = 0
 let powerup = 0
@@ -3919,7 +3890,7 @@ scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.OnlyHorizontal, sc
 scroller.scrollBackgroundWithSpeed(5, 0, scroller.BackgroundLayer.Layer4)
 let block_locations: tiles.Location[] = []
 multilights.addLightSource(mySprite, 20)
-let spritetypes = [
+spritetypes = [
 SpriteKind.Food,
 SpriteKind.Projectile,
 SpriteKind.Enemy,
