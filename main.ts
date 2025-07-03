@@ -362,10 +362,10 @@ function levelCastle () {
     for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
         value.destroy()
     }
-    for (let value of sprites.allOfKind(SpriteKind.Food)) {
-        value.destroy()
+    for (let value2 of sprites.allOfKind(SpriteKind.Food)) {
+        value2.destroy()
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile0`)) {
+    for (let value3 of tiles.getTilesByType(assets.tile`myTile0`)) {
         mySprite2 = sprites.create(img`
             . . . . . . e e e e . . . . . . 
             . . . . . e e e e e e . . . . . 
@@ -384,7 +384,7 @@ function levelCastle () {
             . f f f f f f . . f f f f f f . 
             . . f f f f f . . f f f f f . . 
             `, SpriteKind.OffScreenEnemy)
-        tiles.placeOnTile(mySprite2, value)
+        tiles.placeOnTile(mySprite2, value3)
         animation.runImageAnimation(
         mySprite2,
         [img`
@@ -461,7 +461,7 @@ function levelCastle () {
         )
         mySprite2.ay = 500
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile11`)) {
+    for (let value4 of tiles.getTilesByType(assets.tile`myTile11`)) {
         mySprite2 = sprites.create(img`
             ................
             ............1...
@@ -488,7 +488,7 @@ function levelCastle () {
             .4441111144444..
             4444......44444.
             `, SpriteKind.offScreenKoopaGreen)
-        tiles.placeOnTile(mySprite2, value)
+        tiles.placeOnTile(mySprite2, value4)
         mySprite2.ay = 500
         animation.runImageAnimation(
         mySprite2,
@@ -547,7 +547,7 @@ function levelCastle () {
         true
         )
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile30`)) {
+    for (let value5 of tiles.getTilesByType(assets.tile`myTile30`)) {
         mySprite2 = sprites.create(img`
             ........................
             ........................
@@ -574,7 +574,7 @@ function levelCastle () {
             ........................
             ........................
             `, SpriteKind.Food)
-        tiles.placeOnTile(mySprite2, value)
+        tiles.placeOnTile(mySprite2, value5)
         animation.runImageAnimation(
         mySprite2,
         [img`
@@ -701,7 +701,7 @@ function levelCastle () {
         true
         )
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile47`)) {
+    for (let value6 of tiles.getTilesByType(assets.tile`myTile47`)) {
         mySprite2 = sprites.create(img`
             3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
             3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
@@ -721,8 +721,8 @@ function levelCastle () {
             3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 
             `, SpriteKind.firebar)
         mySprite2.setFlag(SpriteFlag.GhostThroughWalls, true)
-        tiles.placeOnTile(mySprite2, value.getNeighboringLocation(CollisionDirection.Top).getNeighboringLocation(CollisionDirection.Top).getNeighboringLocation(CollisionDirection.Left).getNeighboringLocation(CollisionDirection.Left))
-        tiles.setTileAt(value, assets.tile`myTile22`)
+        tiles.placeOnTile(mySprite2, value6.getNeighboringLocation(CollisionDirection.Top).getNeighboringLocation(CollisionDirection.Top).getNeighboringLocation(CollisionDirection.Left).getNeighboringLocation(CollisionDirection.Left))
+        tiles.setTileAt(value6, assets.tile`myTile22`)
         animation.runImageAnimation(
         mySprite2,
         assets.animation`myAnim7`,
@@ -730,7 +730,7 @@ function levelCastle () {
         true
         )
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile48`)) {
+    for (let value7 of tiles.getTilesByType(assets.tile`myTile48`)) {
         mySprite2 = sprites.create(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -749,12 +749,12 @@ function levelCastle () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             `, SpriteKind.lavabubble)
-        tiles.placeOnTile(mySprite2, value)
+        tiles.placeOnTile(mySprite2, value7)
         mySprite2.setFlag(SpriteFlag.GhostThroughWalls, true)
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile53`)) {
+    for (let value8 of tiles.getTilesByType(assets.tile`myTile53`)) {
         mySprite2 = sprites.create(assets.image`myImage0`, SpriteKind.boss)
-        tiles.placeOnTile(mySprite2, value)
+        tiles.placeOnTile(mySprite2, value8)
         mySprite2.ay = 500
         timer.after(500, function () {
             mySprite2.ay = 0
@@ -1028,10 +1028,6 @@ sprites.onCreated(SpriteKind.SMW_Block, function (sprite) {
         sprites.destroy(sprite)
     })
 })
-function underwater_physics () {
-    underwater = 1
-    mySprite.ay = 100
-}
 scene.onOverlapTile(SpriteKind.display, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -1640,9 +1636,21 @@ scene.onOverlapTile(SpriteKind.display, assets.tile`myTile20`, function (sprite,
 })
 scene.onHitWall(SpriteKind.bullet, function (sprite, location) {
     if (sprite.isHittingTile(CollisionDirection.Left)) {
-        sprites.destroy(sprite)
+        sprite.setFlag(SpriteFlag.GhostThroughSprites, true)
+        sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+        sprite.vx = 0
+        sprite.ay = 500
+        timer.after(2000, function () {
+            sprites.destroy(sprite)
+        })
     } else if (sprite.isHittingTile(CollisionDirection.Right)) {
-        sprites.destroy(sprite)
+        sprite.setFlag(SpriteFlag.GhostThroughSprites, true)
+        sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+        sprite.vx = 0
+        sprite.ay = 500
+        timer.after(2000, function () {
+            sprites.destroy(sprite)
+        })
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -1668,6 +1676,106 @@ sprites.onOverlap(SpriteKind.enemy_killer_sprite, SpriteKind.Enemy, function (sp
 sprites.onOverlap(SpriteKind.enemy_killer_sprite, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
 })
+function luigi_Die () {
+    if (invulnerability == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile41`))) {
+    	
+    } else if (powerup == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile41`))) {
+        invulnerability = 1
+        powerup = 0
+        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+        mySprite.setImage(assets.image`Luigi`)
+        timer.after(500, function () {
+            mySprite.setFlag(SpriteFlag.Invisible, true)
+            timer.after(500, function () {
+                mySprite.setFlag(SpriteFlag.Invisible, false)
+                timer.after(500, function () {
+                    mySprite.setFlag(SpriteFlag.Invisible, true)
+                    timer.after(500, function () {
+                        mySprite.setFlag(SpriteFlag.Invisible, false)
+                        timer.after(500, function () {
+                            mySprite.setFlag(SpriteFlag.Invisible, true)
+                            timer.after(500, function () {
+                                mySprite.setFlag(SpriteFlag.Invisible, false)
+                                invulnerability = 0
+                            })
+                        })
+                    })
+                })
+            })
+        })
+    } else {
+        music.stopAllSounds()
+        mySprite.setFlag(SpriteFlag.GhostThroughTiles, true)
+        die = 1
+        animation.runImageAnimation(
+        mySprite,
+        [img`
+            ......6666......
+            ....66755766....
+            ...6771551776...
+            ..6777ffff7776..
+            ..67ffffffff76..
+            ...ffffffffff...
+            ...6f2f22f2f6...
+            ..ff22222222ff..
+            ...f22333322f...
+            ..ff23f33f32ff..
+            .edf33dddd33fde.
+            .edffddddddffde.
+            .e4fdf4444fdf4e.
+            .1edffffffffde..
+            .11eddd22dddeee.
+            ..77eed22dee711e
+            ...7ced22decff1e
+            ...caaedde1ffff.
+            ...cb11ee11ffff.
+            ..fff11bbbcffff.
+            .f5eefcccc.ffff.
+            .ffffef.....ff..
+            .ffffff.........
+            ....ff..........
+            `,img`
+            ......6666......
+            ....66755766....
+            ...6771551776...
+            ..6777ffff7776..
+            ..67ffffffff76..
+            ...ffffffffff...
+            ...6f2f22f2f6...
+            ..ff22222222ff..
+            ...f22333322f...
+            ..ff23f33f32ff..
+            .edf33dddd33fde.
+            .edffddddddffde.
+            .e4fdf4444fdf4e.
+            ..edffffffffde1.
+            .eeeddd22ddde11.
+            e117eed22dee77..
+            e1ffced22dec7...
+            .ffff1eddeaac...
+            .ffff11ee11bc...
+            .ffffcbbb11fff..
+            .ffff.ccccfee5f.
+            ..ff.....feffff.
+            .........ffffff.
+            ..........ff....
+            `],
+        100,
+        true
+        )
+        mySprite.vy = -250
+        mySprite.setFlag(SpriteFlag.GhostThroughSprites, true)
+        mySprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+        music.play(music.createSong(assets.song`death`), music.PlaybackMode.UntilDone)
+        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+        mySprite.setFlag(SpriteFlag.GhostThroughSprites, false)
+        mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
+        mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
+        die = 0
+        world()
+        loadworld1()
+    }
+}
 scene.onOverlapTile(SpriteKind.Food, assets.tile`myTile49`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -1718,7 +1826,7 @@ function startNextLevel () {
         level_Above_Ground()
     } else if (currentLevel == 4) {
         tiles.setCurrentTilemap(tilemap`level`)
-        for (let value of tiles.getTilesByType(assets.tile`myTile50`)) {
+        for (let value9 of tiles.getTilesByType(assets.tile`myTile50`)) {
             mySprite8 = sprites.create(img`
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
@@ -1737,7 +1845,7 @@ function startNextLevel () {
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
                 `, SpriteKind.utility)
-            tiles.placeOnTile(mySprite8, value)
+            tiles.placeOnTile(mySprite8, value9)
             animation.runImageAnimation(
             mySprite8,
             assets.animation`myAnim6`,
@@ -1749,7 +1857,7 @@ function startNextLevel () {
         level_Above_Ground()
     } else if (currentLevel == 5) {
         tiles.setCurrentTilemap(tilemap`level0`)
-        for (let value of tiles.getTilesByType(assets.tile`myTile48`)) {
+        for (let value10 of tiles.getTilesByType(assets.tile`myTile48`)) {
             mySprite8 = sprites.create(img`
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
@@ -1768,7 +1876,7 @@ function startNextLevel () {
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
                 `, SpriteKind.utility)
-            tiles.placeOnTile(mySprite8, value)
+            tiles.placeOnTile(mySprite8, value10)
             animation.runImageAnimation(
             mySprite8,
             assets.animation`myAnim10`,
@@ -1776,7 +1884,7 @@ function startNextLevel () {
             true
             )
         }
-        for (let value of tiles.getTilesByType(assets.tile`myTile42`)) {
+        for (let value11 of tiles.getTilesByType(assets.tile`myTile42`)) {
             mySprite8 = sprites.create(img`
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
@@ -1795,7 +1903,7 @@ function startNextLevel () {
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
                 `, SpriteKind.utility)
-            tiles.placeOnTile(mySprite8, value)
+            tiles.placeOnTile(mySprite8, value11)
             animation.runImageAnimation(
             mySprite8,
             assets.animation`myAnim10`,
@@ -1803,7 +1911,7 @@ function startNextLevel () {
             true
             )
         }
-        for (let value of tiles.getTilesByType(assets.tile`myTile44`)) {
+        for (let value12 of tiles.getTilesByType(assets.tile`myTile44`)) {
             mySprite8 = sprites.create(img`
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
@@ -1822,7 +1930,7 @@ function startNextLevel () {
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
                 `, SpriteKind.utility)
-            tiles.placeOnTile(mySprite8, value)
+            tiles.placeOnTile(mySprite8, value12)
             animation.runImageAnimation(
             mySprite8,
             assets.animation`myAnim8`,
@@ -1852,87 +1960,32 @@ scene.onOverlapTile(SpriteKind.Enemy, assets.tile`myTile20`, function (sprite, l
 scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile20`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
-function above_ground_SMW () {
-    color.setPalette(
-    color.originalPalette
-    )
-    color.setColor(3, color.rgb(201, 152, 88))
-    scroller.setLayerImage(scroller.BackgroundLayer.Layer4, assets.image`BG`)
-    scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.BothDirections, scroller.BackgroundLayer.Layer4)
-    scroller.scrollBackgroundWithSpeed(-5, 0, scroller.BackgroundLayer.Layer4)
-    tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
-    for (let value of sprites.allOfKind(SpriteKind.utility)) {
-        sprites.destroy(value)
-    }
-    for (let value of tiles.getTilesByType(assets.tile`myTile65`)) {
-        mySprite11 = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, SpriteKind.utility)
-        animation.runImageAnimation(
-        mySprite11,
-        assets.animation`myAnim11`,
-        200,
-        true
-        )
-        tiles.placeOnTile(mySprite11, value)
-    }
-    for (let value of tiles.getTilesByType(assets.tile`myTile68`)) {
-        mySprite11 = sprites.create(assets.image`myImage3`, SpriteKind.bullet_off_screen)
-        tiles.placeOnTile(mySprite11, value)
-    }
-    for (let value of tiles.getTilesByType(assets.tile`myTile18`)) {
-        mySprite11 = sprites.create(assets.image`myImage4`, SpriteKind.offscreenSMWgoomba)
-        tiles.placeOnTile(mySprite11, value)
-        animation.runImageAnimation(
-        mySprite11,
-        assets.animation`myAnim14`,
-        200,
-        true
-        )
-        mySprite11.ay = 500
-    }
-}
 sprites.onOverlap(SpriteKind.enemy_killer_sprite, SpriteKind.utility, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
 })
 function start_movement () {
-    for (let value4 of sprites.allOfKind(SpriteKind.OffScreenEnemy)) {
-        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value4.x) {
-            value4.vx = -30
-            value4.setKind(SpriteKind.Enemy)
+    for (let value42 of sprites.allOfKind(SpriteKind.OffScreenEnemy)) {
+        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value42.x) {
+            value42.vx = -30
+            value42.setKind(SpriteKind.Enemy)
         }
     }
-    for (let value5 of sprites.allOfKind(SpriteKind.offScreenKoopaGreen)) {
-        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value5.x) {
-            value5.vx = -30
-            value5.setKind(SpriteKind.koopaGreen)
+    for (let value52 of sprites.allOfKind(SpriteKind.offScreenKoopaGreen)) {
+        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value52.x) {
+            value52.vx = -30
+            value52.setKind(SpriteKind.koopaGreen)
         }
     }
-    for (let value5 of sprites.allOfKind(SpriteKind.bullet_off_screen)) {
-        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value5.x) {
-            value5.vx = -50
-            value5.setKind(SpriteKind.bullet)
+    for (let value53 of sprites.allOfKind(SpriteKind.bullet_off_screen)) {
+        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value53.x) {
+            value53.vx = -50
+            value53.setKind(SpriteKind.bullet)
         }
     }
-    for (let value5 of sprites.allOfKind(SpriteKind.offscreenSMWgoomba)) {
-        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value5.x) {
-            value5.vx = -30
-            value5.setKind(SpriteKind.SMW_Goomba)
+    for (let value54 of sprites.allOfKind(SpriteKind.offscreenSMWgoomba)) {
+        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value54.x) {
+            value54.vx = -30
+            value54.setKind(SpriteKind.SMW_Goomba)
         }
     }
 }
@@ -2191,106 +2244,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.flipped_SMW_goomba, function (sp
         })
     }
 })
-function luigi_Die () {
-    if (invulnerability == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile41`))) {
-    	
-    } else if (powerup == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile41`))) {
-        invulnerability = 1
-        powerup = 0
-        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
-        mySprite.setImage(assets.image`Luigi`)
-        timer.after(500, function () {
-            mySprite.setFlag(SpriteFlag.Invisible, true)
-            timer.after(500, function () {
-                mySprite.setFlag(SpriteFlag.Invisible, false)
-                timer.after(500, function () {
-                    mySprite.setFlag(SpriteFlag.Invisible, true)
-                    timer.after(500, function () {
-                        mySprite.setFlag(SpriteFlag.Invisible, false)
-                        timer.after(500, function () {
-                            mySprite.setFlag(SpriteFlag.Invisible, true)
-                            timer.after(500, function () {
-                                mySprite.setFlag(SpriteFlag.Invisible, false)
-                                invulnerability = 0
-                            })
-                        })
-                    })
-                })
-            })
-        })
-    } else {
-        music.stopAllSounds()
-        mySprite.setFlag(SpriteFlag.GhostThroughTiles, true)
-        die = 1
-        animation.runImageAnimation(
-        mySprite,
-        [img`
-            ......6666......
-            ....66755766....
-            ...6771551776...
-            ..6777ffff7776..
-            ..67ffffffff76..
-            ...ffffffffff...
-            ...6f2f22f2f6...
-            ..ff22222222ff..
-            ...f22333322f...
-            ..ff23f33f32ff..
-            .edf33dddd33fde.
-            .edffddddddffde.
-            .e4fdf4444fdf4e.
-            .1edffffffffde..
-            .11eddd22dddeee.
-            ..77eed22dee711e
-            ...7ced22decff1e
-            ...caaedde1ffff.
-            ...cb11ee11ffff.
-            ..fff11bbbcffff.
-            .f5eefcccc.ffff.
-            .ffffef.....ff..
-            .ffffff.........
-            ....ff..........
-            `,img`
-            ......6666......
-            ....66755766....
-            ...6771551776...
-            ..6777ffff7776..
-            ..67ffffffff76..
-            ...ffffffffff...
-            ...6f2f22f2f6...
-            ..ff22222222ff..
-            ...f22333322f...
-            ..ff23f33f32ff..
-            .edf33dddd33fde.
-            .edffddddddffde.
-            .e4fdf4444fdf4e.
-            ..edffffffffde1.
-            .eeeddd22ddde11.
-            e117eed22dee77..
-            e1ffced22dec7...
-            .ffff1eddeaac...
-            .ffff11ee11bc...
-            .ffffcbbb11fff..
-            .ffff.ccccfee5f.
-            ..ff.....feffff.
-            .........ffffff.
-            ..........ff....
-            `],
-        100,
-        true
-        )
-        mySprite.vy = -250
-        mySprite.setFlag(SpriteFlag.GhostThroughSprites, true)
-        mySprite.setFlag(SpriteFlag.GhostThroughWalls, true)
-        music.play(music.createSong(assets.song`death`), music.PlaybackMode.UntilDone)
-        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
-        mySprite.setFlag(SpriteFlag.GhostThroughSprites, false)
-        mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
-        mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
-        die = 0
-        world()
-        loadworld1()
-    }
-}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, location) {
     mySprite.setFlag(SpriteFlag.GhostThroughTiles, true)
     controller.moveSprite(mySprite, 0, 0)
@@ -2315,11 +2268,11 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, 
         `, SpriteKind.utility)
     mySprite7.setFlag(SpriteFlag.GhostThroughWalls, true)
     tiles.placeOnTile(mySprite7, tiles.getTileLocation(85, 12))
-    for (let value of tiles.getTilesByType(assets.tile`myTile43`)) {
-        tiles.setTileAt(value, assets.tile`transparency16`)
-        tiles.setWallAt(value, false)
+    for (let value17 of tiles.getTilesByType(assets.tile`myTile43`)) {
+        tiles.setTileAt(value17, assets.tile`transparency16`)
+        tiles.setWallAt(value17, false)
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile42`)) {
+    for (let value18 of tiles.getTilesByType(assets.tile`myTile42`)) {
         mySprite10 = sprites.create(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -2344,9 +2297,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, 
         200,
         true
         )
-        tiles.placeOnTile(mySprite10, value)
+        tiles.placeOnTile(mySprite10, value18)
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile41`)) {
+    for (let value19 of tiles.getTilesByType(assets.tile`myTile41`)) {
         mySprite10 = sprites.create(img`
             2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
             2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
@@ -2365,7 +2318,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, 
             2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
             2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
             `, SpriteKind.utility)
-        tiles.placeOnTile(mySprite10, value)
+        tiles.placeOnTile(mySprite10, value19)
     }
     animation.runImageAnimation(
     mySprite7,
@@ -2375,8 +2328,8 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, 
     )
     music.play(music.createSong(assets.song`win`), music.PlaybackMode.InBackground)
     timer.after(3000, function () {
-        for (let value of sprites.allOfKind(SpriteKind.boss)) {
-            value.vy = 50
+        for (let value20 of sprites.allOfKind(SpriteKind.boss)) {
+            value20.vy = 50
         }
         timer.after(3000, function () {
             tiles.setCurrentTilemap(tilemap`level11`)
@@ -2403,389 +2356,6 @@ controller.combos.attachCombo("up down left right b", function () {
 scene.onOverlapTile(SpriteKind.koopaGreen, assets.tile`myTile20`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
-function level_Above_Ground () {
-    music.play(music.createSong(assets.song`mariomusic`), music.PlaybackMode.LoopingInBackground)
-    scene.setBackgroundImage(assets.image`BG`)
-    tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
-    mySprite4 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Enemy)
-    mySprite4 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Food)
-    for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
-        value.destroy()
-    }
-    for (let value of sprites.allOfKind(SpriteKind.Food)) {
-        value.destroy()
-    }
-    for (let value of tiles.getTilesByType(assets.tile`myTile18`)) {
-        mySprite2 = sprites.create(img`
-            . . . . . . e e e e . . . . . . 
-            . . . . . e e e e e e . . . . . 
-            . . . . e e e e e e e e . . . . 
-            . . . e e e e e e e e e e . . . 
-            . . e f f e e e e e e f f e . . 
-            . e e e 1 f e e e e f 1 e e e . 
-            . e e e 1 f f f f f f 1 e e e . 
-            e e e e 1 f 1 e e 1 f 1 e e e e 
-            e e e e 1 1 1 e e 1 1 1 e e e e 
-            e e e e e e e e e e e e e e e e 
-            . e e e e d d d d d d e e e e . 
-            . . . . d d d d d d d d . . . . 
-            . . f f d d d d d d d d f f . . 
-            . f f f f f d d d d f f f f f . 
-            . f f f f f f . . f f f f f f . 
-            . . f f f f f . . f f f f f . . 
-            `, SpriteKind.OffScreenEnemy)
-        tiles.placeOnTile(mySprite2, value)
-        animation.runImageAnimation(
-        mySprite2,
-        [img`
-            . . . . . . e e e e . . . . . . 
-            . . . . . e e e e e e . . . . . 
-            . . . . e e e e e e e e . . . . 
-            . . . e e e e e e e e e e . . . 
-            . . e f f e e e e e e f f e . . 
-            . e e e 1 f e e e e f 1 e e e . 
-            . e e e 1 f f f f f f 1 e e e . 
-            e e e e 1 f 1 e e 1 f 1 e e e e 
-            e e e e 1 1 1 e e 1 1 1 e e e e 
-            e e e e e e e e e e e e e e e e 
-            . e e e e d d d d d d e e e e . 
-            . . . . d d d d d d d d . . . . 
-            . . f f d d d d d d d d f f . . 
-            . f f f f f d d d d f f f f f . 
-            . f f f f f f . . f f f f f f . 
-            . . f f f f f . . f f f f f . . 
-            `,img`
-            . . . . . . e e e e . . . . . . 
-            . . . . . e e e e e e . . . . . 
-            . . . . e e e e e e e e . . . . 
-            . . . e e e e e e e e e e . . . 
-            . . e f f e e e e e e f f e . . 
-            . e e e 1 f e e e e f 1 e e e . 
-            . e e e 1 f f f f f f 1 e e e . 
-            e e e e 1 f 1 e e 1 f 1 e e e e 
-            e e e e 1 1 1 e e 1 1 1 e e e e 
-            e e e e e e e e e e e e e e e e 
-            . e e e e d d d d d d e e e e . 
-            . . . . d d d d d d d d f f . . 
-            . . f f d d d d d d f f f f f . 
-            . f f f f f d d d f f f f f f . 
-            . f f f f f f . . f f f f f . . 
-            . . f f f f f . . . . . . . . . 
-            `,img`
-            . . . . . . e e e e . . . . . . 
-            . . . . . e e e e e e . . . . . 
-            . . . . e e e e e e e e . . . . 
-            . . . e e e e e e e e e e . . . 
-            . . e f f e e e e e e f f e . . 
-            . e e e 1 f e e e e f 1 e e e . 
-            . e e e 1 f f f f f f 1 e e e . 
-            e e e e 1 f 1 e e 1 f 1 e e e e 
-            e e e e 1 1 1 e e 1 1 1 e e e e 
-            e e e e e e e e e e e e e e e e 
-            . e e e e d d d d d d e e e e . 
-            . . . . d d d d d d d d . . . . 
-            . . f f d d d d d d d d f f . . 
-            . f f f f f d d d d f f f f f . 
-            . f f f f f f . . f f f f f f . 
-            . . f f f f f . . f f f f f . . 
-            `,img`
-            . . . . . . e e e e . . . . . . 
-            . . . . . e e e e e e . . . . . 
-            . . . . e e e e e e e e . . . . 
-            . . . e e e e e e e e e e . . . 
-            . . e f f e e e e e e f f e . . 
-            . e e e 1 f e e e e f 1 e e e . 
-            . e e e 1 f f f f f f 1 e e e . 
-            e e e e 1 f 1 e e 1 f 1 e e e e 
-            e e e e 1 1 1 e e 1 1 1 e e e e 
-            e e e e e e e e e e e e e e e e 
-            . e e e e d d d d d d e e e e . 
-            . . f f d d d d d d d d . . . . 
-            . f f f f f d d d d d d f f . . 
-            . f f f f f f d d d f f f f f . 
-            . . f f f f f . . f f f f f f . 
-            . . . . . . . . . f f f f f . . 
-            `],
-        200,
-        true
-        )
-        mySprite2.ay = 500
-    }
-    for (let value of tiles.getTilesByType(assets.tile`myTile12`)) {
-        mySprite2 = sprites.create(img`
-            ................
-            ............1...
-            ...........111..
-            ..........4111..
-            .........441174.
-            .........441174.
-            .........441174.
-            .........441114.
-            .........4441444
-            .........4444474
-            ...77777..444444
-            ..7477747.44.444
-            .77747477.44..44
-            .711747777144.44
-            .717474777144.4.
-            .474777474144...
-            .7477777471144..
-            .474777474714...
-            .777474777414...
-            .77774777771....
-            111747477711....
-            ..11177411144...
-            .4441111144444..
-            4444......44444.
-            `, SpriteKind.offScreenKoopaGreen)
-        tiles.placeOnTile(mySprite2, value)
-        mySprite2.ay = 500
-        animation.runImageAnimation(
-        mySprite2,
-        [img`
-            .................
-            ....1............
-            ...111...........
-            ...1114..........
-            ..471144.........
-            ..471144.........
-            ..471144.........
-            ..411144.........
-            .4441444.........
-            .4744444.........
-            .444444..77777...
-            .444.44.7477747..
-            .44..44.77474777.
-            .44.441777747117.
-            ..4.441777474717.
-            ....441474777474.
-            ...4411747777747.
-            ....417474777474.
-            ....414777474777.
-            .....17777747777.
-            .....117774747111
-            ....44111477111..
-            ...4444411111444.
-            ..44444......4444
-            `,img`
-            ....1............
-            ...111...........
-            ..41114..........
-            ..471144.........
-            .4471144.........
-            .4471144.........
-            47411144.........
-            44441444.........
-            44444444.........
-            44444444.77777...
-            4444..417477747..
-            444...4177474777.
-            .....41777747117.
-            ....441777474717.
-            ..44441474777474.
-            ...4411747777747.
-            ....417474777474.
-            ....414777474777.
-            .....17777747777.
-            .....117774747111
-            .....41114771114.
-            .....44411111444.
-            ......444....444.
-            .......444..444..
-            `],
-        200,
-        true
-        )
-    }
-    for (let value of tiles.getTilesByType(assets.tile`myTile31`)) {
-        mySprite2 = sprites.create(img`
-            ........................
-            ........................
-            ........................
-            ..........ffffff........
-            ........fff111ffff......
-            .......ff1155555ff......
-            .......f155111f55ff.....
-            ......ff155155f55ff.....
-            ......f1555155f555ff....
-            ......f1555155f555ff....
-            ......f1555155f555ff....
-            ......f1555155f555ff....
-            ......f1555155f555ff....
-            ......f1555155f555ff....
-            ......ff155155f55ff.....
-            .......f155ffff55ff.....
-            .......ff1555555ff......
-            ........fff555ffff......
-            ..........ffffff........
-            ........................
-            ........................
-            ........................
-            ........................
-            ........................
-            `, SpriteKind.Food)
-        tiles.placeOnTile(mySprite2, value)
-        animation.runImageAnimation(
-        mySprite2,
-        [img`
-            ........ffffff..........
-            ......fff111fff.........
-            .....ff1155555ff........
-            .....f155111f55ff.......
-            ....ff155155f55ff.......
-            ....f1555155f555ff......
-            ....f1555155f555ff......
-            ....f1555155f555ff......
-            ....f1555155f555ff......
-            ....f1555155f555ff......
-            ....ff155155f55ff.......
-            .....f155ffff55ff.......
-            .....ff1555555ff........
-            ......fff555ffff........
-            ........ffffff..........
-            ........................
-            `,img`
-            .........ffff...........
-            .......fff1ffff.........
-            ......ff11555ff.........
-            ......f1551f55ff........
-            .....ff1551f55ff........
-            .....f15551f555ff.......
-            .....f15551f555ff.......
-            .....f15551f555ff.......
-            .....f15551f555ff.......
-            .....f15551f555ff.......
-            .....ff1551f55ff........
-            ......f155ff55ff........
-            ......ff15555ff.........
-            .......fff5ffff.........
-            .........ffff...........
-            ........................
-            `,img`
-            .........fff............
-            ........ff1fff..........
-            .......ff155ff..........
-            .......f15155ff.........
-            ......ff15155ff.........
-            ......f1551555ff........
-            ......f1551555ff........
-            ......f1551555ff........
-            ......f1551555ff........
-            ......f1551555ff........
-            ......ff15155ff.........
-            .......f15f55ff.........
-            .......ff155ff..........
-            ........ff5fff..........
-            .........fff............
-            ........................
-            `,img`
-            ..........ff............
-            .........ffff...........
-            ........ff1ff...........
-            ........f155ff..........
-            .......ff155ff..........
-            .......f15555ff.........
-            .......f15555ff.........
-            .......f15555ff.........
-            .......f15555ff.........
-            .......f15555ff.........
-            .......ff155ff..........
-            ........f155ff..........
-            ........ff1ff...........
-            .........ffff...........
-            ..........ff............
-            ........................
-            `,img`
-            .........fff............
-            ........ff1fff..........
-            .......ff155ff..........
-            .......f15155ff.........
-            ......ff15155ff.........
-            ......f1551555ff........
-            ......f1551555ff........
-            ......f1551555ff........
-            ......f1551555ff........
-            ......f1551555ff........
-            ......ff15155ff.........
-            .......f15f55ff.........
-            .......ff155ff..........
-            ........ff5fff..........
-            .........fff............
-            ........................
-            `,img`
-            .........ffff...........
-            .......fff1ffff.........
-            ......ff11555ff.........
-            ......f1551f55ff........
-            .....ff1551f55ff........
-            .....f15551f555ff.......
-            .....f15551f555ff.......
-            .....f15551f555ff.......
-            .....f15551f555ff.......
-            .....f15551f555ff.......
-            .....ff1551f55ff........
-            ......f155ff55ff........
-            ......ff15555ff.........
-            .......fff5ffff.........
-            .........ffff...........
-            ........................
-            `,img`
-            ........ffffff..........
-            ......fff111ffff........
-            .....ff1155555ff........
-            .....f155111f55ff.......
-            ....ff155155f55ff.......
-            ....f1555155f555ff......
-            ....f1555155f555ff......
-            ....f1555155f555ff......
-            ....f1555155f555ff......
-            ....f1555155f555ff......
-            ....ff155155f55ff.......
-            .....f155ffff55ff.......
-            .....ff1555555ff........
-            ......fff555ffff........
-            ........ffffff..........
-            ........................
-            `],
-        100,
-        true
-        )
-    }
-}
 scene.onOverlapTile(SpriteKind.Food, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -2946,6 +2516,444 @@ function coinPlace () {
     coins += 1
     textSprite.setText(convertToText(coins))
 }
+function above_ground_SMW () {
+    color.setPalette(
+    color.originalPalette
+    )
+    color.setColor(3, color.rgb(201, 152, 88))
+    scroller.setLayerImage(scroller.BackgroundLayer.Layer4, assets.image`BG`)
+    scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.BothDirections, scroller.BackgroundLayer.Layer4)
+    scroller.scrollBackgroundWithSpeed(-5, 0, scroller.BackgroundLayer.Layer4)
+    tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
+    for (let value13 of sprites.allOfKind(SpriteKind.utility)) {
+        sprites.destroy(value13)
+    }
+    for (let value14 of tiles.getTilesByType(assets.tile`myTile65`)) {
+        mySprite11 = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.utility)
+        animation.runImageAnimation(
+        mySprite11,
+        assets.animation`myAnim11`,
+        200,
+        true
+        )
+        tiles.placeOnTile(mySprite11, value14)
+    }
+    for (let value15 of tiles.getTilesByType(assets.tile`myTile68`)) {
+        mySprite11 = sprites.create(assets.image`myImage3`, SpriteKind.bullet_off_screen)
+        tiles.placeOnTile(mySprite11, value15)
+    }
+    for (let value16 of tiles.getTilesByType(assets.tile`myTile18`)) {
+        mySprite11 = sprites.create(assets.image`myImage4`, SpriteKind.offscreenSMWgoomba)
+        tiles.placeOnTile(mySprite11, value16)
+        animation.runImageAnimation(
+        mySprite11,
+        assets.animation`myAnim14`,
+        200,
+        true
+        )
+        mySprite11.ay = 500
+    }
+}
+function level_Above_Ground () {
+    music.play(music.createSong(assets.song`mariomusic`), music.PlaybackMode.LoopingInBackground)
+    scene.setBackgroundImage(assets.image`BG`)
+    tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
+    mySprite4 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Enemy)
+    mySprite4 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Food)
+    for (let value21 of sprites.allOfKind(SpriteKind.Enemy)) {
+        value21.destroy()
+    }
+    for (let value22 of sprites.allOfKind(SpriteKind.Food)) {
+        value22.destroy()
+    }
+    for (let value23 of tiles.getTilesByType(assets.tile`myTile18`)) {
+        mySprite2 = sprites.create(img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . . . d d d d d d d d . . . . 
+            . . f f d d d d d d d d f f . . 
+            . f f f f f d d d d f f f f f . 
+            . f f f f f f . . f f f f f f . 
+            . . f f f f f . . f f f f f . . 
+            `, SpriteKind.OffScreenEnemy)
+        tiles.placeOnTile(mySprite2, value23)
+        animation.runImageAnimation(
+        mySprite2,
+        [img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . . . d d d d d d d d . . . . 
+            . . f f d d d d d d d d f f . . 
+            . f f f f f d d d d f f f f f . 
+            . f f f f f f . . f f f f f f . 
+            . . f f f f f . . f f f f f . . 
+            `,img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . . . d d d d d d d d f f . . 
+            . . f f d d d d d d f f f f f . 
+            . f f f f f d d d f f f f f f . 
+            . f f f f f f . . f f f f f . . 
+            . . f f f f f . . . . . . . . . 
+            `,img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . . . d d d d d d d d . . . . 
+            . . f f d d d d d d d d f f . . 
+            . f f f f f d d d d f f f f f . 
+            . f f f f f f . . f f f f f f . 
+            . . f f f f f . . f f f f f . . 
+            `,img`
+            . . . . . . e e e e . . . . . . 
+            . . . . . e e e e e e . . . . . 
+            . . . . e e e e e e e e . . . . 
+            . . . e e e e e e e e e e . . . 
+            . . e f f e e e e e e f f e . . 
+            . e e e 1 f e e e e f 1 e e e . 
+            . e e e 1 f f f f f f 1 e e e . 
+            e e e e 1 f 1 e e 1 f 1 e e e e 
+            e e e e 1 1 1 e e 1 1 1 e e e e 
+            e e e e e e e e e e e e e e e e 
+            . e e e e d d d d d d e e e e . 
+            . . f f d d d d d d d d . . . . 
+            . f f f f f d d d d d d f f . . 
+            . f f f f f f d d d f f f f f . 
+            . . f f f f f . . f f f f f f . 
+            . . . . . . . . . f f f f f . . 
+            `],
+        200,
+        true
+        )
+        mySprite2.ay = 500
+    }
+    for (let value24 of tiles.getTilesByType(assets.tile`myTile12`)) {
+        mySprite2 = sprites.create(img`
+            ................
+            ............1...
+            ...........111..
+            ..........4111..
+            .........441174.
+            .........441174.
+            .........441174.
+            .........441114.
+            .........4441444
+            .........4444474
+            ...77777..444444
+            ..7477747.44.444
+            .77747477.44..44
+            .711747777144.44
+            .717474777144.4.
+            .474777474144...
+            .7477777471144..
+            .474777474714...
+            .777474777414...
+            .77774777771....
+            111747477711....
+            ..11177411144...
+            .4441111144444..
+            4444......44444.
+            `, SpriteKind.offScreenKoopaGreen)
+        tiles.placeOnTile(mySprite2, value24)
+        mySprite2.ay = 500
+        animation.runImageAnimation(
+        mySprite2,
+        [img`
+            .................
+            ....1............
+            ...111...........
+            ...1114..........
+            ..471144.........
+            ..471144.........
+            ..471144.........
+            ..411144.........
+            .4441444.........
+            .4744444.........
+            .444444..77777...
+            .444.44.7477747..
+            .44..44.77474777.
+            .44.441777747117.
+            ..4.441777474717.
+            ....441474777474.
+            ...4411747777747.
+            ....417474777474.
+            ....414777474777.
+            .....17777747777.
+            .....117774747111
+            ....44111477111..
+            ...4444411111444.
+            ..44444......4444
+            `,img`
+            ....1............
+            ...111...........
+            ..41114..........
+            ..471144.........
+            .4471144.........
+            .4471144.........
+            47411144.........
+            44441444.........
+            44444444.........
+            44444444.77777...
+            4444..417477747..
+            444...4177474777.
+            .....41777747117.
+            ....441777474717.
+            ..44441474777474.
+            ...4411747777747.
+            ....417474777474.
+            ....414777474777.
+            .....17777747777.
+            .....117774747111
+            .....41114771114.
+            .....44411111444.
+            ......444....444.
+            .......444..444..
+            `],
+        200,
+        true
+        )
+    }
+    for (let value25 of tiles.getTilesByType(assets.tile`myTile31`)) {
+        mySprite2 = sprites.create(img`
+            ........................
+            ........................
+            ........................
+            ..........ffffff........
+            ........fff111ffff......
+            .......ff1155555ff......
+            .......f155111f55ff.....
+            ......ff155155f55ff.....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......f1555155f555ff....
+            ......ff155155f55ff.....
+            .......f155ffff55ff.....
+            .......ff1555555ff......
+            ........fff555ffff......
+            ..........ffffff........
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            `, SpriteKind.Food)
+        tiles.placeOnTile(mySprite2, value25)
+        animation.runImageAnimation(
+        mySprite2,
+        [img`
+            ........ffffff..........
+            ......fff111fff.........
+            .....ff1155555ff........
+            .....f155111f55ff.......
+            ....ff155155f55ff.......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....ff155155f55ff.......
+            .....f155ffff55ff.......
+            .....ff1555555ff........
+            ......fff555ffff........
+            ........ffffff..........
+            ........................
+            `,img`
+            .........ffff...........
+            .......fff1ffff.........
+            ......ff11555ff.........
+            ......f1551f55ff........
+            .....ff1551f55ff........
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....ff1551f55ff........
+            ......f155ff55ff........
+            ......ff15555ff.........
+            .......fff5ffff.........
+            .........ffff...........
+            ........................
+            `,img`
+            .........fff............
+            ........ff1fff..........
+            .......ff155ff..........
+            .......f15155ff.........
+            ......ff15155ff.........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......ff15155ff.........
+            .......f15f55ff.........
+            .......ff155ff..........
+            ........ff5fff..........
+            .........fff............
+            ........................
+            `,img`
+            ..........ff............
+            .........ffff...........
+            ........ff1ff...........
+            ........f155ff..........
+            .......ff155ff..........
+            .......f15555ff.........
+            .......f15555ff.........
+            .......f15555ff.........
+            .......f15555ff.........
+            .......f15555ff.........
+            .......ff155ff..........
+            ........f155ff..........
+            ........ff1ff...........
+            .........ffff...........
+            ..........ff............
+            ........................
+            `,img`
+            .........fff............
+            ........ff1fff..........
+            .......ff155ff..........
+            .......f15155ff.........
+            ......ff15155ff.........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......f1551555ff........
+            ......ff15155ff.........
+            .......f15f55ff.........
+            .......ff155ff..........
+            ........ff5fff..........
+            .........fff............
+            ........................
+            `,img`
+            .........ffff...........
+            .......fff1ffff.........
+            ......ff11555ff.........
+            ......f1551f55ff........
+            .....ff1551f55ff........
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....f15551f555ff.......
+            .....ff1551f55ff........
+            ......f155ff55ff........
+            ......ff15555ff.........
+            .......fff5ffff.........
+            .........ffff...........
+            ........................
+            `,img`
+            ........ffffff..........
+            ......fff111ffff........
+            .....ff1155555ff........
+            .....f155111f55ff.......
+            ....ff155155f55ff.......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....f1555155f555ff......
+            ....ff155155f55ff.......
+            .....f155ffff55ff.......
+            .....ff1555555ff........
+            ......fff555ffff........
+            ........ffffff..........
+            ........................
+            `],
+        100,
+        true
+        )
+    }
+}
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile41`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -3032,8 +3040,8 @@ function world () {
     mySprite.setImage(assets.image`Luigi`)
     powerup = 0
     World_Map_True = 1
-    for (let value of spritetypes) {
-        destroyspritetype(value)
+    for (let value26 of spritetypes) {
+        destroyspritetype(value26)
     }
     controller.moveSprite(mySprite, 100, 100)
     mySprite.ay = 0
@@ -3046,6 +3054,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.firebar, function (sprite, other
 scene.onOverlapTile(SpriteKind.Text, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
+function underwater_physics () {
+    underwater = 1
+    mySprite.ay = 100
+}
 scene.onOverlapTile(SpriteKind.koopaGreen, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -3217,13 +3229,13 @@ function levelBelowGround () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Food)
-    for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
-        value.destroy()
+    for (let value27 of sprites.allOfKind(SpriteKind.Enemy)) {
+        value27.destroy()
     }
-    for (let value of sprites.allOfKind(SpriteKind.Food)) {
-        value.destroy()
+    for (let value28 of sprites.allOfKind(SpriteKind.Food)) {
+        value28.destroy()
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile0`)) {
+    for (let value29 of tiles.getTilesByType(assets.tile`myTile0`)) {
         mySprite2 = sprites.create(img`
             . . . . . . e e e e . . . . . . 
             . . . . . e e e e e e . . . . . 
@@ -3242,7 +3254,7 @@ function levelBelowGround () {
             . f f f f f f . . f f f f f f . 
             . . f f f f f . . f f f f f . . 
             `, SpriteKind.OffScreenEnemy)
-        tiles.placeOnTile(mySprite2, value)
+        tiles.placeOnTile(mySprite2, value29)
         mySprite2.ay = 500
         animation.runImageAnimation(
         mySprite2,
@@ -3319,7 +3331,7 @@ function levelBelowGround () {
         true
         )
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile11`)) {
+    for (let value30 of tiles.getTilesByType(assets.tile`myTile11`)) {
         mySprite2 = sprites.create(img`
             ................
             ............1...
@@ -3346,7 +3358,7 @@ function levelBelowGround () {
             .4441111144444..
             4444......44444.
             `, SpriteKind.offScreenKoopaGreen)
-        tiles.placeOnTile(mySprite2, value)
+        tiles.placeOnTile(mySprite2, value30)
         mySprite2.ay = 500
         animation.runImageAnimation(
         mySprite2,
@@ -3405,7 +3417,7 @@ function levelBelowGround () {
         true
         )
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile30`)) {
+    for (let value31 of tiles.getTilesByType(assets.tile`myTile30`)) {
         mySprite2 = sprites.create(img`
             ........................
             ........................
@@ -3432,7 +3444,7 @@ function levelBelowGround () {
             ........................
             ........................
             `, SpriteKind.Food)
-        tiles.placeOnTile(mySprite2, value)
+        tiles.placeOnTile(mySprite2, value31)
         animation.runImageAnimation(
         mySprite2,
         [img`
@@ -3828,19 +3840,20 @@ scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile13`, function (sprite
 //     export const bullet = SpriteKind.create()
 //     export const offscreenSMWgoomba = SpriteKind.create()
 //     export const SMW_Block = SpriteKind.create()
+//     export const flipped_SMW_goomba = SpriteKind.create()
 // }
 let mySprite9: Sprite = null
 let mySprite13: Sprite = null
 let mySprite12: Sprite = null
 let mySprite5: Sprite = null
+let mySprite11: Sprite = null
 let coins = 0
 let mySprite3: Sprite = null
 let mySprite10: Sprite = null
 let mySprite7: Sprite = null
-let mySprite11: Sprite = null
 let mySprite8: Sprite = null
-let die = 0
 let underwater = 0
+let die = 0
 let mySprite2: Sprite = null
 let mySprite4: Sprite = null
 let spritetypes: number[] = []
@@ -3970,7 +3983,6 @@ canMove = 1
 invulnerability = 0
 scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.OnlyHorizontal, scroller.BackgroundLayer.Layer4)
 scroller.scrollBackgroundWithSpeed(5, 0, scroller.BackgroundLayer.Layer4)
-let block_locations: tiles.Location[] = []
 multilights.addLightSource(mySprite, 20)
 spritetypes = [
 SpriteKind.Food,
@@ -3992,7 +4004,8 @@ SpriteKind.bullet_off_screen,
 SpriteKind.SMW_Goomba,
 SpriteKind.bullet,
 SpriteKind.offscreenSMWgoomba,
-SpriteKind.SMW_Block
+SpriteKind.SMW_Block,
+SpriteKind.flipped_SMW_goomba
 ]
 game.onUpdate(function () {
     if (World_Map_True == 0) {
@@ -4002,14 +4015,14 @@ game.onUpdate(function () {
             mySprite3.vx = 30
             tiles.placeOnTile(mySprite3, tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top).getNeighboringLocation(CollisionDirection.Top))
             tiles.setTileAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), assets.tile`myTile22`)
-            for (let value of sprites.allOfKind(SpriteKind.koopaGreen)) {
-                if (value.overlapsWith(mySprite3)) {
-                    sprites.destroy(value)
+            for (let value32 of sprites.allOfKind(SpriteKind.koopaGreen)) {
+                if (value32.overlapsWith(mySprite3)) {
+                    sprites.destroy(value32)
                 }
             }
-            for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
-                if (value.overlapsWith(mySprite3)) {
-                    sprites.destroy(value)
+            for (let value33 of sprites.allOfKind(SpriteKind.Enemy)) {
+                if (value33.overlapsWith(mySprite3)) {
+                    sprites.destroy(value33)
                 }
             }
         }
@@ -4037,6 +4050,7 @@ game.onUpdate(function () {
             }
             // See on created sprite of kind SMW_Block for how it gets destroyed
             if (mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile64`)) {
+                let block_locations: tiles.Location[] = []
                 block_locations.push(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top))
                 tiles.setTileAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), assets.tile`transparency16`)
                 tiles.setWallAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), false)
@@ -4071,36 +4085,36 @@ game.onUpdate(function () {
                 })
             }
         }
-        for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
-            pathfinding(value, false, 30, "goomba")
+        for (let value34 of sprites.allOfKind(SpriteKind.Enemy)) {
+            pathfinding(value34, false, 30, "goomba")
         }
-        for (let value of sprites.allOfKind(SpriteKind.koopaGreen)) {
-            pathfinding(value, true, 30, "koopaGreen")
+        for (let value35 of sprites.allOfKind(SpriteKind.koopaGreen)) {
+            pathfinding(value35, true, 30, "koopaGreen")
         }
-        for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
-            pathfinding(value, false, 100, "shellGreen")
+        for (let value36 of sprites.allOfKind(SpriteKind.Projectile)) {
+            pathfinding(value36, false, 100, "shellGreen")
         }
-        for (let value of sprites.allOfKind(SpriteKind.SMW_Goomba)) {
-            pathfinding(value, false, 30, "SMWgoomba")
+        for (let value37 of sprites.allOfKind(SpriteKind.SMW_Goomba)) {
+            pathfinding(value37, false, 30, "SMWgoomba")
         }
-        for (let value of sprites.allOfKind(SpriteKind.firebar)) {
-            transformSprites.changeRotation(value, 5)
+        for (let value38 of sprites.allOfKind(SpriteKind.firebar)) {
+            transformSprites.changeRotation(value38, 5)
         }
         start_movement()
     }
 })
 game.onUpdateInterval(5000, function () {
-    for (let value of sprites.allOfKind(SpriteKind.lavabubble)) {
-        value.ay = 500
-        value.vy = -250
+    for (let value39 of sprites.allOfKind(SpriteKind.lavabubble)) {
+        value39.ay = 500
+        value39.vy = -250
         animation.runImageAnimation(
-        value,
+        value39,
         assets.animation`myAnim5`,
         200,
         false
         )
     }
-    for (let value of sprites.allOfKind(SpriteKind.boss)) {
+    for (let value40 of sprites.allOfKind(SpriteKind.boss)) {
         mySprite9 = sprites.create(img`
             . . . . . . . . . . 2 2 2 2 2 2 . . 2 . . . . . 
             . . . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . . 
@@ -4112,7 +4126,7 @@ game.onUpdateInterval(5000, function () {
             . . . . . 2 2 . . 2 2 2 . 2 2 . . 2 . . . . . . 
             `, SpriteKind.fire)
         mySprite9.setFlag(SpriteFlag.GhostThroughWalls, true)
-        tiles.placeOnTile(mySprite9, tiles.getTileLocation(value.tilemapLocation().column, randint(8, 13)))
+        tiles.placeOnTile(mySprite9, tiles.getTileLocation(value40.tilemapLocation().column, randint(8, 13)))
         mySprite9.vx = -50
         animation.runImageAnimation(
         mySprite9,
@@ -4121,12 +4135,12 @@ game.onUpdateInterval(5000, function () {
         true
         )
     }
-    for (let value of tiles.getTilesByType(assets.tile`myTile66`)) {
-        if (!(tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Left))) && (mySprite.tilemapLocation().column < value.column - 2 && scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 100 >= value.x)) {
+    for (let value41 of tiles.getTilesByType(assets.tile`myTile66`)) {
+        if (!(tiles.tileAtLocationIsWall(value41.getNeighboringLocation(CollisionDirection.Left))) && (mySprite.tilemapLocation().column < value41.column - 2 && scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 100 >= value41.x)) {
             mySprite9 = sprites.create(assets.image`myImage2`, SpriteKind.bullet)
-            tiles.placeOnTile(mySprite9, value.getNeighboringLocation(CollisionDirection.Left))
+            tiles.placeOnTile(mySprite9, value41.getNeighboringLocation(CollisionDirection.Left))
             mySprite9.vx = -50
-        } else if (!(tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Right))) && (mySprite.tilemapLocation().column < value.column - 2 && scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) - scene.screenWidth() >= value.x)) {
+        } else if (!(tiles.tileAtLocationIsWall(value41.getNeighboringLocation(CollisionDirection.Right))) && (mySprite.tilemapLocation().column < value41.column - 2 && scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) - scene.screenWidth() >= value41.x)) {
             mySprite9 = sprites.create(img`
                 . . . . . . . . . . . . . . . . 
                 f f . f f f f f f f . . . . . . 
@@ -4145,7 +4159,7 @@ game.onUpdateInterval(5000, function () {
                 f f . f f f f f f f . . . . . . 
                 . . . . . . . . . . . . . . . . 
                 `, SpriteKind.bullet)
-            tiles.placeOnTile(mySprite9, value.getNeighboringLocation(CollisionDirection.Right))
+            tiles.placeOnTile(mySprite9, value41.getNeighboringLocation(CollisionDirection.Right))
             mySprite9.vx = 50
         }
     }
