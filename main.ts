@@ -1943,6 +1943,8 @@ function startNextLevel () {
     } else {
         tiles.setCurrentTilemap(tilemap`level8`)
         above_ground_SMW()
+        mySprite14 = sprites.create(assets.image`myImage8`, SpriteKind.Player)
+        mySprite14.ay = 500
     }
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.koopaGreen, function (sprite, otherSprite) {
@@ -3851,6 +3853,7 @@ let coins = 0
 let mySprite3: Sprite = null
 let mySprite10: Sprite = null
 let mySprite7: Sprite = null
+let mySprite14: Sprite = null
 let mySprite8: Sprite = null
 let underwater = 0
 let die = 0
