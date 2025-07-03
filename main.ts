@@ -17,6 +17,7 @@ namespace SpriteKind {
     export const bullet = SpriteKind.create()
     export const offscreenSMWgoomba = SpriteKind.create()
     export const SMW_Block = SpriteKind.create()
+    export const flipped_SMW_goomba = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
@@ -762,6 +763,7 @@ function levelCastle () {
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.SMW_Goomba, function (sprite, otherSprite) {
     if (sprite.bottom < otherSprite.y) {
+        otherSprite.setKind(SpriteKind.flipped_SMW_goomba)
         otherSprite.vx = 0
         sprite.vy = -100
         animation.runImageAnimation(
@@ -771,6 +773,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.SMW_Goomba, function (sprite, ot
         true
         )
         timer.after(5000, function () {
+            otherSprite.setKind(SpriteKind.SMW_Goomba)
             otherSprite.vx = -30
             animation.runImageAnimation(
             otherSprite,
@@ -1566,6 +1569,8 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     if (sprite.bottom < otherSprite.y) {
+        sprite.vy = -100
+        otherSprite.vy = -105
         otherSprite.setKind(SpriteKind.Projectile)
         animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
         otherSprite.setImage(img`
@@ -2162,6 +2167,29 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.lavabubble, function (sprite, otherSprite) {
     luigi_Die()
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.flipped_SMW_goomba, function (sprite, otherSprite) {
+    if (sprite.bottom < otherSprite.y) {
+        otherSprite.setKind(SpriteKind.flipped_SMW_goomba)
+        otherSprite.vx = 0
+        sprite.vy = -100
+        animation.runImageAnimation(
+        otherSprite,
+        assets.animation`myAnim15`,
+        300,
+        true
+        )
+        timer.after(5000, function () {
+            otherSprite.setKind(SpriteKind.SMW_Goomba)
+            otherSprite.vx = -30
+            animation.runImageAnimation(
+            otherSprite,
+            assets.animation`myAnim14`,
+            200,
+            true
+            )
+        })
+    }
 })
 function luigi_Die () {
     if (invulnerability == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile41`))) {
@@ -2960,6 +2988,40 @@ function kill_above_block (location_of_block: tiles.Location) {
 scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile49`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
+sprites.onOverlap(SpriteKind.SMW_Goomba, SpriteKind.SMW_Goomba, function (sprite, otherSprite) {
+    animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
+    sprite.vx = sprite.vx * -1
+    otherSprite.vx = otherSprite.vx * -1
+    sprite.image.flipX()
+    if (otherSprite.vx < 0) {
+        animation.runImageAnimation(
+        otherSprite,
+        assets.animation`myAnim14`,
+        200,
+        true
+        )
+        animation.runImageAnimation(
+        sprite,
+        assets.animation`myAnim16`,
+        200,
+        true
+        )
+    } else if (otherSprite.vx > 0) {
+        animation.runImageAnimation(
+        otherSprite,
+        assets.animation`myAnim16`,
+        200,
+        true
+        )
+        animation.runImageAnimation(
+        sprite,
+        assets.animation`myAnim14`,
+        200,
+        true
+        )
+    }
+    pause(1000)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile41`, function (sprite, location) {
     if (die == 0) {
         luigi_Die()
@@ -3747,6 +3809,26 @@ scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile41`, function (sprite
 scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
+// namespace SpriteKind {
+//     export const display = SpriteKind.create()
+//     export const koopaGreen = SpriteKind.create()
+//     export const offScreenKoopaGreen = SpriteKind.create()
+//     export const OffScreenEnemy = SpriteKind.create()
+//     export const koopaRed = SpriteKind.create()
+//     export const flag = SpriteKind.create()
+//     export const mushroom = SpriteKind.create()
+//     export const enemy_killer_sprite = SpriteKind.create()
+//     export const firebar = SpriteKind.create()
+//     export const utility = SpriteKind.create()
+//     export const lavabubble = SpriteKind.create()
+//     export const boss = SpriteKind.create()
+//     export const fire = SpriteKind.create()
+//     export const bullet_off_screen = SpriteKind.create()
+//     export const SMW_Goomba = SpriteKind.create()
+//     export const bullet = SpriteKind.create()
+//     export const offscreenSMWgoomba = SpriteKind.create()
+//     export const SMW_Block = SpriteKind.create()
+// }
 let mySprite9: Sprite = null
 let mySprite13: Sprite = null
 let mySprite12: Sprite = null
@@ -4040,11 +4122,11 @@ game.onUpdateInterval(5000, function () {
         )
     }
     for (let value of tiles.getTilesByType(assets.tile`myTile66`)) {
-        if (mySprite.tilemapLocation().column < value.column - 2) {
+        if (!(tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Left))) && (mySprite.tilemapLocation().column < value.column - 2 && scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 100 >= value.x)) {
             mySprite9 = sprites.create(assets.image`myImage2`, SpriteKind.bullet)
             tiles.placeOnTile(mySprite9, value.getNeighboringLocation(CollisionDirection.Left))
             mySprite9.vx = -50
-        } else if (mySprite.tilemapLocation().column > value.column + 2) {
+        } else if (!(tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Right))) && (mySprite.tilemapLocation().column < value.column - 2 && scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) - scene.screenWidth() >= value.x)) {
             mySprite9 = sprites.create(img`
                 . . . . . . . . . . . . . . . . 
                 f f . f f f f f f f . . . . . . 
