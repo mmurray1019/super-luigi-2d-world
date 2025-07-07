@@ -18,6 +18,9 @@ namespace SpriteKind {
     export const offscreenSMWgoomba = SpriteKind.create()
     export const SMW_Block = SpriteKind.create()
     export const flipped_SMW_goomba = SpriteKind.create()
+    export const offscreenSMWKoopaGreen = SpriteKind.create()
+    export const SMWkoopaGreen = SpriteKind.create()
+    export const SMWgreenShell = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
@@ -786,6 +789,29 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.SMW_Goomba, function (sprite, ot
         luigi_Die()
     }
 })
+sprites.onOverlap(SpriteKind.SMWgreenShell, SpriteKind.flipped_SMW_goomba, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+})
+sprites.onOverlap(SpriteKind.SMWgreenShell, SpriteKind.SMW_Goomba, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.SMWkoopaGreen, function (sprite, otherSprite) {
+    if (sprite.bottom < otherSprite.y) {
+        sprite.vy = -100
+        otherSprite.vx = -105
+        otherSprite.setKind(SpriteKind.SMWgreenShell)
+        animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
+        otherSprite.setImage(assets.image`myImage9`)
+        animation.runImageAnimation(
+        otherSprite,
+        assets.animation`myAnim20`,
+        150,
+        true
+        )
+    } else {
+        luigi_Die()
+    }
+})
 sprites.onOverlap(SpriteKind.koopaGreen, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     animation.stopAnimation(animation.AnimationTypes.All, sprite)
     animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
@@ -1028,6 +1054,9 @@ sprites.onCreated(SpriteKind.SMW_Block, function (sprite) {
         sprites.destroy(sprite)
     })
 })
+scene.onOverlapTile(SpriteKind.SMWkoopaGreen, assets.tile`myTile20`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
 scene.onOverlapTile(SpriteKind.display, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -1104,6 +1133,13 @@ function pathfinding (sprite: Sprite, edge_detection: boolean, speed: number, sp
             200,
             true
             )
+        } else if (spriteType == "SMWkoopaGreen") {
+            animation.runImageAnimation(
+            sprite,
+            assets.animation`myAnim19`,
+            300,
+            true
+            )
         }
     } else if (sprite.isHittingTile(CollisionDirection.Right)) {
         sprite.vx = 0 - speed
@@ -1172,6 +1208,13 @@ function pathfinding (sprite: Sprite, edge_detection: boolean, speed: number, sp
             200,
             true
             )
+        } else if (spriteType == "SMWkoopaGreen") {
+            animation.runImageAnimation(
+            sprite,
+            assets.animation`myAnim18`,
+            300,
+            true
+            )
         }
     }
     if (edge_detection == true) {
@@ -1234,6 +1277,13 @@ function pathfinding (sprite: Sprite, edge_detection: boolean, speed: number, sp
                 200,
                 true
                 )
+            } else if (spriteType == "SMWkoopaGreen") {
+                animation.runImageAnimation(
+                sprite,
+                assets.animation`myAnim19`,
+                300,
+                true
+                )
             }
         } else if (!(tiles.tileAtLocationIsWall(tiles.locationInDirection(tiles.locationInDirection(tiles.locationOfSprite(sprite), CollisionDirection.Right), CollisionDirection.Bottom)))) {
             sprite.vx = 0 - speed
@@ -1292,6 +1342,13 @@ function pathfinding (sprite: Sprite, edge_detection: boolean, speed: number, sp
                     .......444..444..
                     `],
                 200,
+                true
+                )
+            } else if (spriteType == "SMWkoopaGreen") {
+                animation.runImageAnimation(
+                sprite,
+                assets.animation`myAnim18`,
+                300,
                 true
                 )
             }
@@ -1563,10 +1620,68 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite.vy = -75
     }
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.SMWgreenShell, function (sprite, otherSprite) {
+    if (sprite.bottom < otherSprite.y) {
+        sprite.vy = -100
+        if (otherSprite.vx != 0) {
+            otherSprite.vx = 0
+            animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
+        } else {
+            if (sprite.vx <= 0) {
+                otherSprite.vx = -105
+                animation.runImageAnimation(
+                otherSprite,
+                assets.animation`myAnim20`,
+                150,
+                true
+                )
+            } else if (sprite.vx > 0) {
+                otherSprite.vx = 105
+                animation.runImageAnimation(
+                otherSprite,
+                assets.animation`myAnim20`,
+                150,
+                true
+                )
+            }
+        }
+    } else if (otherSprite.vx == 0) {
+        if (sprite.vx < 0) {
+            invulnerability = 1
+            otherSprite.vx = -105
+            animation.runImageAnimation(
+            otherSprite,
+            assets.animation`myAnim20`,
+            150,
+            true
+            )
+            pause(200)
+            invulnerability = 0
+        } else if (sprite.vx > 0) {
+            invulnerability = 1
+            otherSprite.vx = 105
+            animation.runImageAnimation(
+            otherSprite,
+            assets.animation`myAnim20`,
+            150,
+            true
+            )
+            pause(200)
+            invulnerability = 0
+        }
+    } else {
+        if (invulnerability == 0) {
+            luigi_Die()
+        }
+    }
+    if (otherSprite.vx != 0) {
+    	
+    }
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     if (sprite.bottom < otherSprite.y) {
         sprite.vy = -100
-        otherSprite.vy = -105
+        otherSprite.vx = -105
         otherSprite.setKind(SpriteKind.Projectile)
         animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
         otherSprite.setImage(img`
@@ -1943,8 +2058,6 @@ function startNextLevel () {
     } else {
         tiles.setCurrentTilemap(tilemap`level8`)
         above_ground_SMW()
-        mySprite14 = sprites.create(assets.image`myImage8`, SpriteKind.Player)
-        mySprite14.ay = 500
     }
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.koopaGreen, function (sprite, otherSprite) {
@@ -1990,7 +2103,16 @@ function start_movement () {
             value54.setKind(SpriteKind.SMW_Goomba)
         }
     }
+    for (let value54 of sprites.allOfKind(SpriteKind.offscreenSMWKoopaGreen)) {
+        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value54.x) {
+            value54.vx = -30
+            value54.setKind(SpriteKind.SMWkoopaGreen)
+        }
+    }
 }
+sprites.onOverlap(SpriteKind.SMWgreenShell, SpriteKind.SMWkoopaGreen, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+})
 scene.onOverlapTile(SpriteKind.koopaGreen, assets.tile`myTile49`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -2519,6 +2641,7 @@ function coinPlace () {
     textSprite.setText(convertToText(coins))
 }
 function above_ground_SMW () {
+    music.stopAllSounds()
     color.setPalette(
     color.originalPalette
     )
@@ -2572,6 +2695,21 @@ function above_ground_SMW () {
         )
         mySprite11.ay = 500
     }
+    for (let value16 of tiles.getTilesByType(assets.tile`myTile12`)) {
+        mySprite11 = sprites.create(assets.image`myImage8`, SpriteKind.offscreenSMWKoopaGreen)
+        tiles.placeOnTile(mySprite11, value16.getNeighboringLocation(CollisionDirection.Top))
+        animation.runImageAnimation(
+        mySprite11,
+        assets.animation`myAnim18`,
+        300,
+        true
+        )
+        mySprite11.ay = 500
+    }
+    music.play(music.createSong(assets.song`SMW overworld intro`), music.PlaybackMode.InBackground)
+    timer.after(1818, function () {
+        music.play(music.createSong(assets.song`SMW overworld0`), music.PlaybackMode.LoopingInBackground)
+    })
 }
 function level_Above_Ground () {
     music.play(music.createSong(assets.song`mariomusic`), music.PlaybackMode.LoopingInBackground)
@@ -3577,6 +3715,9 @@ function levelBelowGround () {
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
 })
+scene.onOverlapTile(SpriteKind.SMW_Goomba, assets.tile`myTile20`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
 scene.onOverlapTile(SpriteKind.Food, assets.tile`myTile20`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -3853,7 +3994,6 @@ let coins = 0
 let mySprite3: Sprite = null
 let mySprite10: Sprite = null
 let mySprite7: Sprite = null
-let mySprite14: Sprite = null
 let mySprite8: Sprite = null
 let underwater = 0
 let die = 0
@@ -4008,7 +4148,10 @@ SpriteKind.SMW_Goomba,
 SpriteKind.bullet,
 SpriteKind.offscreenSMWgoomba,
 SpriteKind.SMW_Block,
-SpriteKind.flipped_SMW_goomba
+SpriteKind.flipped_SMW_goomba,
+SpriteKind.offscreenSMWKoopaGreen,
+SpriteKind.SMWkoopaGreen,
+SpriteKind.SMWgreenShell
 ]
 game.onUpdate(function () {
     if (World_Map_True == 0) {
@@ -4099,6 +4242,12 @@ game.onUpdate(function () {
         }
         for (let value37 of sprites.allOfKind(SpriteKind.SMW_Goomba)) {
             pathfinding(value37, false, 30, "SMWgoomba")
+        }
+        for (let value37 of sprites.allOfKind(SpriteKind.SMWkoopaGreen)) {
+            pathfinding(value37, true, 30, "SMWkoopaGreen")
+        }
+        for (let value37 of sprites.allOfKind(SpriteKind.SMWgreenShell)) {
+            pathfinding(value37, false, 100, "SMWgreenShell")
         }
         for (let value38 of sprites.allOfKind(SpriteKind.firebar)) {
             transformSprites.changeRotation(value38, 5)
