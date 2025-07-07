@@ -196,8 +196,14 @@ function loadworld1 () {
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
+scene.onOverlapTile(SpriteKind.SMWgreenShell, assets.tile`myTile20`, function (sprite, location) {
+    sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.boss, function (sprite, otherSprite) {
     luigi_Die()
+})
+sprites.onOverlap(SpriteKind.enemy_killer_sprite, SpriteKind.SMWkoopaGreen, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
 })
 function levelCastle () {
     color.setColor(9, color.rgb(191, 191, 191))
@@ -2092,7 +2098,7 @@ function start_movement () {
         }
     }
     for (let value53 of sprites.allOfKind(SpriteKind.bullet_off_screen)) {
-        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value53.x) {
+        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 70 >= value53.x) {
             value53.vx = -50
             value53.setKind(SpriteKind.bullet)
         }
@@ -2473,6 +2479,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.mushroom, function (sprite, othe
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile20`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
+sprites.onOverlap(SpriteKind.enemy_killer_sprite, SpriteKind.SMW_Goomba, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+})
 controller.combos.attachCombo("up down left right b", function () {
     currentLevel += 1
     loadworld1()
@@ -2711,6 +2720,14 @@ function above_ground_SMW () {
         music.play(music.createSong(assets.song`SMW overworld0`), music.PlaybackMode.LoopingInBackground)
     })
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.bullet, function (sprite, otherSprite) {
+    if (sprite.bottom < otherSprite.y) {
+        otherSprite.destroy()
+        sprite.vy = -100
+    } else {
+        luigi_Die()
+    }
+})
 function level_Above_Ground () {
     music.play(music.createSong(assets.song`mariomusic`), music.PlaybackMode.LoopingInBackground)
     scene.setBackgroundImage(assets.image`BG`)
@@ -4197,6 +4214,7 @@ game.onUpdate(function () {
             // See on created sprite of kind SMW_Block for how it gets destroyed
             if (mySprite.tileKindAt(TileDirection.Top, assets.tile`myTile64`)) {
                 let block_locations: tiles.Location[] = []
+                kill_above_block(mySprite.tilemapLocation().getNeighboringLocation(CollisionDirection.Top))
                 block_locations.push(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top))
                 tiles.setTileAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), assets.tile`transparency16`)
                 tiles.setWallAt(tiles.locationInDirection(tiles.locationOfSprite(mySprite), CollisionDirection.Top), false)
@@ -4288,11 +4306,11 @@ game.onUpdateInterval(5000, function () {
         )
     }
     for (let value41 of tiles.getTilesByType(assets.tile`myTile66`)) {
-        if (!(tiles.tileAtLocationIsWall(value41.getNeighboringLocation(CollisionDirection.Left))) && (mySprite.tilemapLocation().column < value41.column - 2 && scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 100 >= value41.x)) {
+        if (!(tiles.tileAtLocationIsWall(value41.getNeighboringLocation(CollisionDirection.Left))) && (mySprite.tilemapLocation().column < value41.column - 1 && scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 100 >= value41.x)) {
             mySprite9 = sprites.create(assets.image`myImage2`, SpriteKind.bullet)
             tiles.placeOnTile(mySprite9, value41.getNeighboringLocation(CollisionDirection.Left))
             mySprite9.vx = -50
-        } else if (!(tiles.tileAtLocationIsWall(value41.getNeighboringLocation(CollisionDirection.Right))) && (mySprite.tilemapLocation().column < value41.column - 2 && scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) - scene.screenWidth() >= value41.x)) {
+        } else if (!(tiles.tileAtLocationIsWall(value41.getNeighboringLocation(CollisionDirection.Right))) && (mySprite.tilemapLocation().column > value41.column + 1 && scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) - (scene.screenWidth() + 100) <= value41.x)) {
             mySprite9 = sprites.create(img`
                 . . . . . . . . . . . . . . . . 
                 f f . f f f f f f f . . . . . . 
