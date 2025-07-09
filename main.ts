@@ -4239,6 +4239,8 @@ let currentLevel = 0
 let textSprite: TextSprite = null
 let World_Map_True = 0
 let mySprite: Sprite = null
+music.play(music.createSong(assets.song`title`), music.PlaybackMode.LoopingInBackground)
+tiles.setCurrentTilemap(tilemap`level9`)
 mySprite = sprites.create(assets.image`Luigi`, SpriteKind.Player)
 World_Map_True = 1
 game.setDialogCursor(img`
@@ -4306,25 +4308,8 @@ scene.setBackgroundColor(9)
 tiles.setCurrentTilemap(tilemap`level11`)
 tiles.placeOnRandomTile(mySprite, assets.tile`myTile1`)
 world()
-let mySprite6 = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.display)
 textSprite = textsprite.create("0")
+let lifetext = textsprite.create("5")
 textSprite.setIcon(img`
     ........................
     ........................
@@ -4351,7 +4336,28 @@ textSprite.setIcon(img`
     ........................
     ........................
     `)
-textSprite.setStayInScreen(true)
+lifetext.setIcon(img`
+    ..........4444..........
+    .........444477.........
+    ........44447777........
+    .......4444477777.......
+    ......444444477744......
+    .....44777444444444.....
+    .....47777744444444.....
+    ....4477777444447744....
+    ....4477777444447774....
+    ....4447774444444774....
+    ....4444444444444444....
+    .....47771111117774.....
+    ........11111111........
+    ........11111141........
+    ........11111141........
+    .........111141.........
+    `)
+textSprite.setPosition(135, 10)
+lifetext.setPosition(10, 10)
+lifetext.setFlag(SpriteFlag.RelativeToCamera, true)
+textSprite.setFlag(SpriteFlag.RelativeToCamera, true)
 currentLevel = 1
 powerup = 0
 canMove = 1
@@ -4548,8 +4554,4 @@ game.onUpdateInterval(5000, function () {
             mySprite9.vx = 50
         }
     }
-})
-forever(function () {
-    textSprite.x = 0
-    textSprite.y = -99999
 })
