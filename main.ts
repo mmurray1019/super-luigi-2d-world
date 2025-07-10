@@ -833,6 +833,50 @@ function levelCastle () {
         })
     }
 }
+function switch_map (map_: number) {
+    color.FadeToBlack.startScreenEffect(1000)
+    timer.after(1010, function () {
+        color.clearFadeEffect()
+        mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
+        tiles.setCurrentTilemap(tilemap`level10`)
+        mySprite.vx = 0
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
+        change_map = 0
+        spritetypes = [
+        SpriteKind.Food,
+        SpriteKind.Projectile,
+        SpriteKind.Enemy,
+        SpriteKind.koopaGreen,
+        SpriteKind.offScreenKoopaGreen,
+        SpriteKind.OffScreenEnemy,
+        SpriteKind.koopaRed,
+        SpriteKind.flag,
+        SpriteKind.mushroom,
+        SpriteKind.enemy_killer_sprite,
+        SpriteKind.firebar,
+        SpriteKind.utility,
+        SpriteKind.lavabubble,
+        SpriteKind.boss,
+        SpriteKind.fire,
+        SpriteKind.bullet_off_screen,
+        SpriteKind.SMW_Goomba,
+        SpriteKind.bullet,
+        SpriteKind.offscreenSMWgoomba,
+        SpriteKind.SMW_Block,
+        SpriteKind.flipped_SMW_goomba,
+        SpriteKind.offscreenSMWKoopaGreen,
+        SpriteKind.SMWkoopaGreen,
+        SpriteKind.SMWgreenShell
+        ]
+        for (let value of spritetypes) {
+            destroyspritetype(value)
+        }
+        timer.after(20, function () {
+            above_ground_SMW()
+            mySprite.vx = 100
+        })
+    })
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.SMW_Goomba, function (sprite, otherSprite) {
     if (sprite.bottom < otherSprite.y) {
         otherSprite.setKind(SpriteKind.flipped_SMW_goomba)
@@ -2019,103 +2063,107 @@ sprites.onOverlap(SpriteKind.enemy_killer_sprite, SpriteKind.koopaGreen, functio
     sprites.destroy(otherSprite)
 })
 function luigi_Die () {
-    if (invulnerability == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile41`))) {
-    	
-    } else if (powerup == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile41`))) {
-        invulnerability = 1
-        powerup = 0
-        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
-        mySprite.setImage(assets.image`Luigi`)
-        timer.after(500, function () {
-            mySprite.setFlag(SpriteFlag.Invisible, true)
+    if (title == 0) {
+        if (invulnerability == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile41`))) {
+        	
+        } else if (powerup == 1 && !(mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile20`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile13`) || mySprite.tileKindAt(TileDirection.Center, assets.tile`myTile41`))) {
+            invulnerability = 1
+            powerup = 0
+            animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+            mySprite.setImage(assets.image`Luigi`)
             timer.after(500, function () {
-                mySprite.setFlag(SpriteFlag.Invisible, false)
+                mySprite.setFlag(SpriteFlag.Invisible, true)
                 timer.after(500, function () {
-                    mySprite.setFlag(SpriteFlag.Invisible, true)
+                    mySprite.setFlag(SpriteFlag.Invisible, false)
                     timer.after(500, function () {
-                        mySprite.setFlag(SpriteFlag.Invisible, false)
+                        mySprite.setFlag(SpriteFlag.Invisible, true)
                         timer.after(500, function () {
-                            mySprite.setFlag(SpriteFlag.Invisible, true)
+                            mySprite.setFlag(SpriteFlag.Invisible, false)
                             timer.after(500, function () {
-                                mySprite.setFlag(SpriteFlag.Invisible, false)
-                                invulnerability = 0
+                                mySprite.setFlag(SpriteFlag.Invisible, true)
+                                timer.after(500, function () {
+                                    mySprite.setFlag(SpriteFlag.Invisible, false)
+                                    invulnerability = 0
+                                })
                             })
                         })
                     })
                 })
             })
-        })
+        } else {
+            music.stopAllSounds()
+            mySprite.setFlag(SpriteFlag.GhostThroughTiles, true)
+            die = 1
+            animation.runImageAnimation(
+            mySprite,
+            [img`
+                ......6666......
+                ....66755766....
+                ...6771551776...
+                ..6777ffff7776..
+                ..67ffffffff76..
+                ...ffffffffff...
+                ...6f2f22f2f6...
+                ..ff22222222ff..
+                ...f22333322f...
+                ..ff23f33f32ff..
+                .edf33dddd33fde.
+                .edffddddddffde.
+                .e4fdf4444fdf4e.
+                .1edffffffffde..
+                .11eddd22dddeee.
+                ..77eed22dee711e
+                ...7ced22decff1e
+                ...caaedde1ffff.
+                ...cb11ee11ffff.
+                ..fff11bbbcffff.
+                .f5eefcccc.ffff.
+                .ffffef.....ff..
+                .ffffff.........
+                ....ff..........
+                `,img`
+                ......6666......
+                ....66755766....
+                ...6771551776...
+                ..6777ffff7776..
+                ..67ffffffff76..
+                ...ffffffffff...
+                ...6f2f22f2f6...
+                ..ff22222222ff..
+                ...f22333322f...
+                ..ff23f33f32ff..
+                .edf33dddd33fde.
+                .edffddddddffde.
+                .e4fdf4444fdf4e.
+                ..edffffffffde1.
+                .eeeddd22ddde11.
+                e117eed22dee77..
+                e1ffced22dec7...
+                .ffff1eddeaac...
+                .ffff11ee11bc...
+                .ffffcbbb11fff..
+                .ffff.ccccfee5f.
+                ..ff.....feffff.
+                .........ffffff.
+                ..........ff....
+                `],
+            100,
+            true
+            )
+            mySprite.vy = -250
+            mySprite.setFlag(SpriteFlag.GhostThroughSprites, true)
+            mySprite.setFlag(SpriteFlag.GhostThroughWalls, true)
+            music.play(music.createSong(assets.song`death`), music.PlaybackMode.UntilDone)
+            animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+            mySprite.setFlag(SpriteFlag.GhostThroughSprites, false)
+            mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
+            mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
+            die = 0
+            world()
+            loadworld1()
+        }
     } else {
-        music.stopAllSounds()
-        mySprite.setFlag(SpriteFlag.GhostThroughTiles, true)
-        die = 1
-        animation.runImageAnimation(
-        mySprite,
-        [img`
-            ......6666......
-            ....66755766....
-            ...6771551776...
-            ..6777ffff7776..
-            ..67ffffffff76..
-            ...ffffffffff...
-            ...6f2f22f2f6...
-            ..ff22222222ff..
-            ...f22333322f...
-            ..ff23f33f32ff..
-            .edf33dddd33fde.
-            .edffddddddffde.
-            .e4fdf4444fdf4e.
-            .1edffffffffde..
-            .11eddd22dddeee.
-            ..77eed22dee711e
-            ...7ced22decff1e
-            ...caaedde1ffff.
-            ...cb11ee11ffff.
-            ..fff11bbbcffff.
-            .f5eefcccc.ffff.
-            .ffffef.....ff..
-            .ffffff.........
-            ....ff..........
-            `,img`
-            ......6666......
-            ....66755766....
-            ...6771551776...
-            ..6777ffff7776..
-            ..67ffffffff76..
-            ...ffffffffff...
-            ...6f2f22f2f6...
-            ..ff22222222ff..
-            ...f22333322f...
-            ..ff23f33f32ff..
-            .edf33dddd33fde.
-            .edffddddddffde.
-            .e4fdf4444fdf4e.
-            ..edffffffffde1.
-            .eeeddd22ddde11.
-            e117eed22dee77..
-            e1ffced22dec7...
-            .ffff1eddeaac...
-            .ffff11ee11bc...
-            .ffffcbbb11fff..
-            .ffff.ccccfee5f.
-            ..ff.....feffff.
-            .........ffffff.
-            ..........ff....
-            `],
-        100,
-        true
-        )
         mySprite.vy = -250
-        mySprite.setFlag(SpriteFlag.GhostThroughSprites, true)
-        mySprite.setFlag(SpriteFlag.GhostThroughWalls, true)
-        music.play(music.createSong(assets.song`death`), music.PlaybackMode.UntilDone)
-        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
-        mySprite.setFlag(SpriteFlag.GhostThroughSprites, false)
-        mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
-        mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
-        die = 0
-        world()
-        loadworld1()
     }
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile164`, function (sprite, location) {
@@ -2266,6 +2314,13 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.fire, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     luigi_Die()
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile165`, function (sprite, location) {
+    mySprite.setFlag(SpriteFlag.GhostThroughTiles, true)
+    if (change_map == 0) {
+        change_map = 1
+        switch_map(1)
+    }
 })
 function startNextLevel () {
     music.stopAllSounds()
@@ -3074,8 +3129,7 @@ function game_setup () {
     SpriteKind.flipped_SMW_goomba,
     SpriteKind.offscreenSMWKoopaGreen,
     SpriteKind.SMWkoopaGreen,
-    SpriteKind.SMWgreenShell,
-    SpriteKind.display
+    SpriteKind.SMWgreenShell
     ]
     world()
     World_Map_True = 1
@@ -4439,7 +4493,6 @@ let mySprite13: Sprite = null
 let mySprite12: Sprite = null
 let mySprite5: Sprite = null
 let mySprite11: Sprite = null
-let spritetypes: number[] = []
 let lifetext: TextSprite = null
 let textSprite: TextSprite = null
 let coins = 0
@@ -4452,10 +4505,12 @@ let powerup = 0
 let underwater = 0
 let canMove = 0
 let die = 0
+let spritetypes: number[] = []
 let mySprite2: Sprite = null
 let mySprite4: Sprite = null
 let currentLevel = 0
 let mySprite6: Sprite = null
+let change_map = 0
 let mySprite: Sprite = null
 let World_Map_True = 0
 let title = 0
@@ -4588,6 +4643,7 @@ scene.setBackgroundImage(img`
 music.play(music.melodyPlayable(music.baDing), music.PlaybackMode.UntilDone)
 timer.after(2000, function () {
     if (title == 1) {
+        change_map = 0
         color.FadeToBlack.startScreenEffect(1000)
         color.pauseUntilFadeDone()
         color.startFadeFromCurrent(color.originalPalette, 1000)
