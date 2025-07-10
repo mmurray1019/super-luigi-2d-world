@@ -2477,6 +2477,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile16`, function (sprite, 
     music.play(music.createSong(assets.song`win`), music.PlaybackMode.UntilDone)
     tiles.setCurrentTilemap(tilemap`level11`)
     currentLevel += 1
+    blockSettings.writeNumber(currentSave, currentLevel)
     world()
     loadworld1()
 })
@@ -2814,6 +2815,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, 
         timer.after(3000, function () {
             tiles.setCurrentTilemap(tilemap`level11`)
             currentLevel += 1
+            blockSettings.writeNumber(currentSave, currentLevel)
             world()
             loadworld1()
             game.gameOver(true)
@@ -3056,7 +3058,10 @@ function game_setup () {
     lifetext.setPosition(10, 10)
     lifetext.setFlag(SpriteFlag.RelativeToCamera, true)
     textSprite.setFlag(SpriteFlag.RelativeToCamera, true)
-    currentLevel = 1
+    if (currentLevel <= 1) {
+        currentLevel = 1
+    }
+    loadworld1()
     powerup = 0
     canMove = 1
     invulnerability = 0
@@ -3870,24 +3875,50 @@ function saveload () {
     myMenu.setStayInScreen(true)
     myMenu.onButtonPressed(controller.A, function (selection, selectedIndex) {
         if (selection == "Save 1: " + save1) {
-            if (blockSettings.exists("save1")) {
-                currentLevel = blockSettings.readNumber("save1")
+            if (erasing == 0) {
+                if (blockSettings.exists("save1")) {
+                    currentLevel = blockSettings.readNumber("save1")
+                }
+                currentSave = "save1"
+                myMenu.close()
+                game_setup()
+            } else {
+                blockSettings.remove("save1")
+                save1 = "Empty"
+                Menu_items[0] = miniMenu.createMenuItem("Save 1: " + save1)
             }
-            currentSave = "save1"
         } else if (selection == "Save 2: " + save2) {
-            if (blockSettings.exists("save2")) {
-                currentLevel = blockSettings.readNumber("save2")
+            if (erasing == 0) {
+                if (blockSettings.exists("save2")) {
+                    currentLevel = blockSettings.readNumber("save2")
+                }
+                currentSave = "save2"
+                myMenu.close()
+                game_setup()
+            } else {
+                blockSettings.remove("save2")
+                save2 = "Empty"
+                Menu_items[1] = miniMenu.createMenuItem("Save 2: " + save2)
             }
-            currentSave = "save2"
         } else if (selection == "Save 3: " + save3) {
-            if (blockSettings.exists("save3")) {
-                currentLevel = blockSettings.readNumber("save3")
+            if (erasing == 0) {
+                if (blockSettings.exists("save3")) {
+                    currentLevel = blockSettings.readNumber("save3")
+                }
+                currentSave = "save3"
+                myMenu.close()
+                game_setup()
+            } else {
+                blockSettings.remove("save3")
+                save3 = "Empty"
+                Menu_items[1] = miniMenu.createMenuItem("Save 2: " + save2)
             }
-            currentSave = "save3"
         } else if (selection == "Erase") {
+            erasing = 1
             myMenu.setTitle("Erase save:")
             Menu_items[3] = miniMenu.createMenuItem("Cancel")
         } else if (selection == "Cancel") {
+            erasing = 0
             myMenu.setTitle("Select Save:")
             Menu_items[3] = miniMenu.createMenuItem("Erase")
         }
@@ -4693,7 +4724,7 @@ scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile13`, function (sprite
 let mySprite9: Sprite = null
 let mySprite13: Sprite = null
 let mySprite12: Sprite = null
-let currentSave = ""
+let erasing = 0
 let myMenu: miniMenu.MenuSprite = null
 let Menu_items: miniMenu.MenuItem[] = []
 let save3 = ""
@@ -4707,6 +4738,7 @@ let coins = 0
 let mySprite3: Sprite = null
 let mySprite10: Sprite = null
 let mySprite7: Sprite = null
+let currentSave = ""
 let mySprite8: Sprite = null
 let title_map = 0
 let invulnerability = 0
