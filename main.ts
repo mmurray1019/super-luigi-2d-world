@@ -838,7 +838,11 @@ function switch_map (map_: number) {
     timer.after(1010, function () {
         color.clearFadeEffect()
         mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
-        tiles.setCurrentTilemap(tilemap`level10`)
+        if (map_ == 1) {
+            tiles.setCurrentTilemap(tilemap`title1`)
+        } else if (map_ == 0) {
+            tiles.setCurrentTilemap(tilemap`title0`)
+        }
         mySprite.vx = 0
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
         change_map = 0
@@ -872,7 +876,11 @@ function switch_map (map_: number) {
             destroyspritetype(value)
         }
         timer.after(20, function () {
-            above_ground_SMW()
+            if (map_ == 1) {
+                above_ground_SMW()
+            } else if (map_ == 0) {
+                level_Above_Ground()
+            }
             mySprite.vx = 100
         })
     })
@@ -2319,7 +2327,13 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile165`, function (sprite,
     mySprite.setFlag(SpriteFlag.GhostThroughTiles, true)
     if (change_map == 0) {
         change_map = 1
-        switch_map(1)
+        if (title_map == 0) {
+            switch_map(1)
+            title_map = 1
+        } else if (title_map == 1) {
+            switch_map(0)
+            title_map = 0
+        }
     }
 })
 function startNextLevel () {
@@ -4500,6 +4514,7 @@ let mySprite3: Sprite = null
 let mySprite10: Sprite = null
 let mySprite7: Sprite = null
 let mySprite8: Sprite = null
+let title_map = 0
 let invulnerability = 0
 let powerup = 0
 let underwater = 0
@@ -4575,10 +4590,10 @@ scene.setBackgroundImage(img`
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-    ffffffffffffffffffffffffffffffffff111f111f111f111f11f11f1111ff1111fff111ff11f11ffff111ff1111ff1111ff111f1111f111f11f1111ff111fffffffffffffffffffffffffffffffffff
-    ffffffffffffffffffffffffffffffffff1111111f1111111f11f11f11f11f11f11f11f11f11f11ffff11f1f11f11f111ff11fff111ff111111ff11ff11fffffffffffffffffffffffffffffffffffff
-    ffffffffffffffffffffffffffffffffff11f1f11f11f1f11f11f11f1111ff1111ff11111ff111fffff1111f1111ff11ffff111f11fff11f111ff11fff111fffffffffffffffffffffffffffffffffff
-    ffffffffffffffffffffffffffffffffff11fff11f11fff11ff111ff11f11f11f11f11f11f111ffffff11fff11f11f1111f111ff1111f11ff11ff11ff111ffffffffffffffffffffffffffffffffffff
+    fffffffffffffffffffffffffff111f111f111f111f11f11f1111ff1111fff111ff11f11f11f111f11f1111ffff111ff1111ff1111ff111f1111f111f11f1111ff111fffffffffffffffffffffffffff
+    fffffffffffffffffffffffffff1111111f1111111f11f11f11f11f11f11f11f11f11f11f11f1f1f11f1f11ffff11f1f11f11f111ff11fff111ff111111ff11ff11fffffffffffffffffffffffffffff
+    fffffffffffffffffffffffffff11f1f11f11f1f11f11f11f1111ff1111ff11111ff111ff11f1f1f11f1111ffff1111f1111ff11ffff111f11fff11f111ff11fff111fffffffffffffffffffffffffff
+    fffffffffffffffffffffffffff11fff11f11fff11ff111ff11f11f11f11f11f11f111fff11f111f11fff11ffff11fff11f11f1111f111ff1111f11ff11ff11ff111ffffffffffffffffffffffffffff
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -4648,7 +4663,7 @@ timer.after(2000, function () {
         color.pauseUntilFadeDone()
         color.startFadeFromCurrent(color.originalPalette, 1000)
         if (title == 1) {
-            tiles.setCurrentTilemap(tilemap`level9`)
+            tiles.setCurrentTilemap(tilemap`title0`)
             mySprite.setFlag(SpriteFlag.Invisible, false)
             level_Above_Ground()
             music.stopAllSounds()
@@ -4745,8 +4760,29 @@ timer.after(2000, function () {
                 ................................................................................................................................................................
                 ................................................................................................................................................................
                 ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                ................................................................................................................................................................
+                .................................................................fff..ffff..ffff..fff..fff....fff...............................................................
+                ................................................................f111ff1111ff1111ff111ff111f..f111f..............................................................
+                ................................................................f11f1f11f11f111ff11fff11ff..f11f11f.............................................................
+                ................................................................f1111f1111ff11ff.f111ff111f.f11111f.............................................................
+                ................................................................f11fff11f11f1111f111ff111f..f11f11f.............................................................
+                .................................................................ff...ff.ff.ffff.fff..fff....ff.ff..............................................................
                 `, SpriteKind.display)
-            mySprite6.setPosition(80, 40)
+            mySprite6.setPosition(80, 53)
+            mySprite6.z = 100
             mySprite6.setFlag(SpriteFlag.RelativeToCamera, true)
             World_Map_True = 0
             cameraOffsetScene.cameraFollowWithOffset(mySprite, 0, 5)
