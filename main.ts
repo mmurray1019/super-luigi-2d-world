@@ -836,53 +836,57 @@ function levelCastle () {
 function switch_map (map_: number) {
     color.FadeToBlack.startScreenEffect(1000)
     timer.after(1010, function () {
-        color.clearFadeEffect()
-        mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
-        if (map_ == 1) {
-            tiles.setCurrentTilemap(tilemap`title1`)
-        } else if (map_ == 0) {
-            tiles.setCurrentTilemap(tilemap`title0`)
-        }
-        mySprite.vx = 0
-        tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
-        change_map = 0
-        spritetypes = [
-        SpriteKind.Food,
-        SpriteKind.Projectile,
-        SpriteKind.Enemy,
-        SpriteKind.koopaGreen,
-        SpriteKind.offScreenKoopaGreen,
-        SpriteKind.OffScreenEnemy,
-        SpriteKind.koopaRed,
-        SpriteKind.flag,
-        SpriteKind.mushroom,
-        SpriteKind.enemy_killer_sprite,
-        SpriteKind.firebar,
-        SpriteKind.utility,
-        SpriteKind.lavabubble,
-        SpriteKind.boss,
-        SpriteKind.fire,
-        SpriteKind.bullet_off_screen,
-        SpriteKind.SMW_Goomba,
-        SpriteKind.bullet,
-        SpriteKind.offscreenSMWgoomba,
-        SpriteKind.SMW_Block,
-        SpriteKind.flipped_SMW_goomba,
-        SpriteKind.offscreenSMWKoopaGreen,
-        SpriteKind.SMWkoopaGreen,
-        SpriteKind.SMWgreenShell
-        ]
-        for (let value of spritetypes) {
-            destroyspritetype(value)
-        }
-        timer.after(20, function () {
+        if (title == 1) {
+            color.clearFadeEffect()
+            mySprite.setFlag(SpriteFlag.GhostThroughTiles, false)
             if (map_ == 1) {
-                above_ground_SMW()
+                tiles.setCurrentTilemap(tilemap`title1`)
             } else if (map_ == 0) {
-                level_Above_Ground()
+                tiles.setCurrentTilemap(tilemap`title0`)
             }
-            mySprite.vx = 100
-        })
+            mySprite.vx = 0
+            tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
+            change_map = 0
+            spritetypes = [
+            SpriteKind.Food,
+            SpriteKind.Projectile,
+            SpriteKind.Enemy,
+            SpriteKind.koopaGreen,
+            SpriteKind.offScreenKoopaGreen,
+            SpriteKind.OffScreenEnemy,
+            SpriteKind.koopaRed,
+            SpriteKind.flag,
+            SpriteKind.mushroom,
+            SpriteKind.enemy_killer_sprite,
+            SpriteKind.firebar,
+            SpriteKind.utility,
+            SpriteKind.lavabubble,
+            SpriteKind.boss,
+            SpriteKind.fire,
+            SpriteKind.bullet_off_screen,
+            SpriteKind.SMW_Goomba,
+            SpriteKind.bullet,
+            SpriteKind.offscreenSMWgoomba,
+            SpriteKind.SMW_Block,
+            SpriteKind.flipped_SMW_goomba,
+            SpriteKind.offscreenSMWKoopaGreen,
+            SpriteKind.SMWkoopaGreen,
+            SpriteKind.SMWgreenShell
+            ]
+            for (let value of spritetypes) {
+                destroyspritetype(value)
+            }
+            timer.after(20, function () {
+                if (title == 1) {
+                    if (map_ == 1) {
+                        above_ground_SMW()
+                    } else if (map_ == 0) {
+                        level_Above_Ground()
+                    }
+                    mySprite.vx = 100
+                }
+            })
+        }
     })
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.SMW_Goomba, function (sprite, otherSprite) {
@@ -3061,6 +3065,7 @@ function coinPlace () {
 function game_setup () {
     color.startFadeFromCurrent(color.originalPalette, 100)
     mySprite.setFlag(SpriteFlag.Invisible, false)
+    sprites.destroy(mySprite6)
     scene.setBackgroundColor(9)
     tiles.setCurrentTilemap(tilemap`level11`)
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile1`)
