@@ -3097,7 +3097,13 @@ function game_setup () {
     World_Map_True = 1
 }
 function above_ground_SMW () {
-    music.stopAllSounds()
+    if (title == 0) {
+        music.stopAllSounds()
+        music.play(music.createSong(assets.song`SMW overworld intro`), music.PlaybackMode.InBackground)
+        timer.after(1818, function () {
+            music.play(music.createSong(assets.song`SMW overworld`), music.PlaybackMode.LoopingInBackground)
+        })
+    }
     color.setPalette(
     color.originalPalette
     )
@@ -3179,10 +3185,6 @@ function above_ground_SMW () {
         )
         mySprite11.ay = 500
     }
-    music.play(music.createSong(assets.song`SMW overworld intro`), music.PlaybackMode.InBackground)
-    timer.after(1818, function () {
-        music.play(music.createSong(assets.song`SMW overworld`), music.PlaybackMode.LoopingInBackground)
-    })
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.bullet, function (sprite, otherSprite) {
     if (sprite.bottom < otherSprite.y) {
@@ -3193,7 +3195,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.bullet, function (sprite, otherS
     }
 })
 function level_Above_Ground () {
-    music.play(music.createSong(assets.song`mariomusic`), music.PlaybackMode.LoopingInBackground)
+    if (title == 0) {
+        music.play(music.createSong(assets.song`mariomusic`), music.PlaybackMode.LoopingInBackground)
+    }
     scene.setBackgroundImage(assets.image`BG`)
     scroller.setLayerImage(scroller.BackgroundLayer.Layer4, assets.image`BG`)
     tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
@@ -3660,6 +3664,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile41`, function (sprite, 
     }
 })
 function world () {
+    music.stopAllSounds()
     animation.stopAnimation(animation.AnimationTypes.All, mySprite)
     mySprite.setImage(assets.image`Luigi`)
     powerup = 0
