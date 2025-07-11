@@ -22,6 +22,69 @@ namespace SpriteKind {
     export const SMWkoopaGreen = SpriteKind.create()
     export const SMWgreenShell = SpriteKind.create()
 }
+/**
+ * namespace SpriteKind {
+ */
+/**
+ * export const display = SpriteKind.create()
+ */
+/**
+ * export const koopaGreen = SpriteKind.create()
+ */
+/**
+ * export const offScreenKoopaGreen = SpriteKind.create()
+ */
+/**
+ * export const OffScreenEnemy = SpriteKind.create()
+ */
+/**
+ * export const koopaRed = SpriteKind.create()
+ */
+/**
+ * export const flag = SpriteKind.create()
+ */
+/**
+ * export const mushroom = SpriteKind.create()
+ */
+/**
+ * export const enemy_killer_sprite = SpriteKind.create()
+ */
+/**
+ * export const firebar = SpriteKind.create()
+ */
+/**
+ * export const utility = SpriteKind.create()
+ */
+/**
+ * export const lavabubble = SpriteKind.create()
+ */
+/**
+ * export const boss = SpriteKind.create()
+ */
+/**
+ * export const fire = SpriteKind.create()
+ */
+/**
+ * export const bullet_off_screen = SpriteKind.create()
+ */
+/**
+ * export const SMW_Goomba = SpriteKind.create()
+ */
+/**
+ * export const bullet = SpriteKind.create()
+ */
+/**
+ * export const offscreenSMWgoomba = SpriteKind.create()
+ */
+/**
+ * export const SMW_Block = SpriteKind.create()
+ */
+/**
+ * export const flipped_SMW_goomba = SpriteKind.create()
+ */
+/**
+ * }
+ */
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
     sprite.vx = sprite.vx * -1
@@ -3197,6 +3260,7 @@ function above_ground_SMW () {
         )
         mySprite11.ay = 500
     }
+
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.bullet, function (sprite, otherSprite) {
     if (sprite.bottom < otherSprite.y) {
@@ -4848,30 +4912,7 @@ scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile41`, function (sprite
 scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
-// namespace SpriteKind {
-//     export const display = SpriteKind.create()
-//     export const koopaGreen = SpriteKind.create()
-//     export const offScreenKoopaGreen = SpriteKind.create()
-//     export const OffScreenEnemy = SpriteKind.create()
-//     export const koopaRed = SpriteKind.create()
-//     export const flag = SpriteKind.create()
-//     export const mushroom = SpriteKind.create()
-//     export const enemy_killer_sprite = SpriteKind.create()
-//     export const firebar = SpriteKind.create()
-//     export const utility = SpriteKind.create()
-//     export const lavabubble = SpriteKind.create()
-//     export const boss = SpriteKind.create()
-//     export const fire = SpriteKind.create()
-//     export const bullet_off_screen = SpriteKind.create()
-//     export const SMW_Goomba = SpriteKind.create()
-//     export const bullet = SpriteKind.create()
-//     export const offscreenSMWgoomba = SpriteKind.create()
-//     export const SMW_Block = SpriteKind.create()
-//     export const flipped_SMW_goomba = SpriteKind.create()
-//     export const offscreenSMWKoopaGreen = SpriteKind.create()
-//     export const SMWkoopaGreen = SpriteKind.create()
-//     export const SMWgreenShell = SpriteKind.create()
-// }
+
 let mySprite9: Sprite = null
 let mySprite13: Sprite = null
 let mySprite12: Sprite = null
