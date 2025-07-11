@@ -22,6 +22,69 @@ namespace SpriteKind {
     export const SMWkoopaGreen = SpriteKind.create()
     export const SMWgreenShell = SpriteKind.create()
 }
+/**
+ * namespace SpriteKind {
+ */
+/**
+ * export const display = SpriteKind.create()
+ */
+/**
+ * export const koopaGreen = SpriteKind.create()
+ */
+/**
+ * export const offScreenKoopaGreen = SpriteKind.create()
+ */
+/**
+ * export const OffScreenEnemy = SpriteKind.create()
+ */
+/**
+ * export const koopaRed = SpriteKind.create()
+ */
+/**
+ * export const flag = SpriteKind.create()
+ */
+/**
+ * export const mushroom = SpriteKind.create()
+ */
+/**
+ * export const enemy_killer_sprite = SpriteKind.create()
+ */
+/**
+ * export const firebar = SpriteKind.create()
+ */
+/**
+ * export const utility = SpriteKind.create()
+ */
+/**
+ * export const lavabubble = SpriteKind.create()
+ */
+/**
+ * export const boss = SpriteKind.create()
+ */
+/**
+ * export const fire = SpriteKind.create()
+ */
+/**
+ * export const bullet_off_screen = SpriteKind.create()
+ */
+/**
+ * export const SMW_Goomba = SpriteKind.create()
+ */
+/**
+ * export const bullet = SpriteKind.create()
+ */
+/**
+ * export const offscreenSMWgoomba = SpriteKind.create()
+ */
+/**
+ * export const SMW_Block = SpriteKind.create()
+ */
+/**
+ * export const flipped_SMW_goomba = SpriteKind.create()
+ */
+/**
+ * }
+ */
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
     sprite.vx = sprite.vx * -1
@@ -810,7 +873,24 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.SMWkoopaGreen, function (sprite,
         otherSprite.setImage(assets.image`myImage9`)
         animation.runImageAnimation(
         otherSprite,
-        assets.animation`myAnim20`,
+        [img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `],
         150,
         true
         )
@@ -1142,7 +1222,24 @@ function pathfinding (sprite: Sprite, edge_detection: boolean, speed: number, sp
         } else if (spriteType == "SMWkoopaGreen") {
             animation.runImageAnimation(
             sprite,
-            assets.animation`myAnim19`,
+            [img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `],
             300,
             true
             )
@@ -1217,7 +1314,24 @@ function pathfinding (sprite: Sprite, edge_detection: boolean, speed: number, sp
         } else if (spriteType == "SMWkoopaGreen") {
             animation.runImageAnimation(
             sprite,
-            assets.animation`myAnim18`,
+            [img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `],
             300,
             true
             )
@@ -1286,7 +1400,24 @@ function pathfinding (sprite: Sprite, edge_detection: boolean, speed: number, sp
             } else if (spriteType == "SMWkoopaGreen") {
                 animation.runImageAnimation(
                 sprite,
-                assets.animation`myAnim19`,
+                [img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `],
                 300,
                 true
                 )
@@ -1353,7 +1484,24 @@ function pathfinding (sprite: Sprite, edge_detection: boolean, speed: number, sp
             } else if (spriteType == "SMWkoopaGreen") {
                 animation.runImageAnimation(
                 sprite,
-                assets.animation`myAnim18`,
+                [img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `],
                 300,
                 true
                 )
@@ -1637,7 +1785,24 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.SMWgreenShell, function (sprite,
                 otherSprite.vx = -105
                 animation.runImageAnimation(
                 otherSprite,
-                assets.animation`myAnim20`,
+                [img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `],
                 150,
                 true
                 )
@@ -1645,7 +1810,24 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.SMWgreenShell, function (sprite,
                 otherSprite.vx = 105
                 animation.runImageAnimation(
                 otherSprite,
-                assets.animation`myAnim20`,
+                [img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `],
                 150,
                 true
                 )
@@ -1657,7 +1839,24 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.SMWgreenShell, function (sprite,
             otherSprite.vx = -105
             animation.runImageAnimation(
             otherSprite,
-            assets.animation`myAnim20`,
+            [img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `],
             150,
             true
             )
@@ -1668,7 +1867,24 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.SMWgreenShell, function (sprite,
             otherSprite.vx = 105
             animation.runImageAnimation(
             otherSprite,
-            assets.animation`myAnim20`,
+            [img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `],
             150,
             true
             )
@@ -2109,10 +2325,10 @@ function start_movement () {
             value54.setKind(SpriteKind.SMW_Goomba)
         }
     }
-    for (let value54 of sprites.allOfKind(SpriteKind.offscreenSMWKoopaGreen)) {
-        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value54.x) {
-            value54.vx = -30
-            value54.setKind(SpriteKind.SMWkoopaGreen)
+    for (let value542 of sprites.allOfKind(SpriteKind.offscreenSMWKoopaGreen)) {
+        if (scene.screenWidth() / 2 + scene.cameraProperty(CameraProperty.X) + 10 >= value542.x) {
+            value542.vx = -30
+            value542.setKind(SpriteKind.SMWkoopaGreen)
         }
     }
 }
@@ -2704,12 +2920,29 @@ function above_ground_SMW () {
         )
         mySprite11.ay = 500
     }
-    for (let value16 of tiles.getTilesByType(assets.tile`myTile12`)) {
+    for (let value162 of tiles.getTilesByType(assets.tile`myTile12`)) {
         mySprite11 = sprites.create(assets.image`myImage8`, SpriteKind.offscreenSMWKoopaGreen)
-        tiles.placeOnTile(mySprite11, value16.getNeighboringLocation(CollisionDirection.Top))
+        tiles.placeOnTile(mySprite11, value162.getNeighboringLocation(CollisionDirection.Top))
         animation.runImageAnimation(
         mySprite11,
-        assets.animation`myAnim18`,
+        [img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `],
         300,
         true
         )
@@ -2717,7 +2950,7 @@ function above_ground_SMW () {
     }
     music.play(music.createSong(assets.song`SMW overworld intro`), music.PlaybackMode.InBackground)
     timer.after(1818, function () {
-        music.play(music.createSong(assets.song`SMW overworld0`), music.PlaybackMode.LoopingInBackground)
+        music.play(music.createSong(assets.song`SMW overworld`), music.PlaybackMode.LoopingInBackground)
     })
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.bullet, function (sprite, otherSprite) {
@@ -3981,27 +4214,8 @@ scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile41`, function (sprite
 scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
-// namespace SpriteKind {
-//     export const display = SpriteKind.create()
-//     export const koopaGreen = SpriteKind.create()
-//     export const offScreenKoopaGreen = SpriteKind.create()
-//     export const OffScreenEnemy = SpriteKind.create()
-//     export const koopaRed = SpriteKind.create()
-//     export const flag = SpriteKind.create()
-//     export const mushroom = SpriteKind.create()
-//     export const enemy_killer_sprite = SpriteKind.create()
-//     export const firebar = SpriteKind.create()
-//     export const utility = SpriteKind.create()
-//     export const lavabubble = SpriteKind.create()
-//     export const boss = SpriteKind.create()
-//     export const fire = SpriteKind.create()
-//     export const bullet_off_screen = SpriteKind.create()
-//     export const SMW_Goomba = SpriteKind.create()
-//     export const bullet = SpriteKind.create()
-//     export const offscreenSMWgoomba = SpriteKind.create()
-//     export const SMW_Block = SpriteKind.create()
-//     export const flipped_SMW_goomba = SpriteKind.create()
-// }
+/**
+ */
 let mySprite9: Sprite = null
 let mySprite13: Sprite = null
 let mySprite12: Sprite = null
@@ -4261,11 +4475,11 @@ game.onUpdate(function () {
         for (let value37 of sprites.allOfKind(SpriteKind.SMW_Goomba)) {
             pathfinding(value37, false, 30, "SMWgoomba")
         }
-        for (let value37 of sprites.allOfKind(SpriteKind.SMWkoopaGreen)) {
-            pathfinding(value37, true, 30, "SMWkoopaGreen")
+        for (let value372 of sprites.allOfKind(SpriteKind.SMWkoopaGreen)) {
+            pathfinding(value372, true, 30, "SMWkoopaGreen")
         }
-        for (let value37 of sprites.allOfKind(SpriteKind.SMWgreenShell)) {
-            pathfinding(value37, false, 100, "SMWgreenShell")
+        for (let value373 of sprites.allOfKind(SpriteKind.SMWgreenShell)) {
+            pathfinding(value373, false, 100, "SMWgreenShell")
         }
         for (let value38 of sprites.allOfKind(SpriteKind.firebar)) {
             transformSprites.changeRotation(value38, 5)
