@@ -82,9 +82,7 @@ namespace SpriteKind {
 /**
  * export const flipped_SMW_goomba = SpriteKind.create()
  */
-/**
- * }
- */
+// }
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.koopaGreen, function (sprite, otherSprite) {
     animation.stopAnimation(animation.AnimationTypes.All, otherSprite)
     sprite.vx = sprite.vx * -1
@@ -3077,7 +3075,9 @@ function coinPlace () {
 }
 function game_setup () {
     scroller.setLayerImage(scroller.BackgroundLayer.Layer4, assets.image`BG`)
-    color.startFadeFromCurrent(color.originalPalette, 100)
+    color.setPalette(
+    color.originalPalette
+    )
     mySprite.setFlag(SpriteFlag.Invisible, false)
     mySprite.setFlag(SpriteFlag.GhostThroughSprites, false)
     scene.setBackgroundColor(9)
@@ -3135,41 +3135,110 @@ function game_setup () {
     textSprite.setFlag(SpriteFlag.RelativeToCamera, true)
     if (currentLevel <= 1) {
         currentLevel = 1
+        loadworld1()
+        spritetypes = [
+        SpriteKind.Food,
+        SpriteKind.Projectile,
+        SpriteKind.Enemy,
+        SpriteKind.koopaGreen,
+        SpriteKind.offScreenKoopaGreen,
+        SpriteKind.OffScreenEnemy,
+        SpriteKind.koopaRed,
+        SpriteKind.flag,
+        SpriteKind.mushroom,
+        SpriteKind.enemy_killer_sprite,
+        SpriteKind.firebar,
+        SpriteKind.utility,
+        SpriteKind.lavabubble,
+        SpriteKind.boss,
+        SpriteKind.fire,
+        SpriteKind.bullet_off_screen,
+        SpriteKind.SMW_Goomba,
+        SpriteKind.bullet,
+        SpriteKind.offscreenSMWgoomba,
+        SpriteKind.SMW_Block,
+        SpriteKind.flipped_SMW_goomba,
+        SpriteKind.offscreenSMWKoopaGreen,
+        SpriteKind.SMWkoopaGreen,
+        SpriteKind.SMWgreenShell
+        ]
+        world()
+        World_Map_True = 1
+    } else if (currentLevel >= 5) {
+        loadworld1()
+        spritetypes = [
+        SpriteKind.Food,
+        SpriteKind.Projectile,
+        SpriteKind.Enemy,
+        SpriteKind.koopaGreen,
+        SpriteKind.offScreenKoopaGreen,
+        SpriteKind.OffScreenEnemy,
+        SpriteKind.koopaRed,
+        SpriteKind.flag,
+        SpriteKind.mushroom,
+        SpriteKind.enemy_killer_sprite,
+        SpriteKind.firebar,
+        SpriteKind.utility,
+        SpriteKind.lavabubble,
+        SpriteKind.boss,
+        SpriteKind.fire,
+        SpriteKind.bullet_off_screen,
+        SpriteKind.SMW_Goomba,
+        SpriteKind.bullet,
+        SpriteKind.offscreenSMWgoomba,
+        SpriteKind.SMW_Block,
+        SpriteKind.flipped_SMW_goomba,
+        SpriteKind.offscreenSMWKoopaGreen,
+        SpriteKind.SMWkoopaGreen,
+        SpriteKind.SMWgreenShell
+        ]
+        world()
+        World_Map_True = 1
+    } else if (currentLevel <= 6) {
+        spritetypes = [
+        SpriteKind.Food,
+        SpriteKind.Projectile,
+        SpriteKind.Enemy,
+        SpriteKind.koopaGreen,
+        SpriteKind.offScreenKoopaGreen,
+        SpriteKind.OffScreenEnemy,
+        SpriteKind.koopaRed,
+        SpriteKind.flag,
+        SpriteKind.mushroom,
+        SpriteKind.enemy_killer_sprite,
+        SpriteKind.firebar,
+        SpriteKind.utility,
+        SpriteKind.lavabubble,
+        SpriteKind.boss,
+        SpriteKind.fire,
+        SpriteKind.bullet_off_screen,
+        SpriteKind.SMW_Goomba,
+        SpriteKind.bullet,
+        SpriteKind.offscreenSMWgoomba,
+        SpriteKind.SMW_Block,
+        SpriteKind.flipped_SMW_goomba,
+        SpriteKind.offscreenSMWKoopaGreen,
+        SpriteKind.SMWkoopaGreen,
+        SpriteKind.SMWgreenShell
+        ]
+        world()
+        loadworld1()
+        World_Map_True = 1
     }
-    loadworld1()
     powerup = 0
     lifes = 5
     canMove = 1
     invulnerability = 0
     multilights.addLightSource(mySprite, 20)
-    spritetypes = [
-    SpriteKind.Food,
-    SpriteKind.Projectile,
-    SpriteKind.Enemy,
-    SpriteKind.koopaGreen,
-    SpriteKind.offScreenKoopaGreen,
-    SpriteKind.OffScreenEnemy,
-    SpriteKind.koopaRed,
-    SpriteKind.flag,
-    SpriteKind.mushroom,
-    SpriteKind.enemy_killer_sprite,
-    SpriteKind.firebar,
-    SpriteKind.utility,
-    SpriteKind.lavabubble,
-    SpriteKind.boss,
-    SpriteKind.fire,
-    SpriteKind.bullet_off_screen,
-    SpriteKind.SMW_Goomba,
-    SpriteKind.bullet,
-    SpriteKind.offscreenSMWgoomba,
-    SpriteKind.SMW_Block,
-    SpriteKind.flipped_SMW_goomba,
-    SpriteKind.offscreenSMWKoopaGreen,
-    SpriteKind.SMWkoopaGreen,
-    SpriteKind.SMWgreenShell
-    ]
-    world()
-    World_Map_True = 1
+    if (currentLevel <= 6) {
+        music.play(music.createSong(assets.song`Yoshis island`), music.PlaybackMode.LoopingInBackground)
+        color.setColor(6, color.rgb(70, 155, 34))
+        color.setColor(10, color.rgb(252, 242, 145))
+        color.setColor(12, color.rgb(54, 107, 90))
+        color.setColor(11, color.rgb(30, 148, 99))
+        color.setColor(3, color.rgb(201, 152, 88))
+        color.setColor(9, color.rgb(132, 140, 140))
+    }
 }
 function above_ground_SMW () {
     if (title == 0) {
@@ -3260,7 +3329,6 @@ function above_ground_SMW () {
         )
         mySprite11.ay = 500
     }
-
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.bullet, function (sprite, otherSprite) {
     if (sprite.bottom < otherSprite.y) {
@@ -3766,9 +3834,7 @@ function world () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.firebar, function (sprite, otherSprite) {
     luigi_Die()
 })
-/**
- * Need to re=add SMW koopa sprites
- */
+// Need to re=add SMW koopa sprites
 function saveload () {
     sprites.destroy(mySprite6)
     tiles.setCurrentTilemap(tilemap`level18`)
@@ -3920,8 +3986,8 @@ function saveload () {
     SpriteKind.SMWkoopaGreen,
     SpriteKind.SMWgreenShell
     ]
-    for (let value9 of spritetypes) {
-        destroyspritetype(value9)
+    for (let value93 of spritetypes) {
+        destroyspritetype(value93)
     }
     mySprite.vx = 0
     mySprite.ay = 0
@@ -3958,7 +4024,8 @@ function saveload () {
     miniMenu.createMenuItem("Save 1: " + save1),
     miniMenu.createMenuItem("Save 2: " + save2),
     miniMenu.createMenuItem("Save 3: " + save3),
-    miniMenu.createMenuItem("Erase")
+    miniMenu.createMenuItem("Erase"),
+    miniMenu.createMenuItem("Preview: World 2", assets.image`myImage7`)
     ]
     myMenu = miniMenu.createMenuFromArray(Menu_items)
     myMenu.setDimensions(150, 120)
@@ -4014,6 +4081,11 @@ function saveload () {
             erasing = 0
             myMenu.setTitle("Select Save:")
             Menu_items[3] = miniMenu.createMenuItem("Erase")
+        } else if (selection == "Preview: World 2") {
+            currentLevel = 6
+            currentSave = "save4"
+            myMenu.close()
+            game_setup()
         }
     })
 }
@@ -4912,7 +4984,6 @@ scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile41`, function (sprite
 scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile13`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
-
 let mySprite9: Sprite = null
 let mySprite13: Sprite = null
 let mySprite12: Sprite = null
