@@ -2302,7 +2302,6 @@ function luigi_Die () {
             die = 0
             lifes += -1
             if (lifes < 0) {
-                game.setGameOverPlayable(false, music.createSong(assets.song`game over`), false)
                 game.setGameOverMessage(false, "GAME OVER!")
                 game.gameOver(false)
             } else {
