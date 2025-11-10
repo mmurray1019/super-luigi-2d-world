@@ -2424,7 +2424,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile164`, function (sprite,
         animation.runImageAnimation(
         mySprite,
         assets.animation`myAnim4`,
-        50,
+        100,
         true
         )
     }
