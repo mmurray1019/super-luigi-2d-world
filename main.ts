@@ -2290,7 +2290,11 @@ function luigi_Die () {
             mySprite.vy = -250
             mySprite.setFlag(SpriteFlag.GhostThroughSprites, true)
             mySprite.setFlag(SpriteFlag.GhostThroughWalls, true)
-            music.play(music.createSong(assets.song`death`), music.PlaybackMode.UntilDone)
+            if (currentLevel <= 5) {
+                music.play(music.createSong(assets.song`death`), music.PlaybackMode.UntilDone)
+            } else if (currentLevel >= 5) {
+                music.play(music.createSong(assets.song`SMW death`), music.PlaybackMode.UntilDone)
+            }
             animation.stopAnimation(animation.AnimationTypes.All, mySprite)
             mySprite.setFlag(SpriteFlag.GhostThroughSprites, false)
             mySprite.setFlag(SpriteFlag.GhostThroughWalls, false)
@@ -2298,6 +2302,7 @@ function luigi_Die () {
             die = 0
             lifes += -1
             if (lifes < 0) {
+                game.setGameOverPlayable(false, music.createSong(assets.song`game over`), false)
                 game.setGameOverMessage(false, "GAME OVER!")
                 game.gameOver(false)
             } else {
