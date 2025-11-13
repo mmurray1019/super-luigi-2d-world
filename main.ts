@@ -4037,6 +4037,65 @@ function kill_above_block (location_of_block: tiles.Location) {
         sprites.destroy(mySprite5)
     })
 }
+function MusicSelection () {
+    myMenu2 = miniMenu.createMenuFromArray([
+    miniMenu.createMenuItem("SMB Overworld"),
+    miniMenu.createMenuItem("SMB Underground"),
+    miniMenu.createMenuItem("SMW Overworld"),
+    miniMenu.createMenuItem("Athletic"),
+    miniMenu.createMenuItem("Yoshi's Island"),
+    miniMenu.createMenuItem("Title"),
+    miniMenu.createMenuItem("SMB Castle"),
+    miniMenu.createMenuItem("Ghost House"),
+    miniMenu.createMenuItem("Swimming"),
+    miniMenu.createMenuItem("Bonus"),
+    miniMenu.createMenuItem("Back")
+    ])
+    myMenu2.setTitle("Music")
+    myMenu2.setDimensions(150, 120)
+    myMenu2.setPosition(scene.cameraProperty(CameraProperty.Left) + 5, scene.cameraProperty(CameraProperty.Top) + 35)
+    myMenu2.setStayInScreen(true)
+    myMenu2.onButtonPressed(controller.A, function (selection, selectedIndex) {
+        if (selection == "SMB Overworld") {
+            music.stopAllSounds()
+            music.play(music.createSong(assets.song`mariomusic`), music.PlaybackMode.LoopingInBackground)
+        } else if (selection == "SMB Underground") {
+            music.stopAllSounds()
+            music.play(music.createSong(assets.song`underground music`), music.PlaybackMode.LoopingInBackground)
+        } else if (selection == "SMW Overworld") {
+            music.stopAllSounds()
+            music.play(music.createSong(assets.song`SMW overworld intro`), music.PlaybackMode.UntilDone)
+            music.play(music.createSong(assets.song`SMW overworld`), music.PlaybackMode.LoopingInBackground)
+        } else if (selection == "Athletic") {
+            music.stopAllSounds()
+            music.play(music.createSong(assets.song`athletic theme intro`), music.PlaybackMode.UntilDone)
+            music.play(music.createSong(assets.song`athletic theme`), music.PlaybackMode.LoopingInBackground)
+        } else if (selection == "Yoshi's Island") {
+            music.stopAllSounds()
+            music.play(music.createSong(assets.song`Yoshis island`), music.PlaybackMode.LoopingInBackground)
+        } else if (selection == "Title") {
+            music.stopAllSounds()
+            music.play(music.createSong(assets.song`title`), music.PlaybackMode.LoopingInBackground)
+        } else if (selection == "SMB Castle") {
+            music.stopAllSounds()
+            music.play(music.createSong(assets.song`castle`), music.PlaybackMode.LoopingInBackground)
+        } else if (selection == "Ghost House") {
+            music.stopAllSounds()
+            music.play(music.createSong(assets.song`ghost`), music.PlaybackMode.LoopingInBackground)
+        } else if (selection == "Swimming") {
+            music.stopAllSounds()
+            music.play(music.createSong(assets.song`swimming intro`), music.PlaybackMode.UntilDone)
+            music.play(music.createSong(assets.song`swimming`), music.PlaybackMode.LoopingInBackground)
+        } else if (selection == "Bonus") {
+            music.stopAllSounds()
+            music.play(music.createSong(assets.song`bonus intro`), music.PlaybackMode.UntilDone)
+            music.play(music.createSong(assets.song`bonus`), music.PlaybackMode.LoopingInBackground)
+        } else if (selection == "Back") {
+            myMenu2.close()
+            saveload()
+        }
+    })
+}
 scene.onOverlapTile(SpriteKind.mushroom, assets.tile`myTile49`, function (sprite, location) {
     sprite.setFlag(SpriteFlag.GhostThroughWalls, true)
 })
@@ -4287,7 +4346,8 @@ function saveload () {
     miniMenu.createMenuItem("Save 2: " + save2),
     miniMenu.createMenuItem("Save 3: " + save3),
     miniMenu.createMenuItem("Erase"),
-    miniMenu.createMenuItem("Preview: World 2", assets.image`myImage7`)
+    miniMenu.createMenuItem("Preview: World 2", assets.image`myImage7`),
+    miniMenu.createMenuItem("Music")
     ]
     myMenu = miniMenu.createMenuFromArray(Menu_items)
     myMenu.setDimensions(150, 120)
@@ -4348,6 +4408,9 @@ function saveload () {
             currentSave = "save4"
             myMenu.close()
             game_setup()
+        } else if (selection == "Music") {
+            myMenu.close()
+            MusicSelection()
         }
     })
 }
@@ -5255,6 +5318,7 @@ let Menu_items: miniMenu.MenuItem[] = []
 let save3 = ""
 let save2 = ""
 let save1 = ""
+let myMenu2: miniMenu.MenuSprite = null
 let mySprite5: Sprite = null
 let mySprite11: Sprite = null
 let textSprite: TextSprite = null
